@@ -17,7 +17,7 @@
 */
 
 // DEBUG: import { b2Assert, b2_epsilon_sq } from "../common/b2_settings.js";
-import { b2_epsilon, b2_maxFloat, b2_linearSlop, b2_polygonRadius } from "../common/b2_settings.js";
+import { b2_epsilon, b2_linearSlop, b2_polygonRadius } from "../common/b2_settings.js";
 import { b2Vec2, b2Rot, b2Transform, XY } from "../common/b2_math.js";
 import { b2AABB, b2RayCastInput, b2RayCastOutput } from "./b2_collision.js";
 import { b2DistanceProxy } from "./b2_distance.js";
@@ -240,47 +240,6 @@ export class b2PolygonShape extends b2Shape {
 
     return true;
   }
-
-  // #if B2_ENABLE_PARTICLE
-  /// @see b2Shape::ComputeDistance
-  private static ComputeDistance_s_pLocal = new b2Vec2();
-  private static ComputeDistance_s_normalForMaxDistance = new b2Vec2();
-  private static ComputeDistance_s_minDistance = new b2Vec2();
-  private static ComputeDistance_s_distance = new b2Vec2();
-  public ComputeDistance(xf: b2Transform, p: b2Vec2, normal: b2Vec2, childIndex: number): number {
-    const pLocal = b2Transform.MulTXV(xf, p, b2PolygonShape.ComputeDistance_s_pLocal);
-    let maxDistance = -b2_maxFloat;
-    const normalForMaxDistance = b2PolygonShape.ComputeDistance_s_normalForMaxDistance.Copy(pLocal);
-
-    for (let i = 0; i < this.m_count; ++i) {
-      const dot = b2Vec2.DotVV(this.m_normals[i], b2Vec2.SubVV(pLocal, this.m_vertices[i], b2Vec2.s_t0));
-      if (dot > maxDistance) {
-        maxDistance = dot;
-        normalForMaxDistance.Copy(this.m_normals[i]);
-      }
-    }
-
-    if (maxDistance > 0) {
-      const minDistance = b2PolygonShape.ComputeDistance_s_minDistance.Copy(normalForMaxDistance);
-      let minDistance2 = maxDistance * maxDistance;
-      for (let i = 0; i < this.m_count; ++i) {
-        const distance = b2Vec2.SubVV(pLocal, this.m_vertices[i], b2PolygonShape.ComputeDistance_s_distance);
-        const distance2 = distance.LengthSquared();
-        if (minDistance2 > distance2) {
-          minDistance.Copy(distance);
-          minDistance2 = distance2;
-        }
-      }
-
-      b2Rot.MulRV(xf.q, minDistance, normal);
-      normal.Normalize();
-      return Math.sqrt(minDistance2);
-    } else {
-      b2Rot.MulRV(xf.q, normalForMaxDistance, normal);
-      return maxDistance;
-    }
-  }
-  // #endif
 
   /// Implement b2Shape.
   /// @note because the polygon is solid, rays that start inside do not hit because the normal is

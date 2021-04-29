@@ -50,9 +50,6 @@ export class b2TimeStep {
   public dtRatio: number = 0; // dt * inv_dt0
   public velocityIterations: number = 0;
   public positionIterations: number = 0;
-  // #if B2_ENABLE_PARTICLE
-  public particleIterations: number = 0;
-  // #endif
   public warmStarting: boolean = false;
 
   public Copy(step: b2TimeStep): b2TimeStep {
@@ -61,9 +58,6 @@ export class b2TimeStep {
     this.dtRatio = step.dtRatio;
     this.positionIterations = step.positionIterations;
     this.velocityIterations = step.velocityIterations;
-    // #if B2_ENABLE_PARTICLE
-    this.particleIterations = step.particleIterations;
-    // #endif
     this.warmStarting = step.warmStarting;
     return this;
   }

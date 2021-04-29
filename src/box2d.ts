@@ -80,19 +80,4 @@ export * from "./dynamics/b2_revolute_joint.js";
 export * from "./dynamics/b2_weld_joint.js";
 export * from "./dynamics/b2_wheel_joint.js";
 
-// #if B2_ENABLE_CONTROLLER
-export * from "./controllers/b2_controller.js";
-export * from "./controllers/b2_buoyancy_controller.js";
-export * from "./controllers/b2_constant_accel_controller.js";
-export * from "./controllers/b2_constant_force_controller.js";
-export * from "./controllers/b2_gravity_controller.js";
-export * from "./controllers/b2_tensor_damping_controller.js";
-// #endif
-
-// #if B2_ENABLE_PARTICLE
-export * from "./particle/b2_particle.js";
-export * from "./particle/b2_particle_group.js";
-export * from "./particle/b2_particle_system.js";
-// #endif
-
 export * from "./rope/b2_rope.js";
