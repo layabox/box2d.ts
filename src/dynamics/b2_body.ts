@@ -409,8 +409,8 @@ export class b2Body {
     this.m_world.m_newContacts = true;
   }
 
-  public SetTransform(xf: b2Transform): void {
-    this.SetTransformVec(xf.p, xf.GetAngle());
+  public SetTransform(position: XY, angle: number): void {
+    this.SetTransformXY(position.x, position.y, angle);
   }
 
   /// Get the body transform for the body's origin.
