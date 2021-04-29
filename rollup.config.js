@@ -6,7 +6,7 @@ export default {
     file: "./dist/box2d.js",
     name: "box2d",
     format: "iife",
-    sourcemap: true,
+    sourcemap: false,
   },
   plugins: [
     typescript({ clean: true, tsconfigOverride: { compilerOptions: { target: "ES2015", module: "ES2015", declaration: false } } }),
