@@ -7281,8 +7281,8 @@ var box2d = (function (exports) {
           // Check for new contacts the next step
           this.m_world.m_newContacts = true;
       }
-      SetTransform(xf) {
-          this.SetTransformVec(xf.p, xf.GetAngle());
+      SetTransform(position, angle) {
+          this.SetTransformXY(position.x, position.y, angle);
       }
       /// Get the body transform for the body's origin.
       /// @return the world transform of the body's origin.
