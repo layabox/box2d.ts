@@ -1,5 +1,5 @@
 // MIT License
-System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/add_pair.js", "./tests/apply_force.js", "./tests/body_types.js", "./tests/box_stack.js", "./tests/breakable.js", "./tests/bridge.js", "./tests/bullet_test.js", "./tests/cantilever.js", "./tests/car.js", "./tests/chain.js", "./tests/character_collision.js", "./tests/circle_stack.js", "./tests/collision_filtering.js", "./tests/collision_processing.js", "./tests/compound_shapes.js", "./tests/confined.js", "./tests/continuous_test.js", "./tests/convex_hull.js", "./tests/conveyor_belt.js", "./tests/distance_joint.js", "./tests/distance_test.js", "./tests/dominos.js", "./tests/dump_loader.js", "./tests/dynamic_tree.js", "./tests/edge_shapes.js", "./tests/edge_test.js", "./tests/friction.js", "./tests/gear_joint.js", "./tests/heavy1.js", "./tests/heavy2.js", "./tests/mobile_balanced.js", "./tests/mobile_unbalanced.js", "./tests/motor_joint.js", "./tests/pinball.js", "./tests/platformer.js", "./tests/polygon_collision.js", "./tests/polygon_shapes.js", "./tests/prismatic_joint.js", "./tests/pulley_joint.js", "./tests/pyramid.js", "./tests/ray_cast.js", "./tests/restitution.js", "./tests/revolute_joint.js", "./tests/rope.js", "./tests/sensor.js", "./tests/shape_cast.js", "./tests/shape_editing.js", "./tests/skier.js", "./tests/slider_crank_1.js", "./tests/slider_crank_2.js", "./tests/theo_jansen.js", "./tests/tiles.js", "./tests/time_of_impact.js", "./tests/tumbler.js", "./tests/web.js", "./tests/wheel_joint.js", "./tests/wrecking_ball.js", "./tests/extras/blob_test.js", "./tests/extras/domino_tower.js", "./tests/extras/pyramid_topple.js", "./tests/extras/test_ccd.js", "./tests/extras/test_ragdoll.js", "./tests/extras/test_stack.js", "./tests/extras/top_down_car.js", "./tests/extras/segway.js", "./tests/extras/buoyancy_test.js", "./tests/particles/anti_pointy.js", "./tests/particles/corner_case.js", "./tests/particles/dam_break.js", "./tests/particles/drawing_particles.js", "./tests/particles/elastic_particles.js", "./tests/particles/eye_candy.js", "./tests/particles/faucet.js", "./tests/particles/fracker.js", "./tests/particles/impulse.js", "./tests/particles/liquid_timer.js", "./tests/particles/maxwell.js", "./tests/particles/multiple_particle_systems.js", "./tests/particles/particle_collision_filter.js", "./tests/particles/particles_surface_tension.js", "./tests/particles/particles.js", "./tests/particles/pointy.js", "./tests/particles/ramp.js", "./tests/particles/rigid_particles.js", "./tests/particles/sandbox.js", "./tests/particles/soup_stirrer.js", "./tests/particles/soup.js", "./tests/particles/sparky.js", "./tests/particles/wave_machine.js"], function (exports_1, context_1) {
+System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/add_pair.js", "./tests/apply_force.js", "./tests/body_types.js", "./tests/box_stack.js", "./tests/breakable.js", "./tests/bridge.js", "./tests/bullet_test.js", "./tests/cantilever.js", "./tests/car.js", "./tests/chain.js", "./tests/character_collision.js", "./tests/circle_stack.js", "./tests/collision_filtering.js", "./tests/collision_processing.js", "./tests/compound_shapes.js", "./tests/confined.js", "./tests/continuous_test.js", "./tests/convex_hull.js", "./tests/conveyor_belt.js", "./tests/distance_joint.js", "./tests/distance_test.js", "./tests/dominos.js", "./tests/dump_loader.js", "./tests/dynamic_tree.js", "./tests/edge_shapes.js", "./tests/edge_test.js", "./tests/friction.js", "./tests/gear_joint.js", "./tests/heavy1.js", "./tests/heavy2.js", "./tests/mobile_balanced.js", "./tests/mobile_unbalanced.js", "./tests/motor_joint.js", "./tests/pinball.js", "./tests/platformer.js", "./tests/polygon_collision.js", "./tests/polygon_shapes.js", "./tests/prismatic_joint.js", "./tests/pulley_joint.js", "./tests/pyramid.js", "./tests/ray_cast.js", "./tests/restitution.js", "./tests/revolute_joint.js", "./tests/rope.js", "./tests/sensor.js", "./tests/shape_cast.js", "./tests/shape_editing.js", "./tests/skier.js", "./tests/slider_crank_1.js", "./tests/slider_crank_2.js", "./tests/theo_jansen.js", "./tests/tiles.js", "./tests/time_of_impact.js", "./tests/tumbler.js", "./tests/web.js", "./tests/wheel_joint.js", "./tests/wrecking_ball.js", "./tests/extras/blob_test.js", "./tests/extras/domino_tower.js", "./tests/extras/pyramid_topple.js", "./tests/extras/test_ccd.js", "./tests/extras/test_ragdoll.js", "./tests/extras/test_stack.js", "./tests/extras/top_down_car.js", "./tests/extras/segway.js"], function (exports_1, context_1) {
     "use strict";
     var b2, settings_js_1, test_js_1, draw_js_1, Main;
     var __moduleName = context_1 && context_1.id;
@@ -146,54 +146,6 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
             function (_64) {
             },
             function (_65) {
-            },
-            function (_66) {
-            },
-            function (_67) {
-            },
-            function (_68) {
-            },
-            function (_69) {
-            },
-            function (_70) {
-            },
-            function (_71) {
-            },
-            function (_72) {
-            },
-            function (_73) {
-            },
-            function (_74) {
-            },
-            function (_75) {
-            },
-            function (_76) {
-            },
-            function (_77) {
-            },
-            function (_78) {
-            },
-            function (_79) {
-            },
-            function (_80) {
-            },
-            function (_81) {
-            },
-            function (_82) {
-            },
-            function (_83) {
-            },
-            function (_84) {
-            },
-            function (_85) {
-            },
-            function (_86) {
-            },
-            function (_87) {
-            },
-            function (_88) {
-            },
-            function (_89) {
             }
         ],
         execute: function () {
@@ -208,13 +160,13 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                     this.m_ctrl = false;
                     this.m_lMouseDown = false;
                     this.m_rMouseDown = false;
-                    this.m_projection0 = new b2.Vec2();
-                    this.m_viewCenter0 = new b2.Vec2();
+                    this.m_projection0 = new b2.b2Vec2();
+                    this.m_viewCenter0 = new b2.b2Vec2();
                     this.m_demo_mode = false;
                     this.m_demo_time = 0;
                     this.m_max_demo_time = 1000 * 10;
                     this.m_ctx = null;
-                    this.m_mouse = new b2.Vec2();
+                    this.m_mouse = new b2.b2Vec2();
                     const fps_div = this.m_fps_div = document.body.appendChild(document.createElement("div"));
                     fps_div.style.position = "absolute";
                     fps_div.style.left = "0px";
@@ -249,7 +201,7 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                     const title_div = main_div.appendChild(document.createElement("div"));
                     title_div.style.textAlign = "center";
                     title_div.style.color = "grey";
-                    title_div.innerHTML = "Box2D Testbed version " + b2.version.toString();
+                    title_div.innerHTML = "Box2D Testbed version " + b2.b2_version.toString();
                     const view_div = main_div.appendChild(document.createElement("div"));
                     const canvas_div = this.m_canvas_div = view_div.appendChild(document.createElement("div"));
                     canvas_div.style.position = "absolute"; // relative to view_div
@@ -295,7 +247,7 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                         const option = test_options[i];
                         test_select.add(option);
                     }
-                    test_select.selectedIndex = this.m_settings.m_testIndex = 77;
+                    test_select.selectedIndex = this.m_settings.m_testIndex = 0;
                     test_select.addEventListener("change", (e) => {
                         this.m_settings.m_testIndex = test_select.selectedIndex;
                         this.LoadTest();
@@ -327,9 +279,6 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                     const number_input_table = controls_div.appendChild(document.createElement("table"));
                     connect_number_input(number_input_table, "Vel Iters", this.m_settings.m_velocityIterations, (value) => { this.m_settings.m_velocityIterations = value; }, 1, 20, 1);
                     connect_number_input(number_input_table, "Pos Iters", this.m_settings.m_positionIterations, (value) => { this.m_settings.m_positionIterations = value; }, 1, 20, 1);
-                    // #if B2_ENABLE_PARTICLE
-                    connect_number_input(number_input_table, "Pcl Iters", this.m_settings.m_particleIterations, (value) => { this.m_settings.m_particleIterations = value; }, 1, 100, 1);
-                    // #endif
                     connect_number_input(number_input_table, "Hertz", this.m_settings.m_hertz, (value) => { this.m_settings.m_hertz = value; }, 10, 120, 1);
                     // simulation checkbox inputs
                     function connect_checkbox_input(parent, label, init, update) {
@@ -348,17 +297,11 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                     connect_checkbox_input(controls_div, "Warm Starting", this.m_settings.m_enableWarmStarting, (value) => { this.m_settings.m_enableWarmStarting = value; });
                     connect_checkbox_input(controls_div, "Time of Impact", this.m_settings.m_enableContinuous, (value) => { this.m_settings.m_enableContinuous = value; });
                     connect_checkbox_input(controls_div, "Sub-Stepping", this.m_settings.m_enableSubStepping, (value) => { this.m_settings.m_enableSubStepping = value; });
-                    // #if B2_ENABLE_PARTICLE
-                    connect_checkbox_input(controls_div, "Strict Particle/Body Contacts", this.m_settings.m_strictContacts, (value) => { this.m_settings.m_strictContacts = value; });
-                    // #endif
                     // draw checkbox inputs
                     const draw_fieldset = controls_div.appendChild(document.createElement("fieldset"));
                     const draw_legend = draw_fieldset.appendChild(document.createElement("legend"));
                     draw_legend.appendChild(document.createTextNode("Draw"));
                     connect_checkbox_input(draw_fieldset, "Shapes", this.m_settings.m_drawShapes, (value) => { this.m_settings.m_drawShapes = value; });
-                    // #if B2_ENABLE_PARTICLE
-                    connect_checkbox_input(draw_fieldset, "Particles", this.m_settings.m_drawParticles, (value) => { this.m_settings.m_drawParticles = value; });
-                    // #endif
                     connect_checkbox_input(draw_fieldset, "Joints", this.m_settings.m_drawJoints, (value) => { this.m_settings.m_drawJoints = value; });
                     connect_checkbox_input(draw_fieldset, "AABBs", this.m_settings.m_drawAABBs, (value) => { this.m_settings.m_drawAABBs = value; });
                     connect_checkbox_input(draw_fieldset, "Contact Points", this.m_settings.m_drawContactPoints, (value) => { this.m_settings.m_drawContactPoints = value; });
@@ -402,7 +345,7 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                 HomeCamera() {
                     draw_js_1.g_camera.m_zoom = (this.m_test) ? (this.m_test.GetDefaultViewZoom()) : (1.0);
                     draw_js_1.g_camera.m_center.Set(0, 20 * draw_js_1.g_camera.m_zoom);
-                    ///g_camera.m_roll.SetAngle(b2.DegToRad(0));
+                    ///g_camera.m_roll.SetAngle(b2.b2DegToRad(0));
                 }
                 MoveCamera(move) {
                     const position = draw_js_1.g_camera.m_center.Clone();
@@ -416,11 +359,11 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                 ///}
                 ZoomCamera(zoom) {
                     draw_js_1.g_camera.m_zoom *= zoom;
-                    draw_js_1.g_camera.m_zoom = b2.Clamp(draw_js_1.g_camera.m_zoom, 0.02, 20);
+                    draw_js_1.g_camera.m_zoom = b2.b2Clamp(draw_js_1.g_camera.m_zoom, 0.02, 20);
                 }
                 HandleMouseMove(e) {
-                    const element = new b2.Vec2(e.clientX, e.clientY);
-                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+                    const element = new b2.b2Vec2(e.clientX, e.clientY);
+                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
                     this.m_mouse.Copy(element);
                     if (this.m_lMouseDown) {
                         if (this.m_test) {
@@ -429,15 +372,15 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                     }
                     if (this.m_rMouseDown) {
                         // m_center = viewCenter0 - (projection - projection0);
-                        const projection = draw_js_1.g_camera.ConvertElementToProjection(element, new b2.Vec2());
-                        const diff = b2.Vec2.SubVV(projection, this.m_projection0, new b2.Vec2());
-                        const center = b2.Vec2.SubVV(this.m_viewCenter0, diff, new b2.Vec2());
+                        const projection = draw_js_1.g_camera.ConvertElementToProjection(element, new b2.b2Vec2());
+                        const diff = b2.b2Vec2.SubVV(projection, this.m_projection0, new b2.b2Vec2());
+                        const center = b2.b2Vec2.SubVV(this.m_viewCenter0, diff, new b2.b2Vec2());
                         draw_js_1.g_camera.m_center.Copy(center);
                     }
                 }
                 HandleMouseDown(e) {
-                    const element = new b2.Vec2(e.clientX, e.clientY);
-                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+                    const element = new b2.b2Vec2(e.clientX, e.clientY);
+                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
                     switch (e.which) {
                         case 1: // left mouse button
                             this.m_lMouseDown = true;
@@ -454,15 +397,15 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                             break;
                         case 3: // right mouse button
                             this.m_rMouseDown = true;
-                            const projection = draw_js_1.g_camera.ConvertElementToProjection(element, new b2.Vec2());
+                            const projection = draw_js_1.g_camera.ConvertElementToProjection(element, new b2.b2Vec2());
                             this.m_projection0.Copy(projection);
                             this.m_viewCenter0.Copy(draw_js_1.g_camera.m_center);
                             break;
                     }
                 }
                 HandleMouseUp(e) {
-                    const element = new b2.Vec2(e.clientX, e.clientY);
-                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+                    const element = new b2.b2Vec2(e.clientX, e.clientY);
+                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
                     switch (e.which) {
                         case 1: // left mouse button
                             this.m_lMouseDown = false;
@@ -476,16 +419,16 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                     }
                 }
                 HandleTouchMove(e) {
-                    const element = new b2.Vec2(e.touches[0].clientX, e.touches[0].clientY);
-                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+                    const element = new b2.b2Vec2(e.touches[0].clientX, e.touches[0].clientY);
+                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
                     if (this.m_test) {
                         this.m_test.MouseMove(world);
                     }
                     e.preventDefault();
                 }
                 HandleTouchStart(e) {
-                    const element = new b2.Vec2(e.touches[0].clientX, e.touches[0].clientY);
-                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+                    const element = new b2.b2Vec2(e.touches[0].clientX, e.touches[0].clientY);
+                    const world = draw_js_1.g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
                     if (this.m_test) {
                         this.m_test.MouseDown(world);
                     }
@@ -517,51 +460,51 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                         case "ArrowLeft":
                             if (this.m_ctrl) {
                                 if (this.m_test) {
-                                    this.m_test.ShiftOrigin(new b2.Vec2(2, 0));
+                                    this.m_test.ShiftOrigin(new b2.b2Vec2(2, 0));
                                 }
                             }
                             else {
-                                this.MoveCamera(new b2.Vec2(-0.5, 0));
+                                this.MoveCamera(new b2.b2Vec2(-0.5, 0));
                             }
                             break;
                         case "ArrowRight":
                             if (this.m_ctrl) {
                                 if (this.m_test) {
-                                    this.m_test.ShiftOrigin(new b2.Vec2(-2, 0));
+                                    this.m_test.ShiftOrigin(new b2.b2Vec2(-2, 0));
                                 }
                             }
                             else {
-                                this.MoveCamera(new b2.Vec2(0.5, 0));
+                                this.MoveCamera(new b2.b2Vec2(0.5, 0));
                             }
                             break;
                         case "ArrowDown":
                             if (this.m_ctrl) {
                                 if (this.m_test) {
-                                    this.m_test.ShiftOrigin(new b2.Vec2(0, 2));
+                                    this.m_test.ShiftOrigin(new b2.b2Vec2(0, 2));
                                 }
                             }
                             else {
-                                this.MoveCamera(new b2.Vec2(0, -0.5));
+                                this.MoveCamera(new b2.b2Vec2(0, -0.5));
                             }
                             break;
                         case "ArrowUp":
                             if (this.m_ctrl) {
                                 if (this.m_test) {
-                                    this.m_test.ShiftOrigin(new b2.Vec2(0, -2));
+                                    this.m_test.ShiftOrigin(new b2.b2Vec2(0, -2));
                                 }
                             }
                             else {
-                                this.MoveCamera(new b2.Vec2(0, 0.5));
+                                this.MoveCamera(new b2.b2Vec2(0, 0.5));
                             }
                             break;
                         case "Home":
                             this.HomeCamera();
                             break;
                         ///case "PageUp":
-                        ///  this.RollCamera(b2.DegToRad(-1));
+                        ///  this.RollCamera(b2.b2DegToRad(-1));
                         ///  break;
                         ///case "PageDown":
-                        ///  this.RollCamera(b2.DegToRad(1));
+                        ///  this.RollCamera(b2.b2DegToRad(1));
                         ///  break;
                         case "z":
                             this.ZoomCamera(1.1);
@@ -589,20 +532,6 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                         case "]":
                             this.IncrementTest();
                             break;
-                        // #if B2_ENABLE_PARTICLE
-                        case ",":
-                            if (this.m_shift) {
-                                // Press < to select the previous particle parameter setting.
-                                test_js_1.Test.particleParameter.Decrement();
-                            }
-                            break;
-                        case ".":
-                            if (this.m_shift) {
-                                // Press > to select the next particle parameter setting.
-                                test_js_1.Test.particleParameter.Increment();
-                            }
-                            break;
-                        // #endif
                         default:
                             // console.log(e.keyCode);
                             break;
@@ -657,18 +586,7 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                     this.LoadTest();
                 }
                 LoadTest(restartTest = false) {
-                    // #if B2_ENABLE_PARTICLE
-                    test_js_1.Test.fullscreenUI.Reset();
-                    if (!restartTest) {
-                        test_js_1.Test.particleParameter.Reset();
-                    }
-                    // #endif
                     this.m_demo_time = 0;
-                    // #if B2_ENABLE_PARTICLE
-                    if (this.m_test) {
-                        this.m_test.RestoreParticleParameters();
-                    }
-                    // #endif
                     this.m_test = test_js_1.g_testEntries[parseInt(this.m_test_options[this.m_settings.m_testIndex].value)].createFcn();
                     if (!restartTest) {
                         this.HomeCamera();
@@ -701,14 +619,11 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                     }
                     if (time_elapsed > 0) {
                         const ctx = this.m_ctx;
-                        // #if B2_ENABLE_PARTICLE
-                        const restartTest = [false];
-                        // #endif
                         if (ctx) {
                             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
                             // ctx.strokeStyle = "blue";
                             // ctx.strokeRect(this.m_mouse.x - 24, this.m_mouse.y - 24, 48, 48);
-                            // const mouse_world: b2.Vec2 = g_camera.ConvertScreenToWorld(this.m_mouse, new b2.Vec2());
+                            // const mouse_world: b2.b2Vec2 = g_camera.ConvertScreenToWorld(this.m_mouse, new b2.b2Vec2());
                             ctx.save();
                             // 0,0 at center of canvas, x right, y up
                             ctx.translate(0.5 * ctx.canvas.width, 0.5 * ctx.canvas.height);
@@ -726,31 +641,14 @@ System.register(["@box2d", "./settings.js", "./test.js", "./draw.js", "./tests/a
                             if (this.m_test) {
                                 this.m_test.Step(this.m_settings);
                             }
-                            // #if B2_ENABLE_PARTICLE
-                            // Update the state of the particle parameter.
-                            test_js_1.Test.particleParameter.Changed(restartTest);
-                            // #endif
-                            // #if B2_ENABLE_PARTICLE
                             let msg = this.m_test_options[this.m_settings.m_testIndex].text;
-                            if (test_js_1.Test.fullscreenUI.GetParticleParameterSelectionEnabled()) {
-                                msg += " : ";
-                                msg += test_js_1.Test.particleParameter.GetName();
-                            }
                             if (this.m_test) {
                                 this.m_test.DrawTitle(msg);
                             }
-                            // #else
-                            // if (this.m_test) { this.m_test.DrawTitle(this.m_test_options[this.m_settings.m_testIndex].text); }
-                            // #endif
                             // ctx.strokeStyle = "yellow";
                             // ctx.strokeRect(mouse_world.x - 0.5, mouse_world.y - 0.5, 1.0, 1.0);
                             ctx.restore();
                         }
-                        // #if B2_ENABLE_PARTICLE
-                        if (restartTest[0]) {
-                            this.LoadTest(true);
-                        }
-                        // #endif
                         this.UpdateTest(time_elapsed);
                     }
                 }

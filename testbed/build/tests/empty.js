@@ -15,7 +15,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
             Empty = class Empty extends testbed.Test {
                 constructor() {
                     super();
-                    console.log(b2.version);
+                    console.log(b2.b2_version);
                 }
                 static Create() {
                     return new Empty();

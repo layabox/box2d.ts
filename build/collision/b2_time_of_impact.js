@@ -305,9 +305,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         const pointB = b2_math_js_1.b2Transform.MulXV(xfB, localPointB, b2TimeOfImpact_s_pointB);
                         b2_math_js_1.b2Vec2.SubVV(pointB, pointA, this.m_axis);
                         const s = this.m_axis.Normalize();
-                        // #if B2_ENABLE_PARTICLE
-                        this.m_localPoint.SetZero();
-                        // #endif
                         return s;
                     }
                     else if (cache.indexA[0] === cache.indexA[1]) {

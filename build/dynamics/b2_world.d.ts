@@ -25,13 +25,10 @@ import { b2ContactListener } from "./b2_world_callbacks.js";
 import { b2DestructionListener } from "./b2_world_callbacks.js";
 import { b2QueryCallback, b2QueryCallbackFunction } from "./b2_world_callbacks.js";
 import { b2RayCastCallback, b2RayCastCallbackFunction } from "./b2_world_callbacks.js";
-import { b2ParticleSystemDef, b2ParticleSystem } from "../particle/b2_particle_system.js";
-import { b2Controller } from "../controllers/b2_controller.js";
 export declare class b2World {
     readonly m_contactManager: b2ContactManager;
     m_bodyList: b2Body | null;
     m_jointList: b2Joint | null;
-    m_particleSystemList: b2ParticleSystem | null;
     m_bodyCount: number;
     m_jointCount: number;
     readonly m_gravity: b2Vec2;
@@ -49,8 +46,6 @@ export declare class b2World {
     readonly m_profile: b2Profile;
     readonly m_island: b2Island;
     readonly s_stack: Array<b2Body | null>;
-    m_controllerList: b2Controller | null;
-    m_controllerCount: number;
     constructor(gravity: XY);
     SetDestructionListener(listener: b2DestructionListener | null): void;
     SetContactFilter(filter: b2ContactFilter): void;
@@ -72,15 +67,11 @@ export declare class b2World {
     CreateJoint(def: b2IWeldJointDef): b2WeldJoint;
     CreateJoint(def: b2IWheelJointDef): b2WheelJoint;
     DestroyJoint(j: b2Joint): void;
-    CreateParticleSystem(def: b2ParticleSystemDef): b2ParticleSystem;
-    DestroyParticleSystem(p: b2ParticleSystem): void;
-    CalculateReasonableParticleIterations(timeStep: number): number;
     private static Step_s_step;
     private static Step_s_stepTimer;
     private static Step_s_timer;
-    Step(dt: number, velocityIterations: number, positionIterations: number, particleIterations?: number): void;
+    Step(dt: number, velocityIterations: number, positionIterations: number): void;
     ClearForces(): void;
-    DrawParticleSystem(system: b2ParticleSystem): void;
     private static DebugDraw_s_color;
     private static DebugDraw_s_vs;
     private static DebugDraw_s_xf;
@@ -112,7 +103,6 @@ export declare class b2World {
     RayCastAll(point1: XY, point2: XY, out?: b2Fixture[]): b2Fixture[];
     GetBodyList(): b2Body | null;
     GetJointList(): b2Joint | null;
-    GetParticleSystemList(): b2ParticleSystem | null;
     GetContactList(): b2Contact | null;
     SetAllowSleeping(flag: boolean): void;
     GetAllowSleeping(): boolean;
@@ -147,6 +137,4 @@ export declare class b2World {
     private static SolveTOI_s_toi_input;
     private static SolveTOI_s_toi_output;
     SolveTOI(step: b2TimeStep): void;
-    AddController(controller: b2Controller): b2Controller;
-    RemoveController(controller: b2Controller): b2Controller;
 }

@@ -17,13 +17,13 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 constructor() {
                     super();
                     // Create ground body.
-                    const bodyDef = new b2.BodyDef();
+                    const bodyDef = new b2.b2BodyDef();
                     bodyDef.position.Set(0.0, 20.0);
                     const ground = this.m_world.CreateBody(bodyDef);
                     const a = 0.5;
-                    const h = new b2.Vec2(0.0, a);
-                    const root = this.AddNode(ground, b2.Vec2_zero, 0, 3.0, a);
-                    const jointDef = new b2.RevoluteJointDef();
+                    const h = new b2.b2Vec2(0.0, a);
+                    const root = this.AddNode(ground, b2.b2Vec2_zero, 0, 3.0, a);
+                    const jointDef = new b2.b2RevoluteJointDef();
                     jointDef.bodyA = ground;
                     jointDef.bodyB = root;
                     jointDef.localAnchorA.SetZero();
@@ -32,24 +32,24 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 }
                 AddNode(parent, localAnchor, depth, offset, a) {
                     const density = 20.0;
-                    const h = new b2.Vec2(0.0, a);
+                    const h = new b2.b2Vec2(0.0, a);
                     //  b2Vec2 p = parent->GetPosition() + localAnchor - h;
                     const p = parent.GetPosition().Clone().SelfAdd(localAnchor).SelfSub(h);
-                    const bodyDef = new b2.BodyDef();
-                    bodyDef.type = b2.BodyType.b2_dynamicBody;
+                    const bodyDef = new b2.b2BodyDef();
+                    bodyDef.type = b2.b2BodyType.b2_dynamicBody;
                     bodyDef.position.Copy(p);
                     const body = this.m_world.CreateBody(bodyDef);
-                    const shape = new b2.PolygonShape();
+                    const shape = new b2.b2PolygonShape();
                     shape.SetAsBox(0.25 * a, a);
                     body.CreateFixture(shape, density);
                     if (depth === Mobile.e_depth) {
                         return body;
                     }
-                    const a1 = new b2.Vec2(offset, -a);
-                    const a2 = new b2.Vec2(-offset, -a);
+                    const a1 = new b2.b2Vec2(offset, -a);
+                    const a2 = new b2.b2Vec2(-offset, -a);
                     const body1 = this.AddNode(body, a1, depth + 1, 0.5 * offset, a);
                     const body2 = this.AddNode(body, a2, depth + 1, 0.5 * offset, a);
-                    const jointDef = new b2.RevoluteJointDef();
+                    const jointDef = new b2.b2RevoluteJointDef();
                     jointDef.bodyA = body;
                     jointDef.localAnchorB.Copy(h);
                     jointDef.localAnchorA.Copy(a1);

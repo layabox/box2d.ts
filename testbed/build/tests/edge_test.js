@@ -16,22 +16,22 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
             EdgeTest = class EdgeTest extends testbed.Test {
                 constructor() {
                     super();
-                    this.m_offset1 = new b2.Vec2();
-                    this.m_offset2 = new b2.Vec2();
+                    this.m_offset1 = new b2.b2Vec2();
+                    this.m_offset2 = new b2.b2Vec2();
                     this.m_body1 = null;
                     this.m_body2 = null;
                     this.m_boxes = false;
                     const vertices = [
-                        new b2.Vec2(10.0, -4.0),
-                        new b2.Vec2(10.0, 0.0),
-                        new b2.Vec2(6.0, 0.0),
-                        new b2.Vec2(4.0, 2.0),
-                        new b2.Vec2(2.0, 0.0),
-                        new b2.Vec2(-2.0, 0.0),
-                        new b2.Vec2(-6.0, 0.0),
-                        new b2.Vec2(-8.0, -3.0),
-                        new b2.Vec2(-10.0, 0.0),
-                        new b2.Vec2(-10.0, -4.0),
+                        new b2.b2Vec2(10.0, -4.0),
+                        new b2.b2Vec2(10.0, 0.0),
+                        new b2.b2Vec2(6.0, 0.0),
+                        new b2.b2Vec2(4.0, 2.0),
+                        new b2.b2Vec2(2.0, 0.0),
+                        new b2.b2Vec2(-2.0, 0.0),
+                        new b2.b2Vec2(-6.0, 0.0),
+                        new b2.b2Vec2(-8.0, -3.0),
+                        new b2.b2Vec2(-10.0, 0.0),
+                        new b2.b2Vec2(-10.0, -4.0),
                     ];
                     this.m_offset1.Set(0.0, 8.0);
                     this.m_offset2.Set(0.0, 16.0);
@@ -46,9 +46,9 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         const v8 = vertices[7].Clone().SelfAdd(this.m_offset1);
                         const v9 = vertices[8].Clone().SelfAdd(this.m_offset1);
                         const v10 = vertices[9].Clone().SelfAdd(this.m_offset1);
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         const ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
+                        const shape = new b2.b2EdgeShape();
                         shape.SetOneSided(v10, v1, v2, v3);
                         ground.CreateFixture(shape, 0.0);
                         shape.SetOneSided(v1, v2, v3, v4);
@@ -81,9 +81,9 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         const v8 = vertices[7].Clone().SelfAdd(this.m_offset2);
                         const v9 = vertices[8].Clone().SelfAdd(this.m_offset2);
                         const v10 = vertices[9].Clone().SelfAdd(this.m_offset2);
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         const ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
+                        const shape = new b2.b2EdgeShape();
                         shape.SetTwoSided(v1, v2);
                         ground.CreateFixture(shape, 0.0);
                         shape.SetTwoSided(v2, v3);
@@ -120,26 +120,26 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         this.m_body2 = null;
                     }
                     {
-                        const bd = new b2.BodyDef();
-                        bd.type = b2.BodyType.b2_dynamicBody;
+                        const bd = new b2.b2BodyDef();
+                        bd.type = b2.b2BodyType.b2_dynamicBody;
                         // bd.position = b2Vec2(8.0, 2.6) + this.m_offset1;
                         bd.position.x = 8.0 + this.m_offset1.x;
                         bd.position.y = 2.6 + this.m_offset1.y;
                         bd.allowSleep = false;
                         this.m_body1 = this.m_world.CreateBody(bd);
-                        const shape = new b2.PolygonShape();
+                        const shape = new b2.b2PolygonShape();
                         shape.SetAsBox(0.5, 1.0);
                         this.m_body1.CreateFixture(shape, 1.0);
                     }
                     {
-                        const bd = new b2.BodyDef();
-                        bd.type = b2.BodyType.b2_dynamicBody;
+                        const bd = new b2.b2BodyDef();
+                        bd.type = b2.b2BodyType.b2_dynamicBody;
                         // bd.position = b2Vec2(8.0, 2.6f) + this.m_offset2;
                         bd.position.x = 8.0 + this.m_offset2.x;
                         bd.position.y = 2.6 + this.m_offset2.y;
                         bd.allowSleep = false;
                         this.m_body2 = this.m_world.CreateBody(bd);
-                        const shape = new b2.PolygonShape();
+                        const shape = new b2.b2PolygonShape();
                         shape.SetAsBox(0.5, 1.0);
                         this.m_body2.CreateFixture(shape, 1.0);
                     }
@@ -154,26 +154,26 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         this.m_body2 = null;
                     }
                     {
-                        const bd = new b2.BodyDef();
-                        bd.type = b2.BodyType.b2_dynamicBody;
+                        const bd = new b2.b2BodyDef();
+                        bd.type = b2.b2BodyType.b2_dynamicBody;
                         // bd.position = b2Vec2(-0.5f, 0.6f) + this.m_offset1;
                         bd.position.x = -0.5 + this.m_offset1.x;
                         bd.position.y = 0.6 + this.m_offset1.y;
                         bd.allowSleep = false;
                         this.m_body1 = this.m_world.CreateBody(bd);
-                        const shape = new b2.CircleShape();
+                        const shape = new b2.b2CircleShape();
                         shape.m_radius = 0.5;
                         this.m_body1.CreateFixture(shape, 1.0);
                     }
                     {
-                        const bd = new b2.BodyDef();
-                        bd.type = b2.BodyType.b2_dynamicBody;
+                        const bd = new b2.b2BodyDef();
+                        bd.type = b2.b2BodyType.b2_dynamicBody;
                         // bd.position = b2Vec2(-0.5f, 0.6f) + this.m_offset2;
                         bd.position.x = -0.5 + this.m_offset2.x;
                         bd.position.y = 0.6 + this.m_offset2.y;
                         bd.allowSleep = false;
                         this.m_body2 = this.m_world.CreateBody(bd);
-                        const shape = new b2.CircleShape();
+                        const shape = new b2.b2CircleShape();
                         shape.m_radius = 0.5;
                         this.m_body2.CreateFixture(shape, 1.0);
                     }
@@ -197,13 +197,13 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 Step(settings) {
                     // if (glfwGetKey(g_mainWindow, GLFW_KEY_A) == GLFW_PRESS)
                     // {
-                    //   this.m_body1.ApplyForceToCenter(new b2.Vec2(-10.0, 0.0), true);
-                    //   this.m_body2.ApplyForceToCenter(new b2.Vec2(-10.0, 0.0), true);
+                    //   this.m_body1.ApplyForceToCenter(new b2.b2Vec2(-10.0, 0.0), true);
+                    //   this.m_body2.ApplyForceToCenter(new b2.b2Vec2(-10.0, 0.0), true);
                     // }
                     // if (glfwGetKey(g_mainWindow, GLFW_KEY_D) == GLFW_PRESS)
                     // {
-                    //   this.m_body1.ApplyForceToCenter(new b2.Vec2(10.0, 0.0), true);
-                    //   this.m_body2.ApplyForceToCenter(new b2.Vec2(10.0, 0.0), true);
+                    //   this.m_body1.ApplyForceToCenter(new b2.b2Vec2(10.0, 0.0), true);
+                    //   this.m_body2.ApplyForceToCenter(new b2.b2Vec2(10.0, 0.0), true);
                     // }
                     super.Step(settings);
                 }
@@ -211,12 +211,12 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     var _a, _b, _c, _d;
                     switch (key) {
                         case "a":
-                            (_a = this.m_body1) === null || _a === void 0 ? void 0 : _a.ApplyForceToCenter(new b2.Vec2(-10.0, 0.0), true);
-                            (_b = this.m_body2) === null || _b === void 0 ? void 0 : _b.ApplyForceToCenter(new b2.Vec2(-10.0, 0.0), true);
+                            (_a = this.m_body1) === null || _a === void 0 ? void 0 : _a.ApplyForceToCenter(new b2.b2Vec2(-10.0, 0.0), true);
+                            (_b = this.m_body2) === null || _b === void 0 ? void 0 : _b.ApplyForceToCenter(new b2.b2Vec2(-10.0, 0.0), true);
                             break;
                         case "d":
-                            (_c = this.m_body1) === null || _c === void 0 ? void 0 : _c.ApplyForceToCenter(new b2.Vec2(10.0, 0.0), true);
-                            (_d = this.m_body2) === null || _d === void 0 ? void 0 : _d.ApplyForceToCenter(new b2.Vec2(10.0, 0.0), true);
+                            (_c = this.m_body1) === null || _c === void 0 ? void 0 : _c.ApplyForceToCenter(new b2.b2Vec2(10.0, 0.0), true);
+                            (_d = this.m_body2) === null || _d === void 0 ? void 0 : _d.ApplyForceToCenter(new b2.b2Vec2(10.0, 0.0), true);
                             break;
                         case "b":
                             this.CreateBoxes();

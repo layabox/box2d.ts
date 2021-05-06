@@ -22,18 +22,18 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     this.m_state = Platformer_State.e_unknown;
                     // Ground
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         const ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+                        const shape = new b2.b2EdgeShape();
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
                         ground.CreateFixture(shape, 0.0);
                     }
                     // Platform
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         bd.position.Set(0.0, 10.0);
                         const body = this.m_world.CreateBody(bd);
-                        const shape = new b2.PolygonShape();
+                        const shape = new b2.b2PolygonShape();
                         shape.SetAsBox(3.0, 0.5);
                         this.m_platform = body.CreateFixture(shape, 0.0);
                         this.m_bottom = 10.0 - 0.5;
@@ -41,15 +41,15 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     }
                     // Actor
                     {
-                        const bd = new b2.BodyDef();
-                        bd.type = b2.BodyType.b2_dynamicBody;
+                        const bd = new b2.b2BodyDef();
+                        bd.type = b2.b2BodyType.b2_dynamicBody;
                         bd.position.Set(0.0, 12.0);
                         const body = this.m_world.CreateBody(bd);
                         this.m_radius = 0.5;
-                        const shape = new b2.CircleShape();
+                        const shape = new b2.b2CircleShape();
                         shape.m_radius = this.m_radius;
                         this.m_character = body.CreateFixture(shape, 20.0);
-                        body.SetLinearVelocity(new b2.Vec2(0.0, -50.0));
+                        body.SetLinearVelocity(new b2.b2Vec2(0.0, -50.0));
                         this.m_state = Platformer_State.e_unknown;
                     }
                 }
@@ -64,7 +64,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         return;
                     }
                     const position = this.m_character.GetBody().GetPosition();
-                    if (position.y < this.m_top + this.m_radius - 3.0 * b2.linearSlop) {
+                    if (position.y < this.m_top + this.m_radius - 3.0 * b2.b2_linearSlop) {
                         contact.SetEnabled(false);
                     }
                 }

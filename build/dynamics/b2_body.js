@@ -35,7 +35,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
             }
         ],
         execute: function () {
-            // #endif
             /// The body type.
             /// static: zero mass, zero velocity, may be manually moved
             /// kinematic: zero mass, non-zero velocity set by user, moved by solver
@@ -96,7 +95,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
             exports_1("b2BodyDef", b2BodyDef);
             /// A rigid body. These are created via b2World::CreateBody.
             b2Body = class b2Body {
-                // #endif
                 constructor(bd, world) {
                     this.m_type = b2BodyType.b2_staticBody;
                     this.m_islandFlag = false;
@@ -108,9 +106,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     this.m_toiFlag = false;
                     this.m_islandIndex = 0;
                     this.m_xf = new b2_math_js_1.b2Transform(); // the body origin transform
-                    // #if B2_ENABLE_PARTICLE
-                    this.m_xf0 = new b2_math_js_1.b2Transform();
-                    // #endif
                     this.m_sweep = new b2_math_js_1.b2Sweep(); // the swept motion for CCD
                     this.m_linearVelocity = new b2_math_js_1.b2Vec2();
                     this.m_angularVelocity = 0;
@@ -132,9 +127,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     this.m_gravityScale = 1;
                     this.m_sleepTime = 0;
                     this.m_userData = null;
-                    // #if B2_ENABLE_CONTROLLER
-                    this.m_controllerList = null;
-                    this.m_controllerCount = 0;
                     this.m_bulletFlag = b2_settings_js_1.b2Maybe(bd.bullet, false);
                     this.m_fixedRotationFlag = b2_settings_js_1.b2Maybe(bd.fixedRotation, false);
                     this.m_autoSleepFlag = b2_settings_js_1.b2Maybe(bd.allowSleep, true);
@@ -148,9 +140,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     // DEBUG: b2Assert(this.m_xf.p.IsValid());
                     this.m_xf.q.SetAngle(b2_settings_js_1.b2Maybe(bd.angle, 0));
                     // DEBUG: b2Assert(b2IsValid(this.m_xf.q.GetAngle()));
-                    // #if B2_ENABLE_PARTICLE
-                    this.m_xf0.Copy(this.m_xf);
-                    // #endif
                     this.m_sweep.localCenter.SetZero();
                     this.m_sweep.c0.Copy(this.m_xf.p);
                     this.m_sweep.c.Copy(this.m_xf.p);
@@ -177,10 +166,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     this.m_userData = bd.userData;
                     this.m_fixtureList = null;
                     this.m_fixtureCount = 0;
-                    // #if B2_ENABLE_CONTROLLER
-                    this.m_controllerList = null;
-                    this.m_controllerCount = 0;
-                    // #endif
                 }
                 CreateFixture(a, b = 0) {
                     if (a instanceof b2_shape_js_1.b2Shape) {
@@ -294,9 +279,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     }
                     this.m_xf.q.SetAngle(angle);
                     this.m_xf.p.Set(x, y);
-                    // #if B2_ENABLE_PARTICLE
-                    this.m_xf0.Copy(this.m_xf);
-                    // #endif
                     b2_math_js_1.b2Transform.MulXV(this.m_xf, this.m_sweep.localCenter, this.m_sweep.c);
                     this.m_sweep.a = angle;
                     this.m_sweep.c0.Copy(this.m_sweep.c);
@@ -307,8 +289,8 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     // Check for new contacts the next step
                     this.m_world.m_newContacts = true;
                 }
-                SetTransform(xf) {
-                    this.SetTransformVec(xf.p, xf.GetAngle());
+                SetTransform(position, angle) {
+                    this.SetTransformXY(position.x, position.y, angle);
                 }
                 /// Get the body transform for the body's origin.
                 /// @return the world transform of the body's origin.
@@ -916,13 +898,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     this.m_xf.q.SetAngle(this.m_sweep.a);
                     b2_math_js_1.b2Rot.MulRV(this.m_xf.q, this.m_sweep.localCenter, this.m_xf.p);
                     b2_math_js_1.b2Vec2.SubVV(this.m_sweep.c, this.m_xf.p, this.m_xf.p);
-                }
-                // #if B2_ENABLE_CONTROLLER
-                GetControllerList() {
-                    return this.m_controllerList;
-                }
-                GetControllerCount() {
-                    return this.m_controllerCount;
                 }
             };
             exports_1("b2Body", b2Body);

@@ -21,11 +21,6 @@ export declare class b2PolygonShape extends b2Shape {
     SetAsBox(hx: number, hy: number, center?: XY, angle?: number): b2PolygonShape;
     private static TestPoint_s_pLocal;
     TestPoint(xf: b2Transform, p: XY): boolean;
-    private static ComputeDistance_s_pLocal;
-    private static ComputeDistance_s_normalForMaxDistance;
-    private static ComputeDistance_s_minDistance;
-    private static ComputeDistance_s_distance;
-    ComputeDistance(xf: b2Transform, p: b2Vec2, normal: b2Vec2, childIndex: number): number;
     private static RayCast_s_p1;
     private static RayCast_s_p2;
     private static RayCast_s_d;

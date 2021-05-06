@@ -16,11 +16,6 @@ export declare class b2EdgeShape extends b2Shape {
     Copy(other: b2EdgeShape): b2EdgeShape;
     GetChildCount(): number;
     TestPoint(xf: b2Transform, p: XY): boolean;
-    private static ComputeDistance_s_v1;
-    private static ComputeDistance_s_v2;
-    private static ComputeDistance_s_d;
-    private static ComputeDistance_s_s;
-    ComputeDistance(xf: b2Transform, p: b2Vec2, normal: b2Vec2, childIndex: number): number;
     private static RayCast_s_p1;
     private static RayCast_s_p2;
     private static RayCast_s_d;

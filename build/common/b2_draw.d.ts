@@ -76,8 +76,6 @@ export declare enum b2DrawFlags {
     e_aabbBit = 4,
     e_pairBit = 8,
     e_centerOfMassBit = 16,
-    e_particleBit = 32,
-    e_controllerBit = 64,
     e_all = 63
 }
 export declare abstract class b2Draw {
@@ -92,7 +90,6 @@ export declare abstract class b2Draw {
     abstract DrawSolidPolygon(vertices: XY[], vertexCount: number, color: RGBA): void;
     abstract DrawCircle(center: XY, radius: number, color: RGBA): void;
     abstract DrawSolidCircle(center: XY, radius: number, axis: XY, color: RGBA): void;
-    abstract DrawParticles(centers: XY[], radius: number, colors: RGBA[] | null, count: number): void;
     abstract DrawSegment(p1: XY, p2: XY, color: RGBA): void;
     abstract DrawTransform(xf: b2Transform): void;
     abstract DrawPoint(p: XY, size: number, color: RGBA): void;

@@ -23,8 +23,6 @@ export declare class b2ChainShape extends b2Shape {
     GetChildCount(): number;
     GetChildEdge(edge: b2EdgeShape, index: number): void;
     TestPoint(xf: b2Transform, p: XY): boolean;
-    private static ComputeDistance_s_edgeShape;
-    ComputeDistance(xf: b2Transform, p: b2Vec2, normal: b2Vec2, childIndex: number): number;
     private static RayCast_s_edgeShape;
     RayCast(output: b2RayCastOutput, input: b2RayCastInput, xf: b2Transform, childIndex: number): boolean;
     private static ComputeAABB_s_v1;

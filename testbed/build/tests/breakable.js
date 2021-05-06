@@ -17,34 +17,34 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
             Breakable = class Breakable extends testbed.Test {
                 constructor() {
                     super();
-                    this.m_velocity = new b2.Vec2();
+                    this.m_velocity = new b2.b2Vec2();
                     this.m_angularVelocity = 0;
-                    this.m_shape1 = new b2.PolygonShape();
-                    this.m_shape2 = new b2.PolygonShape();
+                    this.m_shape1 = new b2.b2PolygonShape();
+                    this.m_shape2 = new b2.b2PolygonShape();
                     this.m_piece1 = null;
                     this.m_piece2 = null;
                     this.m_broke = false;
                     this.m_break = false;
                     // Ground body
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         const ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+                        const shape = new b2.b2EdgeShape();
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
                         ground.CreateFixture(shape, 0.0);
                     }
                     // Breakable dynamic body
                     {
-                        const bd = new b2.BodyDef();
-                        bd.type = b2.BodyType.b2_dynamicBody;
+                        const bd = new b2.b2BodyDef();
+                        bd.type = b2.b2BodyType.b2_dynamicBody;
                         bd.position.Set(0.0, 40.0);
-                        bd.angle = 0.25 * b2.pi;
+                        bd.angle = 0.25 * b2.b2_pi;
                         this.m_body1 = this.m_world.CreateBody(bd);
-                        this.m_shape1 = new b2.PolygonShape();
-                        this.m_shape1.SetAsBox(0.5, 0.5, new b2.Vec2(-0.5, 0.0), 0.0);
+                        this.m_shape1 = new b2.b2PolygonShape();
+                        this.m_shape1.SetAsBox(0.5, 0.5, new b2.b2Vec2(-0.5, 0.0), 0.0);
                         this.m_piece1 = this.m_body1.CreateFixture(this.m_shape1, 1.0);
-                        this.m_shape2 = new b2.PolygonShape();
-                        this.m_shape2.SetAsBox(0.5, 0.5, new b2.Vec2(0.5, 0.0), 0.0);
+                        this.m_shape2 = new b2.b2PolygonShape();
+                        this.m_shape2.SetAsBox(0.5, 0.5, new b2.b2Vec2(0.5, 0.0), 0.0);
                         this.m_piece2 = this.m_body1.CreateFixture(this.m_shape2, 1.0);
                     }
                 }
@@ -57,7 +57,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     const count = contact.GetManifold().pointCount;
                     let maxImpulse = 0.0;
                     for (let i = 0; i < count; ++i) {
-                        maxImpulse = b2.Max(maxImpulse, impulse.normalImpulses[i]);
+                        maxImpulse = b2.b2Max(maxImpulse, impulse.normalImpulses[i]);
                     }
                     if (maxImpulse > 40.0) {
                         // Flag the body for breaking.
@@ -76,8 +76,8 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     const center = body1.GetWorldCenter();
                     body1.DestroyFixture(this.m_piece2);
                     this.m_piece2 = null;
-                    const bd = new b2.BodyDef();
-                    bd.type = b2.BodyType.b2_dynamicBody;
+                    const bd = new b2.b2BodyDef();
+                    bd.type = b2.b2BodyType.b2_dynamicBody;
                     bd.position.Copy(body1.GetPosition());
                     bd.angle = body1.GetAngle();
                     const body2 = this.m_world.CreateBody(bd);
@@ -86,8 +86,8 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     // cached velocity.
                     const center1 = body1.GetWorldCenter();
                     const center2 = body2.GetWorldCenter();
-                    const velocity1 = b2.Vec2.AddVCrossSV(this.m_velocity, this.m_angularVelocity, b2.Vec2.SubVV(center1, center, b2.Vec2.s_t0), new b2.Vec2());
-                    const velocity2 = b2.Vec2.AddVCrossSV(this.m_velocity, this.m_angularVelocity, b2.Vec2.SubVV(center2, center, b2.Vec2.s_t0), new b2.Vec2());
+                    const velocity1 = b2.b2Vec2.AddVCrossSV(this.m_velocity, this.m_angularVelocity, b2.b2Vec2.SubVV(center1, center, b2.b2Vec2.s_t0), new b2.b2Vec2());
+                    const velocity2 = b2.b2Vec2.AddVCrossSV(this.m_velocity, this.m_angularVelocity, b2.b2Vec2.SubVV(center2, center, b2.b2Vec2.s_t0), new b2.b2Vec2());
                     body1.SetAngularVelocity(this.m_angularVelocity);
                     body1.SetLinearVelocity(velocity1);
                     body2.SetAngularVelocity(this.m_angularVelocity);

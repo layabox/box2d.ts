@@ -35,20 +35,20 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     const SlopeLength = 2.0;
                     const SurfaceFriction = 0.2;
                     // Convert to radians
-                    const Slope1Incline = -Angle1Degrees * b2.pi / 180.0;
-                    const Slope2Incline = Slope1Incline - Angle2Degrees * b2.pi / 180.0;
+                    const Slope1Incline = -Angle1Degrees * b2.b2_pi / 180.0;
+                    const Slope2Incline = Slope1Incline - Angle2Degrees * b2.b2_pi / 180.0;
                     //
                     this.m_platform_width = PlatformWidth;
                     // Horizontal platform
-                    const v1 = new b2.Vec2(-PlatformWidth, 0.0);
-                    const v2 = new b2.Vec2(0.0, 0.0);
-                    const v3 = new b2.Vec2(SlopeLength * Math.cos(Slope1Incline), -SlopeLength * Math.sin(Slope1Incline));
-                    const v4 = new b2.Vec2(v3.x + SlopeLength * Math.cos(Slope2Incline), v3.y - SlopeLength * Math.sin(Slope2Incline));
-                    const v5 = new b2.Vec2(v4.x, v4.y - 1.0);
+                    const v1 = new b2.b2Vec2(-PlatformWidth, 0.0);
+                    const v2 = new b2.b2Vec2(0.0, 0.0);
+                    const v3 = new b2.b2Vec2(SlopeLength * Math.cos(Slope1Incline), -SlopeLength * Math.sin(Slope1Incline));
+                    const v4 = new b2.b2Vec2(v3.x + SlopeLength * Math.cos(Slope2Incline), v3.y - SlopeLength * Math.sin(Slope2Incline));
+                    const v5 = new b2.b2Vec2(v4.x, v4.y - 1.0);
                     const vertices = [v5, v4, v3, v2, v1];
-                    const shape = new b2.ChainShape();
+                    const shape = new b2.b2ChainShape();
                     shape.CreateLoop(vertices);
-                    const fd = new b2.FixtureDef();
+                    const fd = new b2.b2FixtureDef();
                     fd.shape = shape;
                     fd.density = 0.0;
                     fd.friction = SurfaceFriction;
@@ -63,25 +63,25 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         const SkiThickness = 0.3;
                         const SkiFriction = 0.0;
                         const SkiRestitution = 0.15;
-                        const bd = new b2.BodyDef();
-                        bd.type = b2.BodyType.b2_dynamicBody;
+                        const bd = new b2.b2BodyDef();
+                        bd.type = b2.b2BodyType.b2_dynamicBody;
                         const initial_y = BodyHeight / 2 + SkiThickness;
                         bd.position.Set(-this.m_platform_width / 2, initial_y);
                         const skier = this.m_world.CreateBody(bd);
-                        const ski = new b2.PolygonShape();
+                        const ski = new b2.b2PolygonShape();
                         const verts = [];
-                        verts.push(new b2.Vec2(-SkiLength / 2 - SkiThickness, -BodyHeight / 2));
-                        verts.push(new b2.Vec2(-SkiLength / 2, -BodyHeight / 2 - SkiThickness));
-                        verts.push(new b2.Vec2(SkiLength / 2, -BodyHeight / 2 - SkiThickness));
-                        verts.push(new b2.Vec2(SkiLength / 2 + SkiThickness, -BodyHeight / 2));
+                        verts.push(new b2.b2Vec2(-SkiLength / 2 - SkiThickness, -BodyHeight / 2));
+                        verts.push(new b2.b2Vec2(-SkiLength / 2, -BodyHeight / 2 - SkiThickness));
+                        verts.push(new b2.b2Vec2(SkiLength / 2, -BodyHeight / 2 - SkiThickness));
+                        verts.push(new b2.b2Vec2(SkiLength / 2 + SkiThickness, -BodyHeight / 2));
                         ski.Set(verts);
-                        const fd = new b2.FixtureDef();
+                        const fd = new b2.b2FixtureDef();
                         fd.density = 1.0;
                         fd.friction = SkiFriction;
                         fd.restitution = SkiRestitution;
                         fd.shape = ski;
                         skier.CreateFixture(fd);
-                        skier.SetLinearVelocity(new b2.Vec2(0.5, 0.0));
+                        skier.SetLinearVelocity(new b2.b2Vec2(0.5, 0.0));
                         this.m_skier = skier;
                     }
                     testbed.g_camera.m_center.Set(this.m_platform_width / 2.0, 0.0);

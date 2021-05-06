@@ -87,24 +87,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape
                 TestPoint(xf, p) {
                     return false;
                 }
-                ComputeDistance(xf, p, normal, childIndex) {
-                    const v1 = b2_math_js_1.b2Transform.MulXV(xf, this.m_vertex1, b2EdgeShape.ComputeDistance_s_v1);
-                    const v2 = b2_math_js_1.b2Transform.MulXV(xf, this.m_vertex2, b2EdgeShape.ComputeDistance_s_v2);
-                    const d = b2_math_js_1.b2Vec2.SubVV(p, v1, b2EdgeShape.ComputeDistance_s_d);
-                    const s = b2_math_js_1.b2Vec2.SubVV(v2, v1, b2EdgeShape.ComputeDistance_s_s);
-                    const ds = b2_math_js_1.b2Vec2.DotVV(d, s);
-                    if (ds > 0) {
-                        const s2 = b2_math_js_1.b2Vec2.DotVV(s, s);
-                        if (ds > s2) {
-                            b2_math_js_1.b2Vec2.SubVV(p, v2, d);
-                        }
-                        else {
-                            d.SelfMulSub(ds / s2, s);
-                        }
-                    }
-                    normal.Copy(d);
-                    return normal.Normalize();
-                }
                 RayCast(output, input, xf, childIndex) {
                     // Put the ray into the edge's frame of reference.
                     const p1 = b2_math_js_1.b2Transform.MulTXV(xf, input.p1, b2EdgeShape.RayCast_s_p1);
@@ -186,13 +168,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape
                 }
             };
             exports_1("b2EdgeShape", b2EdgeShape);
-            // #if B2_ENABLE_PARTICLE
-            /// @see b2Shape::ComputeDistance
-            b2EdgeShape.ComputeDistance_s_v1 = new b2_math_js_1.b2Vec2();
-            b2EdgeShape.ComputeDistance_s_v2 = new b2_math_js_1.b2Vec2();
-            b2EdgeShape.ComputeDistance_s_d = new b2_math_js_1.b2Vec2();
-            b2EdgeShape.ComputeDistance_s_s = new b2_math_js_1.b2Vec2();
-            // #endif
             /// Implement b2Shape.
             // p = p1 + t * d
             // v = v1 + s * e

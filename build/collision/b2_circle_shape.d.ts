@@ -13,8 +13,6 @@ export declare class b2CircleShape extends b2Shape {
     private static TestPoint_s_center;
     private static TestPoint_s_d;
     TestPoint(transform: b2Transform, p: XY): boolean;
-    private static ComputeDistance_s_center;
-    ComputeDistance(xf: b2Transform, p: b2Vec2, normal: b2Vec2, childIndex: number): number;
     private static RayCast_s_position;
     private static RayCast_s_s;
     private static RayCast_s_r;

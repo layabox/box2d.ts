@@ -62,9 +62,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js"], function (
                     this.dtRatio = 0; // dt * inv_dt0
                     this.velocityIterations = 0;
                     this.positionIterations = 0;
-                    // #if B2_ENABLE_PARTICLE
-                    this.particleIterations = 0;
-                    // #endif
                     this.warmStarting = false;
                 }
                 Copy(step) {
@@ -73,9 +70,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js"], function (
                     this.dtRatio = step.dtRatio;
                     this.positionIterations = step.positionIterations;
                     this.velocityIterations = step.velocityIterations;
-                    // #if B2_ENABLE_PARTICLE
-                    this.particleIterations = step.particleIterations;
-                    // #endif
                     this.warmStarting = step.warmStarting;
                     return this;
                 }

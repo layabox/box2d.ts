@@ -206,37 +206,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape
                     }
                     return true;
                 }
-                ComputeDistance(xf, p, normal, childIndex) {
-                    const pLocal = b2_math_js_1.b2Transform.MulTXV(xf, p, b2PolygonShape.ComputeDistance_s_pLocal);
-                    let maxDistance = -b2_settings_js_1.b2_maxFloat;
-                    const normalForMaxDistance = b2PolygonShape.ComputeDistance_s_normalForMaxDistance.Copy(pLocal);
-                    for (let i = 0; i < this.m_count; ++i) {
-                        const dot = b2_math_js_1.b2Vec2.DotVV(this.m_normals[i], b2_math_js_1.b2Vec2.SubVV(pLocal, this.m_vertices[i], b2_math_js_1.b2Vec2.s_t0));
-                        if (dot > maxDistance) {
-                            maxDistance = dot;
-                            normalForMaxDistance.Copy(this.m_normals[i]);
-                        }
-                    }
-                    if (maxDistance > 0) {
-                        const minDistance = b2PolygonShape.ComputeDistance_s_minDistance.Copy(normalForMaxDistance);
-                        let minDistance2 = maxDistance * maxDistance;
-                        for (let i = 0; i < this.m_count; ++i) {
-                            const distance = b2_math_js_1.b2Vec2.SubVV(pLocal, this.m_vertices[i], b2PolygonShape.ComputeDistance_s_distance);
-                            const distance2 = distance.LengthSquared();
-                            if (minDistance2 > distance2) {
-                                minDistance.Copy(distance);
-                                minDistance2 = distance2;
-                            }
-                        }
-                        b2_math_js_1.b2Rot.MulRV(xf.q, minDistance, normal);
-                        normal.Normalize();
-                        return Math.sqrt(minDistance2);
-                    }
-                    else {
-                        b2_math_js_1.b2Rot.MulRV(xf.q, normalForMaxDistance, normal);
-                        return maxDistance;
-                    }
-                }
                 RayCast(output, input, xf, childIndex) {
                     // Put the ray into the polygon's frame of reference.
                     const p1 = b2_math_js_1.b2Transform.MulTXV(xf, input.p1, b2PolygonShape.RayCast_s_p1);
@@ -515,13 +484,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape
             b2PolygonShape.Set_s_v = new b2_math_js_1.b2Vec2();
             /// @see b2Shape::TestPoint
             b2PolygonShape.TestPoint_s_pLocal = new b2_math_js_1.b2Vec2();
-            // #if B2_ENABLE_PARTICLE
-            /// @see b2Shape::ComputeDistance
-            b2PolygonShape.ComputeDistance_s_pLocal = new b2_math_js_1.b2Vec2();
-            b2PolygonShape.ComputeDistance_s_normalForMaxDistance = new b2_math_js_1.b2Vec2();
-            b2PolygonShape.ComputeDistance_s_minDistance = new b2_math_js_1.b2Vec2();
-            b2PolygonShape.ComputeDistance_s_distance = new b2_math_js_1.b2Vec2();
-            // #endif
             /// Implement b2Shape.
             /// @note because the polygon is solid, rays that start inside do not hit because the normal is
             /// not defined.

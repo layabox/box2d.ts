@@ -5,7 +5,7 @@ export declare class WheelJoint extends testbed.Test {
     m_enableMotor: boolean;
     m_motorSpeed: number;
     constructor();
-    m_joint: b2.WheelJoint;
+    m_joint: b2.b2WheelJoint;
     private static Step_s_F;
     Step(settings: testbed.Settings): void;
     static Create(): testbed.Test;

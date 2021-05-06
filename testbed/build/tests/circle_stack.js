@@ -18,22 +18,22 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     super();
                     this.m_bodies = [];
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         const ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+                        const shape = new b2.b2EdgeShape();
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
                         ground.CreateFixture(shape, 0.0);
                     }
                     {
-                        const shape = new b2.CircleShape();
+                        const shape = new b2.b2CircleShape();
                         shape.m_radius = 1.0;
                         for (let i = 0; i < CircleStack.e_count; ++i) {
-                            const bd = new b2.BodyDef();
-                            bd.type = b2.BodyType.b2_dynamicBody;
+                            const bd = new b2.b2BodyDef();
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
                             bd.position.Set(0.0, 4.0 + 3.0 * i);
                             this.m_bodies[i] = this.m_world.CreateBody(bd);
                             this.m_bodies[i].CreateFixture(shape, 1.0);
-                            this.m_bodies[i].SetLinearVelocity(new b2.Vec2(0.0, -50.0));
+                            this.m_bodies[i].SetLinearVelocity(new b2.b2Vec2(0.0, -50.0));
                         }
                     }
                 }

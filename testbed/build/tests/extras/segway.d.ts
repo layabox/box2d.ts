@@ -7,10 +7,10 @@ export declare class Segway extends testbed.Test {
     posAvg: number;
     readonly angleController: PIDController;
     readonly positionController: PIDController;
-    pendulumBody: b2.Body;
-    wheelBody: b2.Body;
-    groundBody: b2.Body;
-    wheelJoint: b2.RevoluteJoint;
+    pendulumBody: b2.b2Body;
+    wheelBody: b2.b2Body;
+    groundBody: b2.b2Body;
+    wheelJoint: b2.b2RevoluteJoint;
     constructor();
     Step(settings: testbed.Settings): void;
     static Create(): testbed.Test;

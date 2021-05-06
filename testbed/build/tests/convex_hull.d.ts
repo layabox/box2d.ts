@@ -2,7 +2,7 @@ import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 export declare class ConvexHull extends testbed.Test {
     static readonly e_count = 10;
-    m_test_points: b2.Vec2[];
+    m_test_points: b2.b2Vec2[];
     m_count: number;
     m_auto: boolean;
     constructor();

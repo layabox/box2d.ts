@@ -17,17 +17,17 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 constructor() {
                     super();
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         const ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+                        const shape = new b2.b2EdgeShape();
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
                         ground.CreateFixture(shape, 0.0);
                     }
-                    const bd = new b2.BodyDef();
-                    bd.type = b2.BodyType.b2_dynamicBody;
+                    const bd = new b2.b2BodyDef();
+                    bd.type = b2.b2BodyType.b2_dynamicBody;
                     bd.position.Set(0.0, 0.5);
                     let body = this.m_world.CreateBody(bd);
-                    const shape = new b2.CircleShape();
+                    const shape = new b2.b2CircleShape();
                     shape.m_radius = 0.5;
                     body.CreateFixture(shape, 10.0);
                     bd.position.Set(0.0, 6.0);

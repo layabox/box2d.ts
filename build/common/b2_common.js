@@ -17,7 +17,7 @@
 */
 System.register([], function (exports_1, context_1) {
     "use strict";
-    var b2_maxFloat, b2_epsilon, b2_epsilon_sq, b2_pi, b2_lengthUnitsPerMeter, b2_maxPolygonVertices, b2_maxManifoldPoints, b2_aabbExtension, b2_aabbMultiplier, b2_linearSlop, b2_angularSlop, b2_polygonRadius, b2_maxSubSteps, b2_maxTOIContacts, b2_maxLinearCorrection, b2_maxAngularCorrection, b2_maxTranslation, b2_maxTranslationSquared, b2_maxRotation, b2_maxRotationSquared, b2_baumgarte, b2_toiBaumgarte, b2_invalidParticleIndex, b2_maxParticleIndex, b2_particleStride, b2_minParticleWeight, b2_maxParticlePressure, b2_maxParticleForce, b2_maxTriadDistance, b2_maxTriadDistanceSquared, b2_minParticleSystemBufferCapacity, b2_barrierCollisionTime, b2_timeToSleep, b2_linearSleepTolerance, b2_angularSleepTolerance, b2Version, b2_version, b2_branch, b2_commit;
+    var b2_maxFloat, b2_epsilon, b2_epsilon_sq, b2_pi, b2_lengthUnitsPerMeter, b2_maxPolygonVertices, b2_maxManifoldPoints, b2_aabbExtension, b2_aabbMultiplier, b2_linearSlop, b2_angularSlop, b2_polygonRadius, b2_maxSubSteps, b2_maxTOIContacts, b2_maxLinearCorrection, b2_maxAngularCorrection, b2_maxTranslation, b2_maxTranslationSquared, b2_maxRotation, b2_maxRotationSquared, b2_baumgarte, b2_toiBaumgarte, b2_timeToSleep, b2_linearSleepTolerance, b2_angularSleepTolerance, b2Version, b2_version, b2_branch, b2_commit;
     var __moduleName = context_1 && context_1.id;
     // import { b2_lengthUnitsPerMeter } from "./b2_settings.js";
     function b2Assert(condition, ...args) {
@@ -126,27 +126,6 @@ System.register([], function (exports_1, context_1) {
             /// to overshoot.
             exports_1("b2_baumgarte", b2_baumgarte = 0.2);
             exports_1("b2_toiBaumgarte", b2_toiBaumgarte = 0.75);
-            // #if B2_ENABLE_PARTICLE
-            // Particle
-            /// A symbolic constant that stands for particle allocation error.
-            exports_1("b2_invalidParticleIndex", b2_invalidParticleIndex = -1);
-            exports_1("b2_maxParticleIndex", b2_maxParticleIndex = 0x7FFFFFFF);
-            /// The default distance between particles, multiplied by the particle diameter.
-            exports_1("b2_particleStride", b2_particleStride = 0.75);
-            /// The minimum particle weight that produces pressure.
-            exports_1("b2_minParticleWeight", b2_minParticleWeight = 1.0);
-            /// The upper limit for particle pressure.
-            exports_1("b2_maxParticlePressure", b2_maxParticlePressure = 0.25);
-            /// The upper limit for force between particles.
-            exports_1("b2_maxParticleForce", b2_maxParticleForce = 0.5);
-            /// The maximum distance between particles in a triad, multiplied by the particle diameter.
-            exports_1("b2_maxTriadDistance", b2_maxTriadDistance = 2.0 * b2_lengthUnitsPerMeter);
-            exports_1("b2_maxTriadDistanceSquared", b2_maxTriadDistanceSquared = (b2_maxTriadDistance * b2_maxTriadDistance));
-            /// The initial size of particle data buffers.
-            exports_1("b2_minParticleSystemBufferCapacity", b2_minParticleSystemBufferCapacity = 256);
-            /// The time into the future that collisions against barrier particles will be detected.
-            exports_1("b2_barrierCollisionTime", b2_barrierCollisionTime = 2.5);
-            // #endif
             // Sleep
             /// The time that a body must be still before it will go to sleep.
             exports_1("b2_timeToSleep", b2_timeToSleep = 0.5);

@@ -1,4 +1,4 @@
-import { b2Vec2, b2Transform, XY } from "../common/b2_math.js";
+import { b2Transform, XY } from "../common/b2_math.js";
 import { b2AABB, b2RayCastInput, b2RayCastOutput } from "../collision/b2_collision.js";
 import { b2TreeNode } from "../collision/b2_dynamic_tree.js";
 import { b2Shape, b2ShapeType, b2MassData } from "../collision/b2_shape.js";
@@ -76,7 +76,6 @@ export declare class b2Fixture {
     GetUserData(): any;
     SetUserData(data: any): void;
     TestPoint(p: XY): boolean;
-    ComputeDistance(p: b2Vec2, normal: b2Vec2, childIndex: number): number;
     RayCast(output: b2RayCastOutput, input: b2RayCastInput, childIndex: number): boolean;
     GetMassData(massData?: b2MassData): b2MassData;
     SetDensity(density: number): void;

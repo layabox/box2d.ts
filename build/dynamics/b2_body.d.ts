@@ -4,7 +4,6 @@ import { b2ContactEdge } from "./b2_contact.js";
 import { b2JointEdge } from "./b2_joint.js";
 import { b2Fixture, b2IFixtureDef } from "./b2_fixture.js";
 import { b2World } from "./b2_world.js";
-import { b2ControllerEdge } from "../controllers/b2_controller.js";
 export declare enum b2BodyType {
     b2_unknown = -1,
     b2_staticBody = 0,
@@ -54,7 +53,6 @@ export declare class b2Body {
     m_toiFlag: boolean;
     m_islandIndex: number;
     readonly m_xf: b2Transform;
-    readonly m_xf0: b2Transform;
     readonly m_sweep: b2Sweep;
     readonly m_linearVelocity: b2Vec2;
     m_angularVelocity: number;
@@ -76,8 +74,6 @@ export declare class b2Body {
     m_gravityScale: number;
     m_sleepTime: number;
     m_userData: any;
-    m_controllerList: b2ControllerEdge | null;
-    m_controllerCount: number;
     constructor(bd: b2IBodyDef, world: b2World);
     CreateFixture(def: b2IFixtureDef): b2Fixture;
     CreateFixture(shape: b2Shape): b2Fixture;
@@ -88,7 +84,7 @@ export declare class b2Body {
     DestroyFixture(fixture: b2Fixture): void;
     SetTransformVec(position: XY, angle: number): void;
     SetTransformXY(x: number, y: number, angle: number): void;
-    SetTransform(xf: b2Transform): void;
+    SetTransform(position: XY, angle: number): void;
     GetTransform(): Readonly<b2Transform>;
     GetPosition(): Readonly<b2Vec2>;
     SetPosition(position: XY): void;
@@ -155,6 +151,4 @@ export declare class b2Body {
     ShouldCollide(other: b2Body): boolean;
     ShouldCollideConnected(other: b2Body): boolean;
     Advance(alpha: number): void;
-    GetControllerList(): b2ControllerEdge | null;
-    GetControllerCount(): number;
 }

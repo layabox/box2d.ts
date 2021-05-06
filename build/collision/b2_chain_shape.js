@@ -160,11 +160,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape
                 TestPoint(xf, p) {
                     return false;
                 }
-                ComputeDistance(xf, p, normal, childIndex) {
-                    const edge = b2ChainShape.ComputeDistance_s_edgeShape;
-                    this.GetChildEdge(edge, childIndex);
-                    return edge.ComputeDistance(xf, p, normal, 0);
-                }
                 RayCast(output, input, xf, childIndex) {
                     // DEBUG: b2Assert(childIndex < this.m_count);
                     const edgeShape = b2ChainShape.RayCast_s_edgeShape;
@@ -221,10 +216,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape
                 }
             };
             exports_1("b2ChainShape", b2ChainShape);
-            // #if B2_ENABLE_PARTICLE
-            /// @see b2Shape::ComputeDistance
-            b2ChainShape.ComputeDistance_s_edgeShape = new b2_edge_shape_js_1.b2EdgeShape();
-            // #endif
             /// Implement b2Shape.
             b2ChainShape.RayCast_s_edgeShape = new b2_edge_shape_js_1.b2EdgeShape();
             /// @see b2Shape::ComputeAABB

@@ -227,11 +227,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                 TestPoint(p) {
                     return this.m_shape.TestPoint(this.m_body.GetTransform(), p);
                 }
-                // #if B2_ENABLE_PARTICLE
-                ComputeDistance(p, normal, childIndex) {
-                    return this.m_shape.ComputeDistance(this.m_body.GetTransform(), p, normal, childIndex);
-                }
-                // #endif
                 /// Cast a ray against this shape.
                 /// @param output the ray-cast results.
                 /// @param input the ray-cast input parameters.

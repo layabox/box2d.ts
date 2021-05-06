@@ -5,9 +5,7 @@ export declare class Settings {
     m_hertz: number;
     m_velocityIterations: number;
     m_positionIterations: number;
-    m_particleIterations: number;
     m_drawShapes: boolean;
-    m_drawParticles: boolean;
     m_drawJoints: boolean;
     m_drawAABBs: boolean;
     m_drawContactPoints: boolean;
@@ -24,7 +22,6 @@ export declare class Settings {
     m_enableSleep: boolean;
     m_pause: boolean;
     m_singleStep: boolean;
-    m_strictContacts: boolean;
     Reset(): void;
     Save(): void;
     Load(): void;

@@ -1,7 +1,7 @@
 import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 export declare class DistanceJoint extends testbed.Test {
-    m_joint: b2.DistanceJoint;
+    m_joint: b2.b2DistanceJoint;
     m_length: number;
     m_minLength: number;
     m_maxLength: number;

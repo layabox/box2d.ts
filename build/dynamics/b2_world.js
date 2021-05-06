@@ -15,15 +15,14 @@
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
-System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/b2_timer.js", "../common/b2_draw.js", "../collision/b2_collision.js", "../collision/b2_time_of_impact.js", "../collision/b2_shape.js", "./b2_joint.js", "./b2_area_joint.js", "./b2_distance_joint.js", "./b2_friction_joint.js", "./b2_gear_joint.js", "./b2_motor_joint.js", "./b2_mouse_joint.js", "./b2_prismatic_joint.js", "./b2_pulley_joint.js", "./b2_revolute_joint.js", "./b2_weld_joint.js", "./b2_wheel_joint.js", "./b2_body.js", "./b2_contact_manager.js", "./b2_island.js", "./b2_time_step.js", "./b2_world_callbacks.js", "../particle/b2_particle.js", "../particle/b2_particle_system.js"], function (exports_1, context_1) {
+System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/b2_timer.js", "../common/b2_draw.js", "../collision/b2_collision.js", "../collision/b2_time_of_impact.js", "../collision/b2_shape.js", "./b2_joint.js", "./b2_area_joint.js", "./b2_distance_joint.js", "./b2_friction_joint.js", "./b2_gear_joint.js", "./b2_motor_joint.js", "./b2_mouse_joint.js", "./b2_prismatic_joint.js", "./b2_pulley_joint.js", "./b2_revolute_joint.js", "./b2_weld_joint.js", "./b2_wheel_joint.js", "./b2_body.js", "./b2_contact_manager.js", "./b2_island.js", "./b2_time_step.js", "./b2_world_callbacks.js"], function (exports_1, context_1) {
     "use strict";
-    var b2_settings_js_1, b2_math_js_1, b2_timer_js_1, b2_draw_js_1, b2_collision_js_1, b2_time_of_impact_js_1, b2_shape_js_1, b2_joint_js_1, b2_area_joint_js_1, b2_distance_joint_js_1, b2_friction_joint_js_1, b2_gear_joint_js_1, b2_motor_joint_js_1, b2_mouse_joint_js_1, b2_prismatic_joint_js_1, b2_pulley_joint_js_1, b2_revolute_joint_js_1, b2_weld_joint_js_1, b2_wheel_joint_js_1, b2_body_js_1, b2_contact_manager_js_1, b2_island_js_1, b2_time_step_js_1, b2_world_callbacks_js_1, b2_world_callbacks_js_2, b2_settings_js_2, b2_particle_js_1, b2_particle_system_js_1, b2World;
+    var b2_settings_js_1, b2_math_js_1, b2_timer_js_1, b2_draw_js_1, b2_collision_js_1, b2_time_of_impact_js_1, b2_shape_js_1, b2_joint_js_1, b2_area_joint_js_1, b2_distance_joint_js_1, b2_friction_joint_js_1, b2_gear_joint_js_1, b2_motor_joint_js_1, b2_mouse_joint_js_1, b2_prismatic_joint_js_1, b2_pulley_joint_js_1, b2_revolute_joint_js_1, b2_weld_joint_js_1, b2_wheel_joint_js_1, b2_body_js_1, b2_contact_manager_js_1, b2_island_js_1, b2_time_step_js_1, b2_world_callbacks_js_1, b2_world_callbacks_js_2, b2World;
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [
             function (b2_settings_js_1_1) {
                 b2_settings_js_1 = b2_settings_js_1_1;
-                b2_settings_js_2 = b2_settings_js_1_1;
             },
             function (b2_math_js_1_1) {
                 b2_math_js_1 = b2_math_js_1_1;
@@ -94,30 +93,19 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
             function (b2_world_callbacks_js_1_1) {
                 b2_world_callbacks_js_1 = b2_world_callbacks_js_1_1;
                 b2_world_callbacks_js_2 = b2_world_callbacks_js_1_1;
-            },
-            function (b2_particle_js_1_1) {
-                b2_particle_js_1 = b2_particle_js_1_1;
-            },
-            function (b2_particle_system_js_1_1) {
-                b2_particle_system_js_1 = b2_particle_system_js_1_1;
             }
         ],
         execute: function () {
-            // #endif
             /// The world class manages all physics entities, dynamic simulation,
             /// and asynchronous queries. The world also contains efficient memory
             /// management facilities.
             b2World = class b2World {
-                // #endif
                 /// Construct a world object.
                 /// @param gravity the world gravity vector.
                 constructor(gravity) {
                     this.m_contactManager = new b2_contact_manager_js_1.b2ContactManager();
                     this.m_bodyList = null;
                     this.m_jointList = null;
-                    // #if B2_ENABLE_PARTICLE
-                    this.m_particleSystemList = null;
-                    // #endif
                     this.m_bodyCount = 0;
                     this.m_jointCount = 0;
                     this.m_gravity = new b2_math_js_1.b2Vec2();
@@ -138,9 +126,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                     this.m_profile = new b2_time_step_js_1.b2Profile();
                     this.m_island = new b2_island_js_1.b2Island();
                     this.s_stack = [];
-                    // #if B2_ENABLE_CONTROLLER
-                    this.m_controllerList = null;
-                    this.m_controllerCount = 0;
                     this.m_gravity.Copy(gravity);
                 }
                 /// Register a destruction listener. The listener is owned by you and must
@@ -204,15 +189,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         b.m_jointList = je;
                     }
                     b.m_jointList = null;
-                    // #if B2_ENABLE_CONTROLLER
-                    // @see b2Controller list
-                    let coe = b.m_controllerList;
-                    while (coe) {
-                        const coe0 = coe;
-                        coe = coe.nextController;
-                        coe0.controller.RemoveBody(b);
-                    }
-                    // #endif
                     // Delete the attached contacts.
                     let ce = b.m_contactList;
                     while (ce) {
@@ -373,55 +349,7 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         }
                     }
                 }
-                // #if B2_ENABLE_PARTICLE
-                CreateParticleSystem(def) {
-                    if (this.IsLocked()) {
-                        throw new Error();
-                    }
-                    const p = new b2_particle_system_js_1.b2ParticleSystem(def, this);
-                    // Add to world doubly linked list.
-                    p.m_prev = null;
-                    p.m_next = this.m_particleSystemList;
-                    if (this.m_particleSystemList) {
-                        this.m_particleSystemList.m_prev = p;
-                    }
-                    this.m_particleSystemList = p;
-                    return p;
-                }
-                DestroyParticleSystem(p) {
-                    if (this.IsLocked()) {
-                        throw new Error();
-                    }
-                    // Remove world particleSystem list.
-                    if (p.m_prev) {
-                        p.m_prev.m_next = p.m_next;
-                    }
-                    if (p.m_next) {
-                        p.m_next.m_prev = p.m_prev;
-                    }
-                    if (p === this.m_particleSystemList) {
-                        this.m_particleSystemList = p.m_next;
-                    }
-                }
-                CalculateReasonableParticleIterations(timeStep) {
-                    if (this.m_particleSystemList === null) {
-                        return 1;
-                    }
-                    function GetSmallestRadius(world) {
-                        let smallestRadius = b2_settings_js_2.b2_maxFloat;
-                        for (let system = world.GetParticleSystemList(); system !== null; system = system.m_next) {
-                            smallestRadius = b2_math_js_1.b2Min(smallestRadius, system.GetRadius());
-                        }
-                        return smallestRadius;
-                    }
-                    // Use the smallest radius, since that represents the worst-case.
-                    return b2_particle_js_1.b2CalculateParticleIterations(this.m_gravity.Length(), GetSmallestRadius(this), timeStep);
-                }
-                // #if B2_ENABLE_PARTICLE
-                Step(dt, velocityIterations, positionIterations, particleIterations = this.CalculateReasonableParticleIterations(dt)) {
-                    // #else
-                    // public Step(dt: number, velocityIterations: number, positionIterations: number): void {
-                    // #endif
+                Step(dt, velocityIterations, positionIterations) {
                     const stepTimer = b2World.Step_s_stepTimer.Reset();
                     // If new fixtures were added, we need to find the new contacts.
                     if (this.m_newContacts) {
@@ -433,9 +361,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                     step.dt = dt;
                     step.velocityIterations = velocityIterations;
                     step.positionIterations = positionIterations;
-                    // #if B2_ENABLE_PARTICLE
-                    step.particleIterations = particleIterations;
-                    // #endif
                     if (dt > 0) {
                         step.inv_dt = 1 / dt;
                     }
@@ -451,11 +376,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                     // Integrate velocities, solve velocity constraints, and integrate positions.
                     if (this.m_stepComplete && step.dt > 0) {
                         const timer = b2World.Step_s_timer.Reset();
-                        // #if B2_ENABLE_PARTICLE
-                        for (let p = this.m_particleSystemList; p; p = p.m_next) {
-                            p.Solve(step); // Particle Simulation
-                        }
-                        // #endif
                         this.Solve(step);
                         this.m_profile.solve = timer.GetMilliseconds();
                     }
@@ -485,24 +405,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                     for (let body = this.m_bodyList; body; body = body.m_next) {
                         body.m_force.SetZero();
                         body.m_torque = 0;
-                    }
-                }
-                // #if B2_ENABLE_PARTICLE
-                DrawParticleSystem(system) {
-                    if (this.m_debugDraw === null) {
-                        return;
-                    }
-                    const particleCount = system.GetParticleCount();
-                    if (particleCount) {
-                        const radius = system.GetRadius();
-                        const positionBuffer = system.GetPositionBuffer();
-                        if (system.m_colorBuffer.data) {
-                            const colorBuffer = system.GetColorBuffer();
-                            this.m_debugDraw.DrawParticles(positionBuffer, radius, colorBuffer, particleCount);
-                        }
-                        else {
-                            this.m_debugDraw.DrawParticles(positionBuffer, radius, null, particleCount);
-                        }
                     }
                 }
                 DebugDraw() {
@@ -544,13 +446,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                             this.m_debugDraw.PopTransform(xf);
                         }
                     }
-                    // #if B2_ENABLE_PARTICLE
-                    if (flags & b2_draw_js_1.b2DrawFlags.e_particleBit) {
-                        for (let p = this.m_particleSystemList; p; p = p.m_next) {
-                            this.DrawParticleSystem(p);
-                        }
-                    }
-                    // #endif
                     if (flags & b2_draw_js_1.b2DrawFlags.e_jointBit) {
                         for (let j = this.m_jointList; j; j = j.m_next) {
                             j.Draw(this.m_debugDraw);
@@ -596,14 +491,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                             this.m_debugDraw.DrawTransform(xf);
                         }
                     }
-                    // #if B2_ENABLE_CONTROLLER
-                    // @see b2Controller list
-                    if (flags & b2_draw_js_1.b2DrawFlags.e_controllerBit) {
-                        for (let c = this.m_controllerList; c; c = c.m_next) {
-                            c.Draw(this.m_debugDraw);
-                        }
-                    }
-                    // #endif
                 }
                 QueryAABB(...args) {
                     if (args[0] instanceof b2_world_callbacks_js_1.b2QueryCallback) {
@@ -626,15 +513,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         }
                         return true;
                     });
-                    // #if B2_ENABLE_PARTICLE
-                    if (callback instanceof b2_world_callbacks_js_1.b2QueryCallback) {
-                        for (let p = this.m_particleSystemList; p; p = p.m_next) {
-                            if (callback.ShouldQueryParticleSystem(p)) {
-                                p.QueryAABB(callback, aabb);
-                            }
-                        }
-                    }
-                    // #endif
                 }
                 QueryAllAABB(aabb, out = []) {
                     this.QueryAABB(aabb, (fixture) => { out.push(fixture); return true; });
@@ -661,15 +539,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         }
                         return true;
                     });
-                    // #if B2_ENABLE_PARTICLE
-                    if (callback instanceof b2_world_callbacks_js_1.b2QueryCallback) {
-                        for (let p = this.m_particleSystemList; p; p = p.m_next) {
-                            if (callback.ShouldQueryParticleSystem(p)) {
-                                p.QueryPointAABB(callback, point);
-                            }
-                        }
-                    }
-                    // #endif
                 }
                 QueryAllPointAABB(point, out = []) {
                     this.QueryPointAABB(point, (fixture) => { out.push(fixture); return true; });
@@ -700,15 +569,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         }
                         return true;
                     });
-                    // #if B2_ENABLE_PARTICLE
-                    if (callback instanceof b2_world_callbacks_js_1.b2QueryCallback) {
-                        for (let p = this.m_particleSystemList; p; p = p.m_next) {
-                            if (callback.ShouldQueryParticleSystem(p)) {
-                                p.QueryAABB(callback, aabb);
-                            }
-                        }
-                    }
-                    // #endif
                 }
                 QueryAllFixtureShape(shape, index, transform, out = []) {
                     this.QueryFixtureShape(shape, index, transform, (fixture) => { out.push(fixture); return true; });
@@ -737,15 +597,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         }
                         return true;
                     });
-                    // #if B2_ENABLE_PARTICLE
-                    if (callback) {
-                        for (let p = this.m_particleSystemList; p; p = p.m_next) {
-                            if (callback.ShouldQueryParticleSystem(p)) {
-                                p.QueryPointAABB(callback, point);
-                            }
-                        }
-                    }
-                    // #endif
                 }
                 QueryAllFixturePoint(point, out = []) {
                     this.QueryFixturePoint(point, (fixture) => { out.push(fixture); return true; });
@@ -784,15 +635,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         }
                         return input.maxFraction;
                     });
-                    // #if B2_ENABLE_PARTICLE
-                    if (callback) {
-                        for (let p = this.m_particleSystemList; p; p = p.m_next) {
-                            if (callback.ShouldQueryParticleSystem(p)) {
-                                p.RayCast(callback, point1, point2);
-                            }
-                        }
-                    }
-                    // #endif
                 }
                 RayCastOne(point1, point2) {
                     let result = null;
@@ -825,11 +667,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                 GetJointList() {
                     return this.m_jointList;
                 }
-                // #if B2_ENABLE_PARTICLE
-                GetParticleSystemList() {
-                    return this.m_particleSystemList;
-                }
-                // #endif
                 /// Get the world contact list. With the returned contact, use b2Contact::GetNext to get
                 /// the next contact in the world list. A NULL contact indicates the end of the list.
                 /// @return the head of the world contact list.
@@ -1044,18 +881,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                     }
                 }
                 Solve(step) {
-                    // #if B2_ENABLE_PARTICLE
-                    // update previous transforms
-                    for (let b = this.m_bodyList; b; b = b.m_next) {
-                        b.m_xf0.Copy(b.m_xf);
-                    }
-                    // #endif
-                    // #if B2_ENABLE_CONTROLLER
-                    // @see b2Controller list
-                    for (let controller = this.m_controllerList; controller; controller = controller.m_next) {
-                        controller.Step(step);
-                    }
-                    // #endif
                     this.m_profile.solveInit = 0;
                     this.m_profile.solveVelocity = 0;
                     this.m_profile.solvePosition = 0;
@@ -1399,9 +1224,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         subStep.dtRatio = 1;
                         subStep.positionIterations = 20;
                         subStep.velocityIterations = step.velocityIterations;
-                        // #if B2_ENABLE_PARTICLE
-                        subStep.particleIterations = step.particleIterations;
-                        // #endif
                         subStep.warmStarting = false;
                         island.SolveTOI(subStep, bA.m_islandIndex, bB.m_islandIndex);
                         // Reset island flags and synchronize broad-phase proxies.
@@ -1427,39 +1249,8 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         }
                     }
                 }
-                // #if B2_ENABLE_CONTROLLER
-                AddController(controller) {
-                    // b2Assert(controller.m_world === null, "Controller can only be a member of one world");
-                    // controller.m_world = this;
-                    controller.m_next = this.m_controllerList;
-                    controller.m_prev = null;
-                    if (this.m_controllerList) {
-                        this.m_controllerList.m_prev = controller;
-                    }
-                    this.m_controllerList = controller;
-                    ++this.m_controllerCount;
-                    return controller;
-                }
-                RemoveController(controller) {
-                    // b2Assert(controller.m_world === this, "Controller is not a member of this world");
-                    if (controller.m_prev) {
-                        controller.m_prev.m_next = controller.m_next;
-                    }
-                    if (controller.m_next) {
-                        controller.m_next.m_prev = controller.m_prev;
-                    }
-                    if (this.m_controllerList === controller) {
-                        this.m_controllerList = controller.m_next;
-                    }
-                    --this.m_controllerCount;
-                    controller.m_prev = null;
-                    controller.m_next = null;
-                    // delete controller.m_world; // = null;
-                    return controller;
-                }
             };
             exports_1("b2World", b2World);
-            // #endif
             /// Take a time step. This performs collision detection, integration,
             /// and constraint solution.
             /// @param timeStep the amount of time to simulate, this should not vary.
@@ -1468,7 +1259,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
             b2World.Step_s_step = new b2_time_step_js_1.b2TimeStep();
             b2World.Step_s_stepTimer = new b2_timer_js_1.b2Timer();
             b2World.Step_s_timer = new b2_timer_js_1.b2Timer();
-            // #endif
             /// Call this to draw shapes and other debug draw data.
             b2World.DebugDraw_s_color = new b2_draw_js_1.b2Color(0, 0, 0);
             b2World.DebugDraw_s_vs = b2_math_js_1.b2Vec2.MakeArray(4);

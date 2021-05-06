@@ -1,7 +1,7 @@
 import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 export declare class ContinuousTest extends testbed.Test {
-    m_body: b2.Body;
+    m_body: b2.b2Body;
     m_angularVelocity: number;
     constructor();
     Launch(): void;

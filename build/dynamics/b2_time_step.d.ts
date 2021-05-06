@@ -16,7 +16,6 @@ export declare class b2TimeStep {
     dtRatio: number;
     velocityIterations: number;
     positionIterations: number;
-    particleIterations: number;
     warmStarting: boolean;
     Copy(step: b2TimeStep): b2TimeStep;
 }

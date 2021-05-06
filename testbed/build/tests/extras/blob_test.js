@@ -32,18 +32,18 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
             BlobTest = class BlobTest extends testbed.Test {
                 constructor() {
                     super();
-                    const ground = this.m_world.CreateBody(new b2.BodyDef());
+                    const ground = this.m_world.CreateBody(new b2.b2BodyDef());
                     {
-                        const shape = new b2.EdgeShape();
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+                        const shape = new b2.b2EdgeShape();
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
                         ground.CreateFixture(shape, 0.0);
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(-40.0, 25.0));
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(-40.0, 25.0));
                         ground.CreateFixture(shape, 0.0);
-                        shape.SetTwoSided(new b2.Vec2(40.0, 0.0), new b2.Vec2(40.0, 25.0));
+                        shape.SetTwoSided(new b2.b2Vec2(40.0, 0.0), new b2.b2Vec2(40.0, 25.0));
                         ground.CreateFixture(shape, 0.0);
                     }
                     {
-                        const ajd = new b2.AreaJointDef();
+                        const ajd = new b2.b2AreaJointDef();
                         const cx = 0.0;
                         const cy = 10.0;
                         const rx = 5.0;
@@ -52,23 +52,23 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         const bodyRadius = 0.5;
                         for (let i = 0; i < nBodies; ++i) {
                             const angle = (i * 2.0 * Math.PI) / nBodies;
-                            const bd = new b2.BodyDef();
+                            const bd = new b2.b2BodyDef();
                             //bd.isBullet = true;
                             bd.fixedRotation = true;
                             const x = cx + rx * Math.cos(angle);
                             const y = cy + ry * Math.sin(angle);
                             bd.position.Set(x, y);
-                            bd.type = b2.BodyType.b2_dynamicBody;
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
                             const body = this.m_world.CreateBody(bd);
-                            const fd = new b2.FixtureDef();
-                            fd.shape = new b2.CircleShape(bodyRadius);
+                            const fd = new b2.b2FixtureDef();
+                            fd.shape = new b2.b2CircleShape(bodyRadius);
                             fd.density = 1.0;
                             body.CreateFixture(fd);
                             ajd.AddBody(body);
                         }
                         const frequencyHz = 10.0;
                         const dampingRatio = 1.0;
-                        b2.LinearStiffness(ajd, frequencyHz, dampingRatio, ajd.bodyA, ajd.bodyB);
+                        b2.b2LinearStiffness(ajd, frequencyHz, dampingRatio, ajd.bodyA, ajd.bodyB);
                         this.m_world.CreateJoint(ajd);
                     }
                 }

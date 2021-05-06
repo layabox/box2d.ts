@@ -1,15 +1,27 @@
 // MIT License
-System.register(["@box2d"], function (exports_1, context_1) {
+System.register([], function (exports_1, context_1) {
     "use strict";
-    var b2, Settings;
+    var Settings;
     var __moduleName = context_1 && context_1.id;
     return {
-        setters: [
-            function (b2_1) {
-                b2 = b2_1;
-            }
-        ],
+        setters: [],
         execute: function () {
+            // Copyright (c) 2019 Erin Catto
+            // Permission is hereby granted, free of charge, to any person obtaining a copy
+            // of this software and associated documentation files (the "Software"), to deal
+            // in the Software without restriction, including without limitation the rights
+            // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+            // copies of the Software, and to permit persons to whom the Software is
+            // furnished to do so, subject to the following conditions:
+            // The above copyright notice and this permission notice shall be included in all
+            // copies or substantial portions of the Software.
+            // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+            // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+            // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+            // AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+            // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+            // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+            // SOFTWARE.
             Settings = class Settings {
                 constructor() {
                     this.m_testIndex = 0;
@@ -18,16 +30,7 @@ System.register(["@box2d"], function (exports_1, context_1) {
                     this.m_hertz = 60;
                     this.m_velocityIterations = 8;
                     this.m_positionIterations = 3;
-                    // #if B2_ENABLE_PARTICLE
-                    // Particle iterations are needed for numerical stability in particle
-                    // simulations with small particles and relatively high gravity.
-                    // b2CalculateParticleIterations helps to determine the number.
-                    this.m_particleIterations = b2.CalculateParticleIterations(10, 0.04, 1 / this.m_hertz);
-                    // #endif
                     this.m_drawShapes = true;
-                    // #if B2_ENABLE_PARTICLE
-                    this.m_drawParticles = true;
-                    // #endif
                     this.m_drawJoints = true;
                     this.m_drawAABBs = false;
                     this.m_drawContactPoints = false;
@@ -44,10 +47,7 @@ System.register(["@box2d"], function (exports_1, context_1) {
                     this.m_enableSleep = true;
                     this.m_pause = false;
                     this.m_singleStep = false;
-                    // #if B2_ENABLE_PARTICLE
-                    this.m_strictContacts = false;
                 }
-                // #endif
                 Reset() {
                     this.m_testIndex = 0;
                     this.m_windowWidth = 1600;
@@ -55,16 +55,7 @@ System.register(["@box2d"], function (exports_1, context_1) {
                     this.m_hertz = 60;
                     this.m_velocityIterations = 8;
                     this.m_positionIterations = 3;
-                    // #if B2_ENABLE_PARTICLE
-                    // Particle iterations are needed for numerical stability in particle
-                    // simulations with small particles and relatively high gravity.
-                    // b2CalculateParticleIterations helps to determine the number.
-                    this.m_particleIterations = b2.CalculateParticleIterations(10, 0.04, 1 / this.m_hertz);
-                    // #endif
                     this.m_drawShapes = true;
-                    // #if B2_ENABLE_PARTICLE
-                    this.m_drawParticles = true;
-                    // #endif
                     this.m_drawJoints = true;
                     this.m_drawAABBs = false;
                     this.m_drawContactPoints = false;
@@ -72,9 +63,6 @@ System.register(["@box2d"], function (exports_1, context_1) {
                     this.m_drawContactImpulse = false;
                     this.m_drawFrictionImpulse = false;
                     this.m_drawCOMs = false;
-                    // #if B2_ENABLE_CONTROLLER
-                    this.m_drawControllers = true;
-                    // #endif
                     this.m_drawStats = false;
                     this.m_drawProfile = false;
                     this.m_enableWarmStarting = true;
@@ -83,9 +71,6 @@ System.register(["@box2d"], function (exports_1, context_1) {
                     this.m_enableSleep = true;
                     this.m_pause = false;
                     this.m_singleStep = false;
-                    // #if B2_ENABLE_PARTICLE
-                    this.m_strictContacts = false;
-                    // #endif
                 }
                 Save() { }
                 Load() { }

@@ -82,10 +82,10 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     this.m_maxBackwardSpeed = 0;
                     this.m_maxDriveForce = 0;
                     this.m_maxLateralImpulse = 0;
-                    const bodyDef = new b2.BodyDef();
-                    bodyDef.type = b2.BodyType.b2_dynamicBody;
+                    const bodyDef = new b2.b2BodyDef();
+                    bodyDef.type = b2.b2BodyType.b2_dynamicBody;
                     this.m_body = world.CreateBody(bodyDef);
-                    const polygonShape = new b2.PolygonShape();
+                    const polygonShape = new b2.b2PolygonShape();
                     polygonShape.SetAsBox(0.5, 1.25);
                     const fixture = this.m_body.CreateFixture(polygonShape, 1); //shape, density
                     fixture.SetUserData(new CarTireFUD());
@@ -120,12 +120,12 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     }
                 }
                 getLateralVelocity() {
-                    const currentRightNormal = this.m_body.GetWorldVector(new b2.Vec2(1, 0), new b2.Vec2());
-                    return currentRightNormal.SelfMul(b2.Vec2.DotVV(currentRightNormal, this.m_body.GetLinearVelocity()));
+                    const currentRightNormal = this.m_body.GetWorldVector(new b2.b2Vec2(1, 0), new b2.b2Vec2());
+                    return currentRightNormal.SelfMul(b2.b2Vec2.DotVV(currentRightNormal, this.m_body.GetLinearVelocity()));
                 }
                 getForwardVelocity() {
-                    const currentForwardNormal = this.m_body.GetWorldVector(new b2.Vec2(0, 1), new b2.Vec2());
-                    return currentForwardNormal.SelfMul(b2.Vec2.DotVV(currentForwardNormal, this.m_body.GetLinearVelocity()));
+                    const currentForwardNormal = this.m_body.GetWorldVector(new b2.b2Vec2(0, 1), new b2.b2Vec2());
+                    return currentForwardNormal.SelfMul(b2.b2Vec2.DotVV(currentForwardNormal, this.m_body.GetLinearVelocity()));
                 }
                 updateFriction() {
                     //lateral linear velocity
@@ -156,8 +156,8 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                             return; //do nothing
                     }
                     //find current speed in forward direction
-                    const currentForwardNormal = this.m_body.GetWorldVector(new b2.Vec2(0, 1), new b2.Vec2());
-                    const currentSpeed = b2.Vec2.DotVV(this.getForwardVelocity(), currentForwardNormal);
+                    const currentForwardNormal = this.m_body.GetWorldVector(new b2.b2Vec2(0, 1), new b2.b2Vec2());
+                    const currentSpeed = b2.b2Vec2.DotVV(this.getForwardVelocity(), currentForwardNormal);
                     //apply necessary force
                     let force = 0;
                     if (desiredSpeed > currentSpeed) {
@@ -191,24 +191,24 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 constructor(world) {
                     this.m_tires = [];
                     //create car body
-                    const bodyDef = new b2.BodyDef();
-                    bodyDef.type = b2.BodyType.b2_dynamicBody;
+                    const bodyDef = new b2.b2BodyDef();
+                    bodyDef.type = b2.b2BodyType.b2_dynamicBody;
                     this.m_body = world.CreateBody(bodyDef);
                     this.m_body.SetAngularDamping(3);
                     const vertices = [];
-                    vertices[0] = new b2.Vec2(1.5, 0);
-                    vertices[1] = new b2.Vec2(3, 2.5);
-                    vertices[2] = new b2.Vec2(2.8, 5.5);
-                    vertices[3] = new b2.Vec2(1, 10);
-                    vertices[4] = new b2.Vec2(-1, 10);
-                    vertices[5] = new b2.Vec2(-2.8, 5.5);
-                    vertices[6] = new b2.Vec2(-3, 2.5);
-                    vertices[7] = new b2.Vec2(-1.5, 0);
-                    const polygonShape = new b2.PolygonShape();
+                    vertices[0] = new b2.b2Vec2(1.5, 0);
+                    vertices[1] = new b2.b2Vec2(3, 2.5);
+                    vertices[2] = new b2.b2Vec2(2.8, 5.5);
+                    vertices[3] = new b2.b2Vec2(1, 10);
+                    vertices[4] = new b2.b2Vec2(-1, 10);
+                    vertices[5] = new b2.b2Vec2(-2.8, 5.5);
+                    vertices[6] = new b2.b2Vec2(-3, 2.5);
+                    vertices[7] = new b2.b2Vec2(-1.5, 0);
+                    const polygonShape = new b2.b2PolygonShape();
                     polygonShape.Set(vertices, 8);
                     this.m_body.CreateFixture(polygonShape, 0.1); //shape, density
                     //prepare common joint parameters
-                    const jointDef = new b2.RevoluteJointDef();
+                    const jointDef = new b2.b2RevoluteJointDef();
                     jointDef.bodyA = this.m_body;
                     jointDef.enableLimit = true;
                     jointDef.lowerAngle = 0;
@@ -273,7 +273,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     }
                     const angleNow = this.flJoint.GetJointAngle();
                     let angleToTurn = desiredAngle - angleNow;
-                    angleToTurn = b2.Clamp(angleToTurn, -turnPerTimeStep, turnPerTimeStep);
+                    angleToTurn = b2.b2Clamp(angleToTurn, -turnPerTimeStep, turnPerTimeStep);
                     const newAngle = angleNow + angleToTurn;
                     this.flJoint.SetLimits(newAngle, newAngle);
                     this.frJoint.SetLimits(newAngle, newAngle);
@@ -298,20 +298,20 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 constructor() {
                     super();
                     //this.m_destructionListener = new MyDestructionListener(this);
-                    this.m_world.SetGravity(new b2.Vec2(0.0, 0.0));
+                    this.m_world.SetGravity(new b2.b2Vec2(0.0, 0.0));
                     this.m_world.SetDestructionListener(this.m_destructionListener);
                     //set up ground areas
                     {
-                        const bodyDef = new b2.BodyDef();
+                        const bodyDef = new b2.b2BodyDef();
                         this.m_groundBody = this.m_world.CreateBody(bodyDef);
-                        const polygonShape = new b2.PolygonShape();
-                        const fixtureDef = new b2.FixtureDef();
+                        const polygonShape = new b2.b2PolygonShape();
+                        const fixtureDef = new b2.b2FixtureDef();
                         fixtureDef.shape = polygonShape;
                         fixtureDef.isSensor = true;
-                        polygonShape.SetAsBox(9, 7, new b2.Vec2(-10, 15), 20 * DEGTORAD);
+                        polygonShape.SetAsBox(9, 7, new b2.b2Vec2(-10, 15), 20 * DEGTORAD);
                         let groundAreaFixture = this.m_groundBody.CreateFixture(fixtureDef);
                         groundAreaFixture.SetUserData(new GroundAreaFUD(0.5, false));
-                        polygonShape.SetAsBox(9, 5, new b2.Vec2(5, 20), -40 * DEGTORAD);
+                        polygonShape.SetAsBox(9, 5, new b2.b2Vec2(5, 20), -40 * DEGTORAD);
                         groundAreaFixture = this.m_groundBody.CreateFixture(fixtureDef);
                         groundAreaFixture.SetUserData(new GroundAreaFUD(0.2, false));
                     }

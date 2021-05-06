@@ -83,6 +83,7 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_joint
                     this.m_qB = new b2_math_js_1.b2Rot();
                     this.m_K = new b2_math_js_1.b2Mat22();
                     this.m_linearOffset.Copy(b2_settings_js_1.b2Maybe(def.linearOffset, b2_math_js_1.b2Vec2.ZERO));
+                    this.m_angularOffset = b2_settings_js_1.b2Maybe(def.angularOffset, 0);
                     this.m_linearImpulse.SetZero();
                     this.m_maxForce = b2_settings_js_1.b2Maybe(def.maxForce, 0);
                     this.m_maxTorque = b2_settings_js_1.b2Maybe(def.maxTorque, 0);

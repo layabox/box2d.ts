@@ -21,21 +21,21 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     this.m_fixtureCount = 0;
                     this.m_createTime = 0.0;
                     this.m_fixtureCount = 0;
-                    const timer = new b2.Timer();
+                    const timer = new b2.b2Timer();
                     {
                         const a = 0.5;
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         bd.position.y = -a;
                         const ground = this.m_world.CreateBody(bd);
                         {
                             const N = 200;
                             const M = 10;
-                            const position = new b2.Vec2();
+                            const position = new b2.b2Vec2();
                             position.y = 0.0;
                             for (let j = 0; j < M; ++j) {
                                 position.x = -N * a;
                                 for (let i = 0; i < N; ++i) {
-                                    const shape = new b2.PolygonShape();
+                                    const shape = new b2.b2PolygonShape();
                                     shape.SetAsBox(a, a, position, 0.0);
                                     ground.CreateFixture(shape, 0.0);
                                     ++this.m_fixtureCount;
@@ -48,14 +48,14 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         //    {
                         //     const N = 200;
                         //     const M = 10;
-                        //      const position = new b2.Vec2();
+                        //      const position = new b2.b2Vec2();
                         //      position.x = -N * a;
                         //      for (let i = 0; i < N; ++i)
                         //      {
                         //        position.y = 0.0;
                         //        for (let j = 0; j < M; ++j)
                         //        {
-                        //          const shape = new b2.PolygonShape();
+                        //          const shape = new b2.b2PolygonShape();
                         //          shape.SetAsBox(a, a, position, 0.0);
                         //          ground.CreateFixture(shape, 0.0);
                         //          position.y -= 2.0 * a;
@@ -66,17 +66,17 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     }
                     {
                         const a = 0.5;
-                        const shape = new b2.PolygonShape();
+                        const shape = new b2.b2PolygonShape();
                         shape.SetAsBox(a, a);
-                        const x = new b2.Vec2(-7.0, 0.75);
-                        const y = new b2.Vec2();
-                        const deltaX = new b2.Vec2(0.5625, 1.25);
-                        const deltaY = new b2.Vec2(1.125, 0.0);
+                        const x = new b2.b2Vec2(-7.0, 0.75);
+                        const y = new b2.b2Vec2();
+                        const deltaX = new b2.b2Vec2(0.5625, 1.25);
+                        const deltaY = new b2.b2Vec2(1.125, 0.0);
                         for (let i = 0; i < Tiles.e_count; ++i) {
                             y.Copy(x);
                             for (let j = i; j < Tiles.e_count; ++j) {
-                                const bd = new b2.BodyDef();
-                                bd.type = b2.BodyType.b2_dynamicBody;
+                                const bd = new b2.b2BodyDef();
+                                bd.type = b2.b2BodyType.b2_dynamicBody;
                                 bd.position.Copy(y);
                                 //if (i === 0 && j === 0)
                                 //{
@@ -107,7 +107,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     super.Step(settings);
                     testbed.g_debugDraw.DrawString(5, this.m_textLine, `create time = ${this.m_createTime.toFixed(2)} ms, fixture count = ${this.m_fixtureCount}`);
                     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;
-                    //b2.DynamicTree* tree = this.m_world.this.m_contactManager.m_broadPhase.m_tree;
+                    //b2.b2DynamicTree* tree = this.m_world.this.m_contactManager.m_broadPhase.m_tree;
                     //if (this.m_stepCount === 400)
                     //{
                     //  tree.RebuildBottomUp();

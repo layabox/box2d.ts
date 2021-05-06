@@ -33,23 +33,23 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 constructor() {
                     super();
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         const ground = this.m_world.CreateBody(bd);
                         const vertices = [];
-                        vertices[0] = new b2.Vec2(-30.0, 40.0);
-                        vertices[1] = new b2.Vec2(30.0, 40.0);
-                        vertices[2] = new b2.Vec2(30.0, 0.0);
-                        vertices[3] = new b2.Vec2(-30.0, 0.0);
-                        const shape = new b2.ChainShape();
+                        vertices[0] = new b2.b2Vec2(-30.0, 40.0);
+                        vertices[1] = new b2.b2Vec2(30.0, 40.0);
+                        vertices[2] = new b2.b2Vec2(30.0, 0.0);
+                        vertices[3] = new b2.b2Vec2(-30.0, 0.0);
+                        const shape = new b2.b2ChainShape();
                         shape.CreateLoop(vertices);
                         ground.CreateFixture(shape, 0.0);
                     }
                     // Add bodies
-                    const bd = new b2.BodyDef();
-                    const fd = new b2.FixtureDef();
-                    bd.type = b2.BodyType.b2_dynamicBody;
+                    const bd = new b2.b2BodyDef();
+                    const fd = new b2.b2FixtureDef();
+                    bd.type = b2.b2BodyType.b2_dynamicBody;
                     //bd.isBullet = true;
-                    const polygon = new b2.PolygonShape();
+                    const polygon = new b2.b2PolygonShape();
                     fd.shape = polygon;
                     fd.density = 1.0;
                     fd.friction = 0.5;
@@ -69,20 +69,20 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         this.m_world.CreateBody(bd).CreateFixture(fd);
                     }
                     // Create ramp
-                    bd.type = b2.BodyType.b2_staticBody;
+                    bd.type = b2.b2BodyType.b2_staticBody;
                     bd.position.Set(0.0, 0.0);
                     const vxs = [
-                        new b2.Vec2(-30.0, 0.0),
-                        new b2.Vec2(-10.0, 0.0),
-                        new b2.Vec2(-30.0, 10.0),
+                        new b2.b2Vec2(-30.0, 0.0),
+                        new b2.b2Vec2(-10.0, 0.0),
+                        new b2.b2Vec2(-30.0, 10.0),
                     ];
                     polygon.Set(vxs, vxs.length);
                     fd.density = 0;
                     this.m_world.CreateBody(bd).CreateFixture(fd);
                     // Create ball
-                    bd.type = b2.BodyType.b2_dynamicBody;
+                    bd.type = b2.b2BodyType.b2_dynamicBody;
                     bd.position.Set(-25.0, 20.0);
-                    fd.shape = new b2.CircleShape(4.0);
+                    fd.shape = new b2.b2CircleShape(4.0);
                     fd.density = 2;
                     fd.restitution = 0.2;
                     fd.friction = 0.5;

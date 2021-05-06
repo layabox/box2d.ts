@@ -24,34 +24,34 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
             WreckingBall = class WreckingBall extends testbed.Test {
                 constructor() {
                     super();
-                    this.m_distanceJointDef = new b2.DistanceJointDef();
+                    this.m_distanceJointDef = new b2.b2DistanceJointDef();
                     this.m_distanceJoint = null;
                     let ground = null;
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+                        const shape = new b2.b2EdgeShape();
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
                         ground.CreateFixture(shape, 0.0);
                     }
                     {
-                        const shape = new b2.PolygonShape();
+                        const shape = new b2.b2PolygonShape();
                         shape.SetAsBox(0.5, 0.125);
-                        const fd = new b2.FixtureDef();
+                        const fd = new b2.b2FixtureDef();
                         fd.shape = shape;
                         fd.density = 20.0;
                         fd.friction = 0.2;
                         fd.filter.categoryBits = 0x0001;
                         fd.filter.maskBits = 0xFFFF & ~0x0002;
-                        const jd = new b2.RevoluteJointDef();
+                        const jd = new b2.b2RevoluteJointDef();
                         jd.collideConnected = false;
                         const N = 10;
                         const y = 15.0;
                         this.m_distanceJointDef.localAnchorA.Set(0.0, y);
                         let prevBody = ground;
                         for (let i = 0; i < N; ++i) {
-                            const bd = new b2.BodyDef();
-                            bd.type = b2.BodyType.b2_dynamicBody;
+                            const bd = new b2.b2BodyDef();
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
                             bd.position.Set(0.5 + 1.0 * i, y);
                             if (i === N - 1) {
                                 bd.position.Set(1.0 * i, y);
@@ -59,9 +59,9 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                             }
                             const body = this.m_world.CreateBody(bd);
                             if (i === N - 1) {
-                                const circleShape = new b2.CircleShape();
+                                const circleShape = new b2.b2CircleShape();
                                 circleShape.m_radius = 1.5;
-                                const sfd = new b2.FixtureDef();
+                                const sfd = new b2.b2FixtureDef();
                                 sfd.shape = circleShape;
                                 sfd.density = 100.0;
                                 sfd.filter.categoryBits = 0x0002;
@@ -70,7 +70,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                             else {
                                 body.CreateFixture(fd);
                             }
-                            const anchor = new b2.Vec2(i, y);
+                            const anchor = new b2.b2Vec2(i, y);
                             jd.Initialize(prevBody, body, anchor);
                             this.m_world.CreateJoint(jd);
                             prevBody = body;

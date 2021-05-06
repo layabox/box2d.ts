@@ -62,11 +62,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape
                     const d = b2_math_js_1.b2Vec2.SubVV(p, center, b2CircleShape.TestPoint_s_d);
                     return b2_math_js_1.b2Vec2.DotVV(d, d) <= b2_math_js_1.b2Sq(this.m_radius);
                 }
-                ComputeDistance(xf, p, normal, childIndex) {
-                    const center = b2_math_js_1.b2Transform.MulXV(xf, this.m_p, b2CircleShape.ComputeDistance_s_center);
-                    b2_math_js_1.b2Vec2.SubVV(p, center, normal);
-                    return normal.Normalize() - this.m_radius;
-                }
                 RayCast(output, input, transform, childIndex) {
                     const position = b2_math_js_1.b2Transform.MulXV(transform, this.m_p, b2CircleShape.RayCast_s_position);
                     const s = b2_math_js_1.b2Vec2.SubVV(input.p1, position, b2CircleShape.RayCast_s_s);
@@ -141,10 +136,6 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape
             /// Implement b2Shape.
             b2CircleShape.TestPoint_s_center = new b2_math_js_1.b2Vec2();
             b2CircleShape.TestPoint_s_d = new b2_math_js_1.b2Vec2();
-            // #if B2_ENABLE_PARTICLE
-            /// @see b2Shape::ComputeDistance
-            b2CircleShape.ComputeDistance_s_center = new b2_math_js_1.b2Vec2();
-            // #endif
             /// Implement b2Shape.
             /// @note because the circle is solid, rays that start inside do not hit because the normal is
             /// not defined.

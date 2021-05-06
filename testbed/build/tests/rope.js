@@ -17,14 +17,14 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
             Rope = class Rope extends testbed.Test {
                 constructor() {
                     super();
-                    this.m_rope1 = new b2.Rope();
-                    this.m_rope2 = new b2.Rope();
-                    this.m_tuning1 = new b2.RopeTuning();
-                    this.m_tuning2 = new b2.RopeTuning();
+                    this.m_rope1 = new b2.b2Rope();
+                    this.m_rope2 = new b2.b2Rope();
+                    this.m_tuning1 = new b2.b2RopeTuning();
+                    this.m_tuning2 = new b2.b2RopeTuning();
                     this.m_iterations1 = 0;
                     this.m_iterations2 = 0;
-                    this.m_position1 = new b2.Vec2();
-                    this.m_position2 = new b2.Vec2();
+                    this.m_position1 = new b2.b2Vec2();
+                    this.m_position2 = new b2.b2Vec2();
                     this.m_speed = 0.0;
                     // void UpdateUI() override
                     // {
@@ -147,9 +147,9 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     const N = 20;
                     const L = 0.5;
                     // b2Vec2 vertices[N];
-                    const vertices = b2.Vec2.MakeArray(N);
+                    const vertices = b2.b2Vec2.MakeArray(N);
                     // float masses[N];
-                    const masses = b2.MakeNumberArray(N);
+                    const masses = b2.b2MakeNumberArray(N);
                     for (let i = 0; i < N; ++i) {
                         vertices[i].Set(0.0, L * (N - i));
                         masses[i] = 1.0;
@@ -176,7 +176,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     this.m_tuning2.stretchingModel = b2.pbdStretchingModel;
                     this.m_position1.Set(-5.0, 15.0);
                     this.m_position2.Set(5.0, 15.0);
-                    const def = new b2.RopeDef();
+                    const def = new b2.b2RopeDef();
                     // def.vertices = vertices;
                     vertices.forEach((value) => def.vertices.push(value));
                     def.count = N;

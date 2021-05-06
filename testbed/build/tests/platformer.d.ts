@@ -5,10 +5,10 @@ export declare class Platformer extends testbed.Test {
     m_top: number;
     m_bottom: number;
     m_state: Platformer_State;
-    m_platform: b2.Fixture;
-    m_character: b2.Fixture;
+    m_platform: b2.b2Fixture;
+    m_character: b2.b2Fixture;
     constructor();
-    PreSolve(contact: b2.Contact, oldManifold: b2.Manifold): void;
+    PreSolve(contact: b2.b2Contact, oldManifold: b2.b2Manifold): void;
     Step(settings: testbed.Settings): void;
     static Create(): testbed.Test;
 }

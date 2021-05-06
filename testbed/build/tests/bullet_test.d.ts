@@ -1,8 +1,8 @@
 import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 export declare class BulletTest extends testbed.Test {
-    m_body: b2.Body;
-    m_bullet: b2.Body;
+    m_body: b2.b2Body;
+    m_bullet: b2.b2Body;
     m_x: number;
     constructor();
     Launch(): void;

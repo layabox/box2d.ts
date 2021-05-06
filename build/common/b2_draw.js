@@ -287,12 +287,6 @@ System.register([], function (exports_1, context_1) {
                 b2DrawFlags[b2DrawFlags["e_aabbBit"] = 4] = "e_aabbBit";
                 b2DrawFlags[b2DrawFlags["e_pairBit"] = 8] = "e_pairBit";
                 b2DrawFlags[b2DrawFlags["e_centerOfMassBit"] = 16] = "e_centerOfMassBit";
-                // #if B2_ENABLE_PARTICLE
-                b2DrawFlags[b2DrawFlags["e_particleBit"] = 32] = "e_particleBit";
-                // #endif
-                // #if B2_ENABLE_CONTROLLER
-                b2DrawFlags[b2DrawFlags["e_controllerBit"] = 64] = "e_controllerBit";
-                // #endif
                 b2DrawFlags[b2DrawFlags["e_all"] = 63] = "e_all";
             })(b2DrawFlags || (b2DrawFlags = {}));
             exports_1("b2DrawFlags", b2DrawFlags);

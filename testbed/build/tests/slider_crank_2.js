@@ -19,26 +19,26 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     super();
                     let ground = null;
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+                        const shape = new b2.b2EdgeShape();
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
                         ground.CreateFixture(shape, 0.0);
                     }
                     {
                         let prevBody = ground;
                         // Define crank.
                         {
-                            const shape = new b2.PolygonShape();
+                            const shape = new b2.b2PolygonShape();
                             shape.SetAsBox(0.5, 2.0);
-                            const bd = new b2.BodyDef();
-                            bd.type = b2.BodyType.b2_dynamicBody;
+                            const bd = new b2.b2BodyDef();
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
                             bd.position.Set(0.0, 7.0);
                             const body = this.m_world.CreateBody(bd);
                             body.CreateFixture(shape, 2.0);
-                            const rjd = new b2.RevoluteJointDef();
-                            rjd.Initialize(prevBody, body, new b2.Vec2(0.0, 5.0));
-                            rjd.motorSpeed = 1.0 * b2.pi;
+                            const rjd = new b2.b2RevoluteJointDef();
+                            rjd.Initialize(prevBody, body, new b2.b2Vec2(0.0, 5.0));
+                            rjd.motorSpeed = 1.0 * b2.b2_pi;
                             rjd.maxMotorTorque = 10000.0;
                             rjd.enableMotor = true;
                             this.m_joint1 = this.m_world.CreateJoint(rjd);
@@ -46,44 +46,44 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         }
                         // Define follower.
                         {
-                            const shape = new b2.PolygonShape();
+                            const shape = new b2.b2PolygonShape();
                             shape.SetAsBox(0.5, 4.0);
-                            const bd = new b2.BodyDef();
-                            bd.type = b2.BodyType.b2_dynamicBody;
+                            const bd = new b2.b2BodyDef();
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
                             bd.position.Set(0.0, 13.0);
                             const body = this.m_world.CreateBody(bd);
                             body.CreateFixture(shape, 2.0);
-                            const rjd = new b2.RevoluteJointDef();
-                            rjd.Initialize(prevBody, body, new b2.Vec2(0.0, 9.0));
+                            const rjd = new b2.b2RevoluteJointDef();
+                            rjd.Initialize(prevBody, body, new b2.b2Vec2(0.0, 9.0));
                             rjd.enableMotor = false;
                             this.m_world.CreateJoint(rjd);
                             prevBody = body;
                         }
                         // Define piston
                         {
-                            const shape = new b2.PolygonShape();
+                            const shape = new b2.b2PolygonShape();
                             shape.SetAsBox(1.5, 1.5);
-                            const bd = new b2.BodyDef();
-                            bd.type = b2.BodyType.b2_dynamicBody;
+                            const bd = new b2.b2BodyDef();
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
                             bd.fixedRotation = true;
                             bd.position.Set(0.0, 17.0);
                             const body = this.m_world.CreateBody(bd);
                             body.CreateFixture(shape, 2.0);
-                            const rjd = new b2.RevoluteJointDef();
-                            rjd.Initialize(prevBody, body, new b2.Vec2(0.0, 17.0));
+                            const rjd = new b2.b2RevoluteJointDef();
+                            rjd.Initialize(prevBody, body, new b2.b2Vec2(0.0, 17.0));
                             this.m_world.CreateJoint(rjd);
-                            const pjd = new b2.PrismaticJointDef();
-                            pjd.Initialize(ground, body, new b2.Vec2(0.0, 17.0), new b2.Vec2(0.0, 1.0));
+                            const pjd = new b2.b2PrismaticJointDef();
+                            pjd.Initialize(ground, body, new b2.b2Vec2(0.0, 17.0), new b2.b2Vec2(0.0, 1.0));
                             pjd.maxMotorForce = 1000.0;
                             pjd.enableMotor = true;
                             this.m_joint2 = this.m_world.CreateJoint(pjd);
                         }
                         // Create a payload
                         {
-                            const shape = new b2.PolygonShape();
+                            const shape = new b2.b2PolygonShape();
                             shape.SetAsBox(1.5, 1.5);
-                            const bd = new b2.BodyDef();
-                            bd.type = b2.BodyType.b2_dynamicBody;
+                            const bd = new b2.b2BodyDef();
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
                             bd.position.Set(0.0, 23.0);
                             const body = this.m_world.CreateBody(bd);
                             body.CreateFixture(shape, 2.0);

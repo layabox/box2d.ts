@@ -29,7 +29,6 @@ System.register(["../common/b2_settings.js", "./b2_body.js"], function (exports_
             }
         ],
         execute: function () {
-            // #endif
             /// Joints and fixtures are destroyed when their associated
             /// body is destroyed. Implement this listener so that you
             /// may nullify references to these joints and shapes.
@@ -40,15 +39,6 @@ System.register(["../common/b2_settings.js", "./b2_body.js"], function (exports_
                 /// Called when any fixture is about to be destroyed due
                 /// to the destruction of its parent body.
                 SayGoodbyeFixture(fixture) { }
-                // #if B2_ENABLE_PARTICLE
-                /// Called when any particle group is about to be destroyed.
-                SayGoodbyeParticleGroup(group) { }
-                /// Called when a particle is about to be destroyed.
-                /// The index can be used in conjunction with
-                /// b2ParticleSystem::GetUserDataBuffer() or
-                /// b2ParticleSystem::GetParticleHandleFromIndex() to determine which
-                /// particle has been destroyed.
-                SayGoodbyeParticle(system, index) { }
             };
             exports_1("b2DestructionListener", b2DestructionListener);
             /// Implement this class to provide collision filtering. In other words, you can implement
@@ -75,16 +65,8 @@ System.register(["../common/b2_settings.js", "./b2_body.js"], function (exports_
                     const collide = (((filter1.maskBits & filter2.categoryBits) !== 0) && ((filter1.categoryBits & filter2.maskBits) !== 0));
                     return collide;
                 }
-                // #if B2_ENABLE_PARTICLE
-                ShouldCollideFixtureParticle(fixture, system, index) {
-                    return true;
-                }
-                ShouldCollideParticleParticle(system, indexA, indexB) {
-                    return true;
-                }
             };
             exports_1("b2ContactFilter", b2ContactFilter);
-            // #endif
             b2ContactFilter.b2_defaultFilter = new b2ContactFilter();
             /// Contact impulses for reporting. Impulses are used instead of forces because
             /// sub-step forces may approach infinity for rigid body collisions. These
@@ -111,12 +93,6 @@ System.register(["../common/b2_settings.js", "./b2_body.js"], function (exports_
                 BeginContact(contact) { }
                 /// Called when two fixtures cease to touch.
                 EndContact(contact) { }
-                // #if B2_ENABLE_PARTICLE
-                BeginContactFixtureParticle(system, contact) { }
-                EndContactFixtureParticle(system, contact) { }
-                BeginContactParticleParticle(system, contact) { }
-                EndContactParticleParticle(system, contact) { }
-                // #endif
                 /// This is called after a contact is updated. This allows you to inspect a
                 /// contact before it goes to the solver. If you are careful, you can modify the
                 /// contact manifold (e.g. disable contact).
@@ -146,13 +122,6 @@ System.register(["../common/b2_settings.js", "./b2_body.js"], function (exports_
                 ReportFixture(fixture) {
                     return true;
                 }
-                // #if B2_ENABLE_PARTICLE
-                ReportParticle(system, index) {
-                    return false;
-                }
-                ShouldQueryParticleSystem(system) {
-                    return true;
-                }
             };
             exports_1("b2QueryCallback", b2QueryCallback);
             /// Callback class for ray casts.
@@ -171,13 +140,6 @@ System.register(["../common/b2_settings.js", "./b2_body.js"], function (exports_
                 /// closest hit, 1 to continue
                 ReportFixture(fixture, point, normal, fraction) {
                     return fraction;
-                }
-                // #if B2_ENABLE_PARTICLE
-                ReportParticle(system, index, point, normal, fraction) {
-                    return 0;
-                }
-                ShouldQueryParticleSystem(system) {
-                    return true;
                 }
             };
             exports_1("b2RayCastCallback", b2RayCastCallback);

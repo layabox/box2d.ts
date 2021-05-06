@@ -16,9 +16,9 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
             AddPair = class AddPair extends testbed.Test {
                 constructor() {
                     super();
-                    this.m_world.SetGravity(new b2.Vec2(0.0, 0.0));
+                    this.m_world.SetGravity(new b2.b2Vec2(0.0, 0.0));
                     {
-                        const shape = new b2.CircleShape();
+                        const shape = new b2.b2CircleShape();
                         shape.m_p.SetZero();
                         shape.m_radius = 0.1;
                         const minX = -6.0;
@@ -26,23 +26,23 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         const minY = 4.0;
                         const maxY = 6.0;
                         for (let i = 0; i < 400; ++i) {
-                            const bd = new b2.BodyDef();
-                            bd.type = b2.BodyType.b2_dynamicBody;
-                            bd.position.Set(b2.RandomRange(minX, maxX), b2.RandomRange(minY, maxY));
+                            const bd = new b2.b2BodyDef();
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
+                            bd.position.Set(b2.b2RandomRange(minX, maxX), b2.b2RandomRange(minY, maxY));
                             const body = this.m_world.CreateBody(bd);
                             body.CreateFixture(shape, 0.01);
                         }
                     }
                     {
-                        const shape = new b2.PolygonShape();
+                        const shape = new b2.b2PolygonShape();
                         shape.SetAsBox(1.5, 1.5);
-                        const bd = new b2.BodyDef();
-                        bd.type = b2.BodyType.b2_dynamicBody;
+                        const bd = new b2.b2BodyDef();
+                        bd.type = b2.b2BodyType.b2_dynamicBody;
                         bd.position.Set(-40.0, 5.0);
                         bd.bullet = true;
                         const body = this.m_world.CreateBody(bd);
                         body.CreateFixture(shape, 1.0);
-                        body.SetLinearVelocity(new b2.Vec2(10.0, 0.0));
+                        body.SetLinearVelocity(new b2.b2Vec2(10.0, 0.0));
                     }
                 }
                 Step(settings) {

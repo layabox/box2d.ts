@@ -19,26 +19,26 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     super();
                     let ground = null;
                     {
-                        const bd = new b2.BodyDef();
+                        const bd = new b2.b2BodyDef();
                         ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.EdgeShape();
-                        shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+                        const shape = new b2.b2EdgeShape();
+                        shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
                         ground.CreateFixture(shape, 0.0);
                     }
                     {
-                        const shape = new b2.PolygonShape();
+                        const shape = new b2.b2PolygonShape();
                         shape.SetAsBox(0.6, 0.125);
-                        const fd = new b2.FixtureDef();
+                        const fd = new b2.b2FixtureDef();
                         fd.shape = shape;
                         fd.density = 20.0;
                         fd.friction = 0.2;
-                        const jd = new b2.RevoluteJointDef();
+                        const jd = new b2.b2RevoluteJointDef();
                         jd.collideConnected = false;
                         const y = 25.0;
                         let prevBody = ground;
                         for (let i = 0; i < Chain.e_count; ++i) {
-                            const bd = new b2.BodyDef();
-                            bd.type = b2.BodyType.b2_dynamicBody;
+                            const bd = new b2.b2BodyDef();
+                            bd.type = b2.b2BodyType.b2_dynamicBody;
                             bd.position.Set(0.5 + i, y);
                             const body = this.m_world.CreateBody(bd);
                             if (TEST_BAD_BODY) {
@@ -51,7 +51,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                                 }
                             }
                             body.CreateFixture(fd);
-                            const anchor = new b2.Vec2(i, y);
+                            const anchor = new b2.b2Vec2(i, y);
                             jd.Initialize(prevBody, body, anchor);
                             this.m_world.CreateJoint(jd);
                             prevBody = body;

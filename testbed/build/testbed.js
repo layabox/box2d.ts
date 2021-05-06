@@ -1,4 +1,4 @@
-System.register(["./settings.js", "./draw.js", "./fullscreen_ui.js", "./particle_emitter.js", "./particle_parameter.js", "./test.js", "./main.js"], function (exports_1, context_1) {
+System.register(["./settings.js", "./draw.js", "./test.js", "./main.js"], function (exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     function exportStar_1(m) {
@@ -15,15 +15,6 @@ System.register(["./settings.js", "./draw.js", "./fullscreen_ui.js", "./particle
             },
             function (draw_js_1_1) {
                 exportStar_1(draw_js_1_1);
-            },
-            function (fullscreen_ui_js_1_1) {
-                exportStar_1(fullscreen_ui_js_1_1);
-            },
-            function (particle_emitter_js_1_1) {
-                exportStar_1(particle_emitter_js_1_1);
-            },
-            function (particle_parameter_js_1_1) {
-                exportStar_1(particle_parameter_js_1_1);
             },
             function (test_js_1_1) {
                 exportStar_1(test_js_1_1);

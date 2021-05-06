@@ -23,7 +23,6 @@ export declare abstract class b2Shape {
     GetType(): b2ShapeType;
     abstract GetChildCount(): number;
     abstract TestPoint(xf: b2Transform, p: XY): boolean;
-    abstract ComputeDistance(xf: b2Transform, p: b2Vec2, normal: b2Vec2, childIndex: number): number;
     abstract RayCast(output: b2RayCastOutput, input: b2RayCastInput, transform: b2Transform, childIndex: number): boolean;
     abstract ComputeAABB(aabb: b2AABB, xf: b2Transform, childIndex: number): void;
     abstract ComputeMass(massData: b2MassData, density: number): void;
