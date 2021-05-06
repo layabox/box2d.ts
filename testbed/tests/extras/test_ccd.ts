@@ -24,15 +24,15 @@ export class TestCCD extends testbed.Test {
     super();
 
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       const ground = this.m_world.CreateBody(bd);
 
       const vertices = [];
-      vertices[0] = new b2.Vec2(-30.0, 40.0);
-      vertices[1] = new b2.Vec2(30.0, 40.0);
-      vertices[2] = new b2.Vec2(30.0, 0.0);
-      vertices[3] = new b2.Vec2(-30.0, 0.0);
-      const shape = new b2.ChainShape();
+      vertices[0] = new b2.b2Vec2(-30.0, 40.0);
+      vertices[1] = new b2.b2Vec2(30.0, 40.0);
+      vertices[2] = new b2.b2Vec2(30.0, 0.0);
+      vertices[3] = new b2.b2Vec2(-30.0, 0.0);
+      const shape = new b2.b2ChainShape();
       shape.CreateLoop(vertices);
       ground.CreateFixture(shape, 0.0);
     }
@@ -40,44 +40,44 @@ export class TestCCD extends testbed.Test {
     // Always on, even if default is off
     this.m_world.SetContinuousPhysics(true);
 
-    const fd = new b2.FixtureDef();
+    const fd = new b2.b2FixtureDef();
     // These values are used for all the parts of the 'basket'
     fd.density = 4.0;
     fd.restitution = 1.4;
 
     // Create 'basket'
     {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.bullet = true;
       bd.position.Set(15.0, 5.0);
       const body = this.m_world.CreateBody(bd);
 
-      const sd_bottom = new b2.PolygonShape();
+      const sd_bottom = new b2.b2PolygonShape();
       sd_bottom.SetAsBox(4.5, 0.45);
       fd.shape = sd_bottom;
       body.CreateFixture(fd);
 
-      const sd_left = new b2.PolygonShape();
-      sd_left.SetAsBox(0.45, 8.1, new b2.Vec2(-4.35, 7.05), 0.2);
+      const sd_left = new b2.b2PolygonShape();
+      sd_left.SetAsBox(0.45, 8.1, new b2.b2Vec2(-4.35, 7.05), 0.2);
       fd.shape = sd_left;
       body.CreateFixture(fd);
 
-      const sd_right = new b2.PolygonShape();
-      sd_right.SetAsBox(0.45, 8.1, new b2.Vec2(4.35, 7.05), -0.2);
+      const sd_right = new b2.b2PolygonShape();
+      sd_right.SetAsBox(0.45, 8.1, new b2.b2Vec2(4.35, 7.05), -0.2);
       fd.shape = sd_right;
       body.CreateFixture(fd);
     }
 
     // add some small circles for effect
     for (let i = 0; i < 5; i++) {
-      const cd = new b2.CircleShape((Math.random() * 1.0 + 0.5));
+      const cd = new b2.b2CircleShape((Math.random() * 1.0 + 0.5));
       fd.shape = cd;
       fd.friction = 0.3;
       fd.density = 1.0;
       fd.restitution = 1.1;
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.bullet = true;
       bd.position.Set((Math.random() * 30.0 - 25.0), (Math.random() * 32.0 + 2.0));
       const body = this.m_world.CreateBody(bd);

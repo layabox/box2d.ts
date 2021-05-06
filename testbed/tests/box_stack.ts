@@ -27,8 +27,8 @@ export class BoxStack extends testbed.Test {
   public static readonly e_columnCount = 1;
   public static readonly e_rowCount = 15;
 
-  public m_bullet: b2.Body | null = null;
-  public m_bodies: b2.Body[];
+  public m_bullet: b2.b2Body | null = null;
+  public m_bodies: b2.b2Body[];
   public m_indices: number[];
 
   constructor() {
@@ -38,31 +38,31 @@ export class BoxStack extends testbed.Test {
     this.m_indices = new Array(BoxStack.e_rowCount * BoxStack.e_columnCount);
 
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       const ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
       ground.CreateFixture(shape, 0.0);
 
-      shape.SetTwoSided(new b2.Vec2(20.0, 0.0), new b2.Vec2(20.0, 20.0));
+      shape.SetTwoSided(new b2.b2Vec2(20.0, 0.0), new b2.b2Vec2(20.0, 20.0));
       ground.CreateFixture(shape, 0.0);
     }
 
     const xs = [0.0, -10.0, -5.0, 5.0, 10.0];
 
     for (let j = 0; j < BoxStack.e_columnCount; ++j) {
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(0.5, 0.5);
 
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = shape;
       fd.density = 1.0;
       fd.friction = 0.3;
 
       for (let i = 0; i < BoxStack.e_rowCount; ++i) {
-        const bd = new b2.BodyDef();
-        bd.type = b2.BodyType.b2_dynamicBody;
+        const bd = new b2.b2BodyDef();
+        bd.type = b2.b2BodyType.b2_dynamicBody;
 
         const n = j * BoxStack.e_rowCount + i;
         // DEBUG: b2.Assert(n < BoxStack.e_rowCount * BoxStack.e_columnCount);
@@ -70,7 +70,7 @@ export class BoxStack extends testbed.Test {
         bd.userData = this.m_indices[n];
 
         const x = 0.0;
-        //const x = b2.RandomRange(-0.02, 0.02);
+        //const x = b2.b2RandomRange(-0.02, 0.02);
         //const x = i % 2 === 0 ? -0.01 : 0.01;
         bd.position.Set(xs[j] + x, 0.55 + 1.1 * i);
         const body = this.m_world.CreateBody(bd);
@@ -91,23 +91,23 @@ export class BoxStack extends testbed.Test {
         }
 
         {
-          const shape = new b2.CircleShape();
+          const shape = new b2.b2CircleShape();
           shape.m_radius = 0.25;
 
-          const fd = new b2.FixtureDef();
+          const fd = new b2.b2FixtureDef();
           fd.shape = shape;
           fd.density = 20.0;
           fd.restitution = 0.05;
 
-          const bd = new b2.BodyDef();
-          bd.type = b2.BodyType.b2_dynamicBody;
+          const bd = new b2.b2BodyDef();
+          bd.type = b2.b2BodyType.b2_dynamicBody;
           bd.bullet = true;
           bd.position.Set(-31.0, 5.0);
 
           this.m_bullet = this.m_world.CreateBody(bd);
           this.m_bullet.CreateFixture(fd);
 
-          this.m_bullet.SetLinearVelocity(new b2.Vec2(400.0, 0.0));
+          this.m_bullet.SetLinearVelocity(new b2.b2Vec2(400.0, 0.0));
         }
         break;
       case "b":
@@ -130,23 +130,23 @@ export class BoxStack extends testbed.Test {
     //  }
 
     //  {
-    //    const shape = new b2.CircleShape();
+    //    const shape = new b2.b2CircleShape();
     //    shape.m_radius = 0.25;
 
-    //    const fd = new b2.FixtureDef();
+    //    const fd = new b2.b2FixtureDef();
     //    fd.shape = shape;
     //    fd.density = 20.0;
     //    fd.restitution = 0.05;
 
-    //    const bd = new b2.BodyDef();
-    //    bd.type = b2.BodyType.b2_dynamicBody;
+    //    const bd = new b2.b2BodyDef();
+    //    bd.type = b2.b2BodyType.b2_dynamicBody;
     //    bd.bullet = true;
     //    bd.position.Set(-31.0, 5.0);
 
     //    this.m_bullet = this.m_world.CreateBody(bd);
     //    this.m_bullet.CreateFixture(fd);
 
-    //    this.m_bullet.SetLinearVelocity(new b2.Vec2(400.0, 0.0));
+    //    this.m_bullet.SetLinearVelocity(new b2.b2Vec2(400.0, 0.0));
     //  }
     //}
   }

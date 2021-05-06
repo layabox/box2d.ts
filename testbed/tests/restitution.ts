@@ -32,31 +32,31 @@ export class Restitution extends testbed.Test {
     const threshold: number = 10.0;
 
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       const ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
 
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = shape;
       fd.restitutionThreshold = threshold;
       ground.CreateFixture(shape, 0.0);
     }
 
     {
-      const shape = new b2.CircleShape();
+      const shape = new b2.b2CircleShape();
       shape.m_radius = 1.0;
 
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = shape;
       fd.density = 1.0;
 
       const restitution = [0.0, 0.1, 0.3, 0.5, 0.75, 0.9, 1.0];
 
       for (let i = 0; i < 7; ++i) {
-        const bd = new b2.BodyDef();
-        bd.type = b2.BodyType.b2_dynamicBody;
+        const bd = new b2.b2BodyDef();
+        bd.type = b2.b2BodyType.b2_dynamicBody;
         bd.position.Set(-10.0 + 3.0 * i, 20.0);
 
         const body = this.m_world.CreateBody(bd);

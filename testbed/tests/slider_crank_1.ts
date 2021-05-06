@@ -29,7 +29,7 @@ export class SliderCrank1 extends testbed.Test {
 
     let ground = null;
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       bd.position.Set(0.0, 17.0);
       ground = this.m_world.CreateBody(bd);
     }
@@ -39,17 +39,17 @@ export class SliderCrank1 extends testbed.Test {
 
       // Define crank.
       {
-        const shape = new b2.PolygonShape();
+        const shape = new b2.b2PolygonShape();
         shape.SetAsBox(4.0, 1.0);
 
-        const bd = new b2.BodyDef();
-        bd.type = b2.BodyType.b2_dynamicBody;
+        const bd = new b2.b2BodyDef();
+        bd.type = b2.b2BodyType.b2_dynamicBody;
         bd.position.Set(-8.0, 20.0);
         const body = this.m_world.CreateBody(bd);
         body.CreateFixture(shape, 2.0);
 
-        const rjd = new b2.RevoluteJointDef();
-        rjd.Initialize(prevBody, body, new b2.Vec2(-12.0, 20.0));
+        const rjd = new b2.b2RevoluteJointDef();
+        rjd.Initialize(prevBody, body, new b2.b2Vec2(-12.0, 20.0));
         this.m_world.CreateJoint(rjd);
 
         prevBody = body;
@@ -57,17 +57,17 @@ export class SliderCrank1 extends testbed.Test {
 
       // Define connecting rod
       {
-        const shape = new b2.PolygonShape();
+        const shape = new b2.b2PolygonShape();
         shape.SetAsBox(8.0, 1.0);
 
-        const bd = new b2.BodyDef();
-        bd.type = b2.BodyType.b2_dynamicBody;
+        const bd = new b2.b2BodyDef();
+        bd.type = b2.b2BodyType.b2_dynamicBody;
         bd.position.Set(4.0, 20.0);
         const body = this.m_world.CreateBody(bd);
         body.CreateFixture(shape, 2.0);
 
-        const rjd = new b2.RevoluteJointDef();
-        rjd.Initialize(prevBody, body, new b2.Vec2(-4.0, 20.0));
+        const rjd = new b2.b2RevoluteJointDef();
+        rjd.Initialize(prevBody, body, new b2.b2Vec2(-4.0, 20.0));
         this.m_world.CreateJoint(rjd);
 
         prevBody = body;
@@ -75,22 +75,22 @@ export class SliderCrank1 extends testbed.Test {
 
       // Define piston
       {
-        const shape = new b2.PolygonShape();
+        const shape = new b2.b2PolygonShape();
         shape.SetAsBox(3.0, 3.0);
 
-        const bd = new b2.BodyDef();
-        bd.type = b2.BodyType.b2_dynamicBody;
+        const bd = new b2.b2BodyDef();
+        bd.type = b2.b2BodyType.b2_dynamicBody;
         bd.fixedRotation = true;
         bd.position.Set(12.0, 20.0);
         const body = this.m_world.CreateBody(bd);
         body.CreateFixture(shape, 2.0);
 
-        const rjd = new b2.RevoluteJointDef();
-        rjd.Initialize(prevBody, body, new b2.Vec2(12.0, 20.0));
+        const rjd = new b2.b2RevoluteJointDef();
+        rjd.Initialize(prevBody, body, new b2.b2Vec2(12.0, 20.0));
         this.m_world.CreateJoint(rjd);
 
-        const pjd = new b2.PrismaticJointDef();
-        pjd.Initialize(ground, body, new b2.Vec2(12.0, 17.0), new b2.Vec2(1.0, 0.0));
+        const pjd = new b2.b2PrismaticJointDef();
+        pjd.Initialize(ground, body, new b2.b2Vec2(12.0, 17.0), new b2.b2Vec2(1.0, 0.0));
         this.m_world.CreateJoint(pjd);
       }
     }

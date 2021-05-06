@@ -20,7 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import * as b2 from "@box2d";
 
 export class Settings {
   public m_testIndex: number = 0;
@@ -29,16 +28,7 @@ export class Settings {
   public m_hertz: number = 60;
   public m_velocityIterations: number = 8;
   public m_positionIterations: number = 3;
-  // #if B2_ENABLE_PARTICLE
-  // Particle iterations are needed for numerical stability in particle
-  // simulations with small particles and relatively high gravity.
-  // b2CalculateParticleIterations helps to determine the number.
-  public m_particleIterations: number = b2.CalculateParticleIterations(10, 0.04, 1 / this.m_hertz);
-  // #endif
   public m_drawShapes: boolean = true;
-  // #if B2_ENABLE_PARTICLE
-  public m_drawParticles: boolean = true;
-  // #endif
   public m_drawJoints: boolean = true;
   public m_drawAABBs: boolean = false;
   public m_drawContactPoints: boolean = false;
@@ -55,9 +45,6 @@ export class Settings {
   public m_enableSleep: boolean = true;
   public m_pause: boolean = false;
   public m_singleStep: boolean = false;
-  // #if B2_ENABLE_PARTICLE
-  public m_strictContacts: boolean = false;
-  // #endif
 
   public Reset(): void {
     this.m_testIndex = 0;
@@ -66,16 +53,7 @@ export class Settings {
     this.m_hertz = 60;
     this.m_velocityIterations = 8;
     this.m_positionIterations = 3;
-    // #if B2_ENABLE_PARTICLE
-    // Particle iterations are needed for numerical stability in particle
-    // simulations with small particles and relatively high gravity.
-    // b2CalculateParticleIterations helps to determine the number.
-    this.m_particleIterations = b2.CalculateParticleIterations(10, 0.04, 1 / this.m_hertz);
-    // #endif
     this.m_drawShapes = true;
-    // #if B2_ENABLE_PARTICLE
-    this.m_drawParticles = true;
-    // #endif
     this.m_drawJoints = true;
     this.m_drawAABBs = false;
     this.m_drawContactPoints = false;
@@ -83,9 +61,6 @@ export class Settings {
     this.m_drawContactImpulse = false;
     this.m_drawFrictionImpulse = false;
     this.m_drawCOMs = false;
-    // #if B2_ENABLE_CONTROLLER
-    this.m_drawControllers = true;
-    // #endif
     this.m_drawStats = false;
     this.m_drawProfile = false;
     this.m_enableWarmStarting = true;
@@ -94,9 +69,6 @@ export class Settings {
     this.m_enableSleep = true;
     this.m_pause = false;
     this.m_singleStep = false;
-    // #if B2_ENABLE_PARTICLE
-    this.m_strictContacts = false;
-    // #endif
   }
 
   public Save(): void { }

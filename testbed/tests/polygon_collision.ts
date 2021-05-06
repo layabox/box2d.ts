@@ -24,11 +24,11 @@ import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 
 export class PolygonCollision extends testbed.Test {
-  public m_polygonA = new b2.PolygonShape();
-  public m_polygonB = new b2.PolygonShape();
-  public m_transformA = new b2.Transform();
-  public m_transformB = new b2.Transform();
-  public m_positionB = new b2.Vec2();
+  public m_polygonA = new b2.b2PolygonShape();
+  public m_polygonB = new b2.b2PolygonShape();
+  public m_transformA = new b2.b2Transform();
+  public m_transformB = new b2.b2Transform();
+  public m_positionB = new b2.b2Vec2();
   public m_angleB = 0;
 
   constructor() {
@@ -36,7 +36,7 @@ export class PolygonCollision extends testbed.Test {
 
     {
       this.m_polygonA.SetAsBox(0.2, 0.4);
-      this.m_transformA.SetPositionAngle(new b2.Vec2(0.0, 0.0), 0.0);
+      this.m_transformA.SetPositionAngle(new b2.b2Vec2(0.0, 0.0), 0.0);
     }
 
     {
@@ -66,11 +66,11 @@ export class PolygonCollision extends testbed.Test {
         break;
 
       case "q":
-        this.m_angleB += 0.1 * b2.pi;
+        this.m_angleB += 0.1 * b2.b2_pi;
         break;
 
       case "e":
-        this.m_angleB -= 0.1 * b2.pi;
+        this.m_angleB -= 0.1 * b2.b2_pi;
         break;
     }
 
@@ -78,31 +78,31 @@ export class PolygonCollision extends testbed.Test {
   }
 
   public Step(settings: testbed.Settings): void {
-    const manifold = new b2.Manifold();
-    b2.CollidePolygons(manifold, this.m_polygonA, this.m_transformA, this.m_polygonB, this.m_transformB);
+    const manifold = new b2.b2Manifold();
+    b2.b2CollidePolygons(manifold, this.m_polygonA, this.m_transformA, this.m_polygonB, this.m_transformB);
 
-    const worldManifold = new b2.WorldManifold();
+    const worldManifold = new b2.b2WorldManifold();
     worldManifold.Initialize(manifold, this.m_transformA, this.m_polygonA.m_radius, this.m_transformB, this.m_polygonB.m_radius);
 
     testbed.g_debugDraw.DrawString(5, this.m_textLine, `point count = ${manifold.pointCount}`);
     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;
 
     {
-      const color = new b2.Color(0.9, 0.9, 0.9);
+      const color = new b2.b2Color(0.9, 0.9, 0.9);
       const v = [];
       for (let i = 0; i < this.m_polygonA.m_count; ++i) {
-        v[i] = b2.Transform.MulXV(this.m_transformA, this.m_polygonA.m_vertices[i], new b2.Vec2());
+        v[i] = b2.b2Transform.MulXV(this.m_transformA, this.m_polygonA.m_vertices[i], new b2.b2Vec2());
       }
       testbed.g_debugDraw.DrawPolygon(v, this.m_polygonA.m_count, color);
 
       for (let i = 0; i < this.m_polygonB.m_count; ++i) {
-        v[i] = b2.Transform.MulXV(this.m_transformB, this.m_polygonB.m_vertices[i], new b2.Vec2());
+        v[i] = b2.b2Transform.MulXV(this.m_transformB, this.m_polygonB.m_vertices[i], new b2.b2Vec2());
       }
       testbed.g_debugDraw.DrawPolygon(v, this.m_polygonB.m_count, color);
     }
 
     for (let i = 0; i < manifold.pointCount; ++i) {
-      testbed.g_debugDraw.DrawPoint(worldManifold.points[i], 4.0, new b2.Color(0.9, 0.3, 0.3));
+      testbed.g_debugDraw.DrawPoint(worldManifold.points[i], 4.0, new b2.b2Color(0.9, 0.3, 0.3));
     }
 
     super.Step(settings);

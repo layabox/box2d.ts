@@ -32,13 +32,13 @@ export class WheelJoint extends testbed.Test {
   constructor() {
     super();
 
-    let ground: b2.Body | null = null;
+    let ground: b2.b2Body | null = null;
     {
-      const bd: b2.BodyDef = new b2.BodyDef();
+      const bd: b2.b2BodyDef = new b2.b2BodyDef();
       ground = this.m_world.CreateBody(bd);
 
-      const shape: b2.EdgeShape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape: b2.b2EdgeShape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
       ground.CreateFixture(shape, 0.0);
     }
 
@@ -47,20 +47,20 @@ export class WheelJoint extends testbed.Test {
     this.m_motorSpeed = 10.0;
 
     {
-      const shape: b2.CircleShape = new b2.CircleShape();
+      const shape: b2.b2CircleShape = new b2.b2CircleShape();
       shape.m_radius = 2.0;
 
-      const bd: b2.BodyDef = new b2.BodyDef();
+      const bd: b2.b2BodyDef = new b2.b2BodyDef();
       bd.type = b2.dynamicBody;
       bd.position.Set(0.0, 10.0);
       bd.allowSleep = false;
-      const body: b2.Body = this.m_world.CreateBody(bd);
+      const body: b2.b2Body = this.m_world.CreateBody(bd);
       body.CreateFixture(shape, 5.0);
 
-      const jd: b2.WheelJointDef = new b2.WheelJointDef();
+      const jd: b2.b2WheelJointDef = new b2.b2WheelJointDef();
 
       // Horizontal
-      jd.Initialize(ground, body, bd.position, new b2.Vec2(0.0, 1.0));
+      jd.Initialize(ground, body, bd.position, new b2.b2Vec2(0.0, 1.0));
 
       jd.motorSpeed = this.m_motorSpeed;
       jd.maxMotorTorque = 10000.0;
@@ -71,15 +71,15 @@ export class WheelJoint extends testbed.Test {
 
       const hertz: number = 1.0;
       const dampingRatio: number = 0.7;
-      b2.LinearStiffness(jd, hertz, dampingRatio, ground, body);
+      b2.b2LinearStiffness(jd, hertz, dampingRatio, ground, body);
 
       this.m_joint = this.m_world.CreateJoint(jd);
     }
   }
 
-  public m_joint: b2.WheelJoint;
+  public m_joint: b2.b2WheelJoint;
 
-  private static Step_s_F: b2.Vec2 = new b2.Vec2();
+  private static Step_s_F: b2.b2Vec2 = new b2.b2Vec2();
   public Step(settings: testbed.Settings): void {
     super.Step(settings);
 
@@ -88,7 +88,7 @@ export class WheelJoint extends testbed.Test {
     testbed.g_debugDraw.DrawString(5, this.m_textLine, `Motor Torque = ${torque.toFixed(0)}`);
     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;
 
-    const F: b2.Vec2 = this.m_joint.GetReactionForce(settings.m_hertz, WheelJoint.Step_s_F);
+    const F: b2.b2Vec2 = this.m_joint.GetReactionForce(settings.m_hertz, WheelJoint.Step_s_F);
     // g_debugDraw.DrawString(5, m_textLine, "Reaction Force = (%4.1f, %4.1f)", F.x, F.y);
     testbed.g_debugDraw.DrawString(5, this.m_textLine, `Reaction Force = (${F.x.toFixed(1)}, ${F.y.toFixed(1)})`);
     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;

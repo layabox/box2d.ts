@@ -27,13 +27,13 @@ import * as testbed from "@testbed";
 export class Breakable extends testbed.Test {
   public static readonly e_count = 7;
 
-  public readonly m_body1: b2.Body;
-  public readonly m_velocity = new b2.Vec2();
+  public readonly m_body1: b2.b2Body;
+  public readonly m_velocity = new b2.b2Vec2();
   public m_angularVelocity = 0;
-  public readonly m_shape1 = new b2.PolygonShape();
-  public readonly m_shape2 = new b2.PolygonShape();
-  public m_piece1: b2.Fixture | null = null;
-  public m_piece2: b2.Fixture | null = null;
+  public readonly m_shape1 = new b2.b2PolygonShape();
+  public readonly m_shape2 = new b2.b2PolygonShape();
+  public m_piece1: b2.b2Fixture | null = null;
+  public m_piece2: b2.b2Fixture | null = null;
   public m_broke = false;
   public m_break = false;
 
@@ -42,33 +42,33 @@ export class Breakable extends testbed.Test {
 
     // Ground body
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       const ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
       ground.CreateFixture(shape, 0.0);
     }
 
     // Breakable dynamic body
     {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.position.Set(0.0, 40.0);
-      bd.angle = 0.25 * b2.pi;
+      bd.angle = 0.25 * b2.b2_pi;
       this.m_body1 = this.m_world.CreateBody(bd);
 
-      this.m_shape1 = new b2.PolygonShape();
-      this.m_shape1.SetAsBox(0.5, 0.5, new b2.Vec2(-0.5, 0.0), 0.0);
+      this.m_shape1 = new b2.b2PolygonShape();
+      this.m_shape1.SetAsBox(0.5, 0.5, new b2.b2Vec2(-0.5, 0.0), 0.0);
       this.m_piece1 = this.m_body1.CreateFixture(this.m_shape1, 1.0);
 
-      this.m_shape2 = new b2.PolygonShape();
-      this.m_shape2.SetAsBox(0.5, 0.5, new b2.Vec2(0.5, 0.0), 0.0);
+      this.m_shape2 = new b2.b2PolygonShape();
+      this.m_shape2.SetAsBox(0.5, 0.5, new b2.b2Vec2(0.5, 0.0), 0.0);
       this.m_piece2 = this.m_body1.CreateFixture(this.m_shape2, 1.0);
     }
   }
 
-  public PostSolve(contact: b2.Contact, impulse: b2.ContactImpulse) {
+  public PostSolve(contact: b2.b2Contact, impulse: b2.b2ContactImpulse) {
     if (this.m_broke) {
       // The body already broke.
       return;
@@ -79,7 +79,7 @@ export class Breakable extends testbed.Test {
 
     let maxImpulse = 0.0;
     for (let i = 0; i < count; ++i) {
-      maxImpulse = b2.Max(maxImpulse, impulse.normalImpulses[i]);
+      maxImpulse = b2.b2Max(maxImpulse, impulse.normalImpulses[i]);
     }
 
     if (maxImpulse > 40.0) {
@@ -98,8 +98,8 @@ export class Breakable extends testbed.Test {
     body1.DestroyFixture(this.m_piece2);
     this.m_piece2 = null;
 
-    const bd = new b2.BodyDef();
-    bd.type = b2.BodyType.b2_dynamicBody;
+    const bd = new b2.b2BodyDef();
+    bd.type = b2.b2BodyType.b2_dynamicBody;
     bd.position.Copy(body1.GetPosition());
     bd.angle = body1.GetAngle();
 
@@ -111,8 +111,8 @@ export class Breakable extends testbed.Test {
     const center1 = body1.GetWorldCenter();
     const center2 = body2.GetWorldCenter();
 
-    const velocity1 = b2.Vec2.AddVCrossSV(this.m_velocity, this.m_angularVelocity, b2.Vec2.SubVV(center1, center, b2.Vec2.s_t0), new b2.Vec2());
-    const velocity2 = b2.Vec2.AddVCrossSV(this.m_velocity, this.m_angularVelocity, b2.Vec2.SubVV(center2, center, b2.Vec2.s_t0), new b2.Vec2());
+    const velocity1 = b2.b2Vec2.AddVCrossSV(this.m_velocity, this.m_angularVelocity, b2.b2Vec2.SubVV(center1, center, b2.b2Vec2.s_t0), new b2.b2Vec2());
+    const velocity2 = b2.b2Vec2.AddVCrossSV(this.m_velocity, this.m_angularVelocity, b2.b2Vec2.SubVV(center2, center, b2.b2Vec2.s_t0), new b2.b2Vec2());
 
     body1.SetAngularVelocity(this.m_angularVelocity);
     body1.SetLinearVelocity(velocity1);

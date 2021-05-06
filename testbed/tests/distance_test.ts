@@ -24,12 +24,12 @@ import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 
 export class DistanceTest extends testbed.Test {
-  public m_positionB = new b2.Vec2();
+  public m_positionB = new b2.b2Vec2();
   public m_angleB = 0;
-  public m_transformA = new b2.Transform();
-  public m_transformB = new b2.Transform();
-  public m_polygonA = new b2.PolygonShape();
-  public m_polygonB = new b2.PolygonShape();
+  public m_transformA = new b2.b2Transform();
+  public m_transformB = new b2.b2Transform();
+  public m_polygonA = new b2.b2PolygonShape();
+  public m_polygonB = new b2.b2PolygonShape();
 
   constructor() {
     super();
@@ -68,11 +68,11 @@ export class DistanceTest extends testbed.Test {
         break;
 
       case "q":
-        this.m_angleB += 0.1 * b2.pi;
+        this.m_angleB += 0.1 * b2.b2_pi;
         break;
 
       case "e":
-        this.m_angleB -= 0.1 * b2.pi;
+        this.m_angleB -= 0.1 * b2.b2_pi;
         break;
     }
 
@@ -82,16 +82,16 @@ export class DistanceTest extends testbed.Test {
   public Step(settings: testbed.Settings): void {
     super.Step(settings);
 
-    const input = new b2.DistanceInput();
+    const input = new b2.b2DistanceInput();
     input.proxyA.SetShape(this.m_polygonA, 0);
     input.proxyB.SetShape(this.m_polygonB, 0);
     input.transformA.Copy(this.m_transformA);
     input.transformB.Copy(this.m_transformB);
     input.useRadii = true;
-    const cache = new b2.SimplexCache();
+    const cache = new b2.b2SimplexCache();
     cache.count = 0;
-    const output = new b2.DistanceOutput();
-    b2.Distance(output, cache, input);
+    const output = new b2.b2DistanceOutput();
+    b2.b2Distance(output, cache, input);
 
     testbed.g_debugDraw.DrawString(5, this.m_textLine, `distance = ${output.distance.toFixed(2)}`);
     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;
@@ -100,15 +100,15 @@ export class DistanceTest extends testbed.Test {
     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;
 
     {
-      const color = new b2.Color(0.9, 0.9, 0.9);
+      const color = new b2.b2Color(0.9, 0.9, 0.9);
       const v = [];
       for (let i = 0; i < this.m_polygonA.m_count; ++i) {
-        v[i] = b2.Transform.MulXV(this.m_transformA, this.m_polygonA.m_vertices[i], new b2.Vec2());
+        v[i] = b2.b2Transform.MulXV(this.m_transformA, this.m_polygonA.m_vertices[i], new b2.b2Vec2());
       }
       testbed.g_debugDraw.DrawPolygon(v, this.m_polygonA.m_count, color);
 
       for (let i = 0; i < this.m_polygonB.m_count; ++i) {
-        v[i] = b2.Transform.MulXV(this.m_transformB, this.m_polygonB.m_vertices[i], new b2.Vec2());
+        v[i] = b2.b2Transform.MulXV(this.m_transformB, this.m_polygonB.m_vertices[i], new b2.b2Vec2());
       }
       testbed.g_debugDraw.DrawPolygon(v, this.m_polygonB.m_count, color);
     }
@@ -116,10 +116,10 @@ export class DistanceTest extends testbed.Test {
     const x1 = output.pointA;
     const x2 = output.pointB;
 
-    const c1 = new b2.Color(1.0, 0.0, 0.0);
+    const c1 = new b2.b2Color(1.0, 0.0, 0.0);
     testbed.g_debugDraw.DrawPoint(x1, 4.0, c1);
 
-    const c2 = new b2.Color(1.0, 1.0, 0.0);
+    const c2 = new b2.b2Color(1.0, 1.0, 0.0);
     testbed.g_debugDraw.DrawPoint(x2, 4.0, c2);
   }
 

@@ -24,60 +24,60 @@ import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 
 export class BodyTypes extends testbed.Test {
-  public m_attachment: b2.Body;
-  public m_platform: b2.Body;
+  public m_attachment: b2.b2Body;
+  public m_platform: b2.b2Body;
   public m_speed = 0;
 
   constructor() {
     super();
 
-    const bd = new b2.BodyDef();
+    const bd = new b2.b2BodyDef();
     const ground = this.m_world.CreateBody(bd);
 
-    const shape = new b2.EdgeShape();
-    shape.SetTwoSided(new b2.Vec2(-20.0, 0.0), new b2.Vec2(20.0, 0.0));
+    const shape = new b2.b2EdgeShape();
+    shape.SetTwoSided(new b2.b2Vec2(-20.0, 0.0), new b2.b2Vec2(20.0, 0.0));
 
-    const fd = new b2.FixtureDef();
+    const fd = new b2.b2FixtureDef();
     fd.shape = shape;
 
     ground.CreateFixture(fd);
 
     // Define attachment
     {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.position.Set(0.0, 3.0);
       this.m_attachment = this.m_world.CreateBody(bd);
 
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(0.5, 2.0);
       this.m_attachment.CreateFixture(shape, 2.0);
     }
 
     // Define platform
     {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.position.Set(-4.0, 5.0);
       this.m_platform = this.m_world.CreateBody(bd);
 
-      const shape = new b2.PolygonShape();
-      shape.SetAsBox(0.5, 4.0, new b2.Vec2(4.0, 0.0), 0.5 * b2.pi);
+      const shape = new b2.b2PolygonShape();
+      shape.SetAsBox(0.5, 4.0, new b2.b2Vec2(4.0, 0.0), 0.5 * b2.b2_pi);
 
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = shape;
       fd.friction = 0.6;
       fd.density = 2.0;
       this.m_platform.CreateFixture(fd);
 
-      const rjd = new b2.RevoluteJointDef();
-      rjd.Initialize(this.m_attachment, this.m_platform, new b2.Vec2(0.0, 5.0));
+      const rjd = new b2.b2RevoluteJointDef();
+      rjd.Initialize(this.m_attachment, this.m_platform, new b2.b2Vec2(0.0, 5.0));
       rjd.maxMotorTorque = 50.0;
       rjd.enableMotor = true;
       this.m_world.CreateJoint(rjd);
 
-      const pjd = new b2.PrismaticJointDef();
-      pjd.Initialize(ground, this.m_platform, new b2.Vec2(0.0, 5.0), new b2.Vec2(1.0, 0.0));
+      const pjd = new b2.b2PrismaticJointDef();
+      pjd.Initialize(ground, this.m_platform, new b2.b2Vec2(0.0, 5.0), new b2.b2Vec2(1.0, 0.0));
 
       pjd.maxMotorForce = 1000.0;
       pjd.enableMotor = true;
@@ -92,15 +92,15 @@ export class BodyTypes extends testbed.Test {
 
     // Create a payload
     {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.position.Set(0.0, 8.0);
       const body = this.m_world.CreateBody(bd);
 
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(0.75, 0.75);
 
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = shape;
       fd.friction = 0.6;
       fd.density = 2.0;
@@ -112,16 +112,16 @@ export class BodyTypes extends testbed.Test {
   public Keyboard(key: string) {
     switch (key) {
       case "d":
-        this.m_platform.SetType(b2.BodyType.b2_dynamicBody);
+        this.m_platform.SetType(b2.b2BodyType.b2_dynamicBody);
         break;
 
       case "s":
-        this.m_platform.SetType(b2.BodyType.b2_staticBody);
+        this.m_platform.SetType(b2.b2BodyType.b2_staticBody);
         break;
 
       case "k":
-        this.m_platform.SetType(b2.BodyType.b2_kinematicBody);
-        this.m_platform.SetLinearVelocity(new b2.Vec2(-this.m_speed, 0.0));
+        this.m_platform.SetType(b2.b2BodyType.b2_kinematicBody);
+        this.m_platform.SetLinearVelocity(new b2.b2Vec2(-this.m_speed, 0.0));
         this.m_platform.SetAngularVelocity(0.0);
         break;
     }
@@ -129,13 +129,13 @@ export class BodyTypes extends testbed.Test {
 
   public Step(settings: testbed.Settings): void {
     // Drive the kinematic body.
-    if (this.m_platform.GetType() === b2.BodyType.b2_kinematicBody) {
+    if (this.m_platform.GetType() === b2.b2BodyType.b2_kinematicBody) {
       const p = this.m_platform.GetTransform().p;
       const v = this.m_platform.GetLinearVelocity();
 
       if ((p.x < -10.0 && v.x < 0.0) ||
         (p.x > 10.0 && v.x > 0.0)) {
-        this.m_platform.SetLinearVelocity(new b2.Vec2(-v.x, v.y));
+        this.m_platform.SetLinearVelocity(new b2.b2Vec2(-v.x, v.y));
       }
     }
 

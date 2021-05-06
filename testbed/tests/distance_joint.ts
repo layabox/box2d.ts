@@ -25,7 +25,7 @@ import * as testbed from "@testbed";
 
 // This tests distance joints, body destruction, and joint destruction.
 export class DistanceJoint extends testbed.Test {
-  public m_joint: b2.DistanceJoint;
+  public m_joint: b2.b2DistanceJoint;
   public m_length: number;
   public m_minLength: number;
   public m_maxLength: number;
@@ -38,36 +38,36 @@ export class DistanceJoint extends testbed.Test {
     let ground = null;
 
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
       ground.CreateFixture(shape, 0.0);
     }
 
     {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.angularDamping = 0.1;
 
       bd.position.Set(0.0, 5.0);
       const body = this.m_world.CreateBody(bd);
 
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(0.5, 0.5);
       body.CreateFixture(shape, 5.0);
 
       this.m_hertz = 1.0;
       this.m_dampingRatio = 0.7;
 
-      const jd = new b2.DistanceJointDef();
-      jd.Initialize(ground, body, new b2.Vec2(0.0, 15.0), bd.position);
+      const jd = new b2.b2DistanceJointDef();
+      jd.Initialize(ground, body, new b2.b2Vec2(0.0, 15.0), bd.position);
       jd.collideConnected = true;
       this.m_length = jd.length;
       this.m_minLength = jd.minLength = jd.length - 3;
       this.m_maxLength = jd.maxLength = jd.length + 3;
-      b2.LinearStiffness(jd, this.m_hertz, this.m_dampingRatio, jd.bodyA, jd.bodyB);
+      b2.b2LinearStiffness(jd, this.m_hertz, this.m_dampingRatio, jd.bodyA, jd.bodyB);
       this.m_joint = this.m_world.CreateJoint(jd);
     }
   }

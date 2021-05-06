@@ -4,7 +4,7 @@ import * as testbed from "@testbed";
 export class Empty extends testbed.Test {
   constructor() {
     super();
-    console.log(b2.version);
+    console.log(b2.b2_version);
   }
 
   public static Create() {

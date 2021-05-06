@@ -25,14 +25,14 @@ import * as testbed from "@testbed";
 
 ///
 export class Rope extends testbed.Test {
-  public readonly m_rope1: b2.Rope = new b2.Rope();
-  public readonly m_rope2: b2.Rope = new b2.Rope();
-  public readonly m_tuning1: b2.RopeTuning = new b2.RopeTuning();
-  public readonly m_tuning2: b2.RopeTuning = new b2.RopeTuning();
+  public readonly m_rope1: b2.b2Rope = new b2.b2Rope();
+  public readonly m_rope2: b2.b2Rope = new b2.b2Rope();
+  public readonly m_tuning1: b2.b2RopeTuning = new b2.b2RopeTuning();
+  public readonly m_tuning2: b2.b2RopeTuning = new b2.b2RopeTuning();
   public m_iterations1: number = 0;
   public m_iterations2: number = 0;
-  public readonly m_position1: b2.Vec2 = new b2.Vec2();
-  public readonly m_position2: b2.Vec2 = new b2.Vec2();
+  public readonly m_position1: b2.b2Vec2 = new b2.b2Vec2();
+  public readonly m_position2: b2.b2Vec2 = new b2.b2Vec2();
   public m_speed: number = 0.0;
 
   constructor() {
@@ -40,9 +40,9 @@ export class Rope extends testbed.Test {
     const N: number = 20;
     const L: number = 0.5;
     // b2Vec2 vertices[N];
-    const vertices: b2.Vec2[] = b2.Vec2.MakeArray(N);
+    const vertices: b2.b2Vec2[] = b2.b2Vec2.MakeArray(N);
     // float masses[N];
-    const masses: number[] = b2.MakeNumberArray(N);
+    const masses: number[] = b2.b2MakeNumberArray(N);
 
     for (let i = 0; i < N; ++i) {
       vertices[i].Set(0.0, L * (N - i));
@@ -76,9 +76,9 @@ export class Rope extends testbed.Test {
     this.m_position1.Set(-5.0, 15.0);
     this.m_position2.Set(5.0, 15.0);
 
-    const def: b2.RopeDef = new b2.RopeDef();
+    const def: b2.b2RopeDef = new b2.b2RopeDef();
     // def.vertices = vertices;
-    vertices.forEach((value: b2.Vec2) => def.vertices.push(value));
+    vertices.forEach((value: b2.b2Vec2) => def.vertices.push(value));
     def.count = N;
     def.gravity.Set(0.0, -10.0);
     // def.masses = masses;
@@ -574,7 +574,7 @@ export const testIndex: number = testbed.RegisterTest("Rope", "Bending", Rope.Cr
 
 
 // export class OldRope extends testbed.Test {
-//   // public this.m_rope = new b2.Rope();
+//   // public this.m_rope = new b2.b2Rope();
 //   public m_angle = 0.0;
 
 //   constructor() {
@@ -582,10 +582,10 @@ export const testIndex: number = testbed.RegisterTest("Rope", "Bending", Rope.Cr
 
 //     /*const int32*/
 //     const N = 40;
-//     /*b2.Vec2[]*/
-//     const vertices = b2.Vec2.MakeArray(N);
+//     /*b2.b2Vec2[]*/
+//     const vertices = b2.b2Vec2.MakeArray(N);
 //     /*float32[]*/
-//     const masses = b2.MakeNumberArray(N);
+//     const masses = b2.b2MakeNumberArray(N);
 
 //     for (let i = 0; i < N; ++i) {
 //       vertices[i].Set(0.0, 20.0 - 0.25 * i);
@@ -594,8 +594,8 @@ export const testIndex: number = testbed.RegisterTest("Rope", "Bending", Rope.Cr
 //     masses[0] = 0.0;
 //     masses[1] = 0.0;
 
-//     /*b2.RopeDef*/
-//     // const def = new b2.RopeDef();
+//     /*b2.b2RopeDef*/
+//     // const def = new b2.b2RopeDef();
 //     // def.vertices = vertices;
 //     // def.count = N;
 //     // def.gravity.Set(0.0, -10.0);
@@ -613,12 +613,12 @@ export const testIndex: number = testbed.RegisterTest("Rope", "Bending", Rope.Cr
 //   public Keyboard(key: string) {
 //     switch (key) {
 //       case "q":
-//         this.m_angle = b2.Max(-b2.pi, this.m_angle - 0.05 * b2.pi);
+//         this.m_angle = b2.b2Max(-b2.b2_pi, this.m_angle - 0.05 * b2.b2_pi);
 //         // this.m_rope.SetAngle(this.m_angle);
 //         break;
 
 //       case "e":
-//         this.m_angle = b2.Min(b2.pi, this.m_angle + 0.05 * b2.pi);
+//         this.m_angle = b2.Min(b2.b2_pi, this.m_angle + 0.05 * b2.b2_pi);
 //         // this.m_rope.SetAngle(this.m_angle);
 //         break;
 //     }
@@ -638,7 +638,7 @@ export const testIndex: number = testbed.RegisterTest("Rope", "Bending", Rope.Cr
 
 //     testbed.g_debugDraw.DrawString(5, this.m_textLine, "Press (q,e) to adjust target angle");
 //     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;
-//     testbed.g_debugDraw.DrawString(5, this.m_textLine, `Target angle = ${(this.m_angle * 180.0 / b2.pi).toFixed(2)} degrees`);
+//     testbed.g_debugDraw.DrawString(5, this.m_textLine, `Target angle = ${(this.m_angle * 180.0 / b2.b2_pi).toFixed(2)} degrees`);
 //     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;
 //   }
 

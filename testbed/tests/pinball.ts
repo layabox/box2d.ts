@@ -26,9 +26,9 @@ import * as testbed from "@testbed";
 /// This tests bullet collision and provides an example of a gameplay scenario.
 /// This also uses a loop shape.
 export class Pinball extends testbed.Test {
-  public m_leftJoint: b2.RevoluteJoint;
-  public m_rightJoint: b2.RevoluteJoint;
-  public m_ball: b2.Body;
+  public m_leftJoint: b2.b2RevoluteJoint;
+  public m_rightJoint: b2.b2RevoluteJoint;
+  public m_ball: b2.b2Body;
   public m_button: boolean = false;
 
   constructor() {
@@ -37,19 +37,19 @@ export class Pinball extends testbed.Test {
     // Ground body
     let ground = null;
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       ground = this.m_world.CreateBody(bd);
 
-      const vs = b2.Vec2.MakeArray(5);
+      const vs = b2.b2Vec2.MakeArray(5);
       vs[0].Set(-8.0, 6.0);
       vs[1].Set(-8.0, 20.0);
       vs[2].Set(8.0, 20.0);
       vs[3].Set(8.0, 6.0);
       vs[4].Set(0.0, -2.0);
 
-      const loop = new b2.ChainShape();
+      const loop = new b2.b2ChainShape();
       loop.CreateLoop(vs, 5);
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = loop;
       fd.density = 0.0;
       ground.CreateFixture(fd);
@@ -57,11 +57,11 @@ export class Pinball extends testbed.Test {
 
     // Flippers
     {
-      const p1 = new b2.Vec2(-2.0, 0.0),
-        p2 = new b2.Vec2(2.0, 0.0);
+      const p1 = new b2.b2Vec2(-2.0, 0.0),
+        p2 = new b2.b2Vec2(2.0, 0.0);
 
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
 
       bd.position.Copy(p1);
       const leftFlipper = this.m_world.CreateBody(bd);
@@ -69,17 +69,17 @@ export class Pinball extends testbed.Test {
       bd.position.Copy(p2);
       const rightFlipper = this.m_world.CreateBody(bd);
 
-      const box = new b2.PolygonShape();
+      const box = new b2.b2PolygonShape();
       box.SetAsBox(1.75, 0.1);
 
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = box;
       fd.density = 1.0;
 
       leftFlipper.CreateFixture(fd);
       rightFlipper.CreateFixture(fd);
 
-      const jd = new b2.RevoluteJointDef();
+      const jd = new b2.b2RevoluteJointDef();
       jd.bodyA = ground;
       jd.localAnchorB.SetZero();
       jd.enableMotor = true;
@@ -89,31 +89,31 @@ export class Pinball extends testbed.Test {
       jd.motorSpeed = 0.0;
       jd.localAnchorA.Copy(p1);
       jd.bodyB = leftFlipper;
-      jd.lowerAngle = -30.0 * b2.pi / 180.0;
-      jd.upperAngle = 5.0 * b2.pi / 180.0;
+      jd.lowerAngle = -30.0 * b2.b2_pi / 180.0;
+      jd.upperAngle = 5.0 * b2.b2_pi / 180.0;
       this.m_leftJoint = this.m_world.CreateJoint(jd);
 
       jd.motorSpeed = 0.0;
       jd.localAnchorA.Copy(p2);
       jd.bodyB = rightFlipper;
-      jd.lowerAngle = -5.0 * b2.pi / 180.0;
-      jd.upperAngle = 30.0 * b2.pi / 180.0;
+      jd.lowerAngle = -5.0 * b2.b2_pi / 180.0;
+      jd.upperAngle = 30.0 * b2.b2_pi / 180.0;
       this.m_rightJoint = this.m_world.CreateJoint(jd);
     }
 
     // Circle character
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       bd.position.Set(1.0, 15.0);
-      bd.type = b2.BodyType.b2_dynamicBody;
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.bullet = true;
 
       this.m_ball = this.m_world.CreateBody(bd);
 
-      const shape = new b2.CircleShape();
+      const shape = new b2.b2CircleShape();
       shape.m_radius = 0.2;
 
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = shape;
       fd.density = 1.0;
       this.m_ball.CreateFixture(fd);

@@ -40,8 +40,8 @@ export class Main {
   public m_ctrl: boolean = false;
   public m_lMouseDown: boolean = false;
   public m_rMouseDown: boolean = false;
-  public readonly m_projection0: b2.Vec2 = new b2.Vec2();
-  public readonly m_viewCenter0: b2.Vec2 = new b2.Vec2();
+  public readonly m_projection0: b2.b2Vec2 = new b2.b2Vec2();
+  public readonly m_viewCenter0: b2.b2Vec2 = new b2.b2Vec2();
   public m_demo_mode: boolean = false;
   public m_demo_time: number = 0;
   public m_max_demo_time: number = 1000 * 10;
@@ -90,7 +90,7 @@ export class Main {
     const title_div: HTMLDivElement = main_div.appendChild(document.createElement("div"));
     title_div.style.textAlign = "center";
     title_div.style.color = "grey";
-    title_div.innerHTML = "Box2D Testbed version " + b2.version.toString();
+    title_div.innerHTML = "Box2D Testbed version " + b2.b2_version.toString();
 
     const view_div: HTMLDivElement = main_div.appendChild(document.createElement("div"));
 
@@ -143,7 +143,7 @@ export class Main {
       const option: HTMLOptionElement = test_options[i];
       test_select.add(option);
     }
-    test_select.selectedIndex = this.m_settings.m_testIndex = 77;
+    test_select.selectedIndex = this.m_settings.m_testIndex = 0;
     test_select.addEventListener("change", (e: Event): void => {
       this.m_settings.m_testIndex = test_select.selectedIndex;
       this.LoadTest();
@@ -178,9 +178,6 @@ export class Main {
     const number_input_table: HTMLTableElement = controls_div.appendChild(document.createElement("table"));
     connect_number_input(number_input_table, "Vel Iters", this.m_settings.m_velocityIterations, (value: number): void => { this.m_settings.m_velocityIterations = value; }, 1, 20, 1);
     connect_number_input(number_input_table, "Pos Iters", this.m_settings.m_positionIterations, (value: number): void => { this.m_settings.m_positionIterations = value; }, 1, 20, 1);
-    // #if B2_ENABLE_PARTICLE
-    connect_number_input(number_input_table, "Pcl Iters", this.m_settings.m_particleIterations, (value: number): void => { this.m_settings.m_particleIterations = value; }, 1, 100, 1);
-    // #endif
     connect_number_input(number_input_table, "Hertz", this.m_settings.m_hertz, (value: number): void => { this.m_settings.m_hertz = value; }, 10, 120, 1);
 
     // simulation checkbox inputs
@@ -201,18 +198,12 @@ export class Main {
     connect_checkbox_input(controls_div, "Warm Starting", this.m_settings.m_enableWarmStarting, (value: boolean): void => { this.m_settings.m_enableWarmStarting = value; });
     connect_checkbox_input(controls_div, "Time of Impact", this.m_settings.m_enableContinuous, (value: boolean): void => { this.m_settings.m_enableContinuous = value; });
     connect_checkbox_input(controls_div, "Sub-Stepping", this.m_settings.m_enableSubStepping, (value: boolean): void => { this.m_settings.m_enableSubStepping = value; });
-    // #if B2_ENABLE_PARTICLE
-    connect_checkbox_input(controls_div, "Strict Particle/Body Contacts", this.m_settings.m_strictContacts, (value: boolean): void => { this.m_settings.m_strictContacts = value; });
-    // #endif
 
     // draw checkbox inputs
     const draw_fieldset: HTMLFieldSetElement = controls_div.appendChild(document.createElement("fieldset"));
     const draw_legend: HTMLLegendElement = draw_fieldset.appendChild(document.createElement("legend"));
     draw_legend.appendChild(document.createTextNode("Draw"));
     connect_checkbox_input(draw_fieldset, "Shapes", this.m_settings.m_drawShapes, (value: boolean): void => { this.m_settings.m_drawShapes = value; });
-    // #if B2_ENABLE_PARTICLE
-    connect_checkbox_input(draw_fieldset, "Particles", this.m_settings.m_drawParticles, (value: boolean): void => { this.m_settings.m_drawParticles = value; });
-    // #endif
     connect_checkbox_input(draw_fieldset, "Joints", this.m_settings.m_drawJoints, (value: boolean): void => { this.m_settings.m_drawJoints = value; });
     connect_checkbox_input(draw_fieldset, "AABBs", this.m_settings.m_drawAABBs, (value: boolean): void => { this.m_settings.m_drawAABBs = value; });
     connect_checkbox_input(draw_fieldset, "Contact Points", this.m_settings.m_drawContactPoints, (value: boolean): void => { this.m_settings.m_drawContactPoints = value; });
@@ -265,11 +256,11 @@ export class Main {
   public HomeCamera(): void {
     g_camera.m_zoom = (this.m_test) ? (this.m_test.GetDefaultViewZoom()) : (1.0);
     g_camera.m_center.Set(0, 20 * g_camera.m_zoom);
-    ///g_camera.m_roll.SetAngle(b2.DegToRad(0));
+    ///g_camera.m_roll.SetAngle(b2.b2DegToRad(0));
   }
 
-  public MoveCamera(move: b2.Vec2): void {
-    const position: b2.Vec2 = g_camera.m_center.Clone();
+  public MoveCamera(move: b2.b2Vec2): void {
+    const position: b2.b2Vec2 = g_camera.m_center.Clone();
     ///move.SelfRotate(g_camera.m_roll.GetAngle());
     position.SelfAdd(move);
     g_camera.m_center.Copy(position);
@@ -282,14 +273,14 @@ export class Main {
 
   public ZoomCamera(zoom: number): void {
     g_camera.m_zoom *= zoom;
-    g_camera.m_zoom = b2.Clamp(g_camera.m_zoom, 0.02, 20);
+    g_camera.m_zoom = b2.b2Clamp(g_camera.m_zoom, 0.02, 20);
   }
 
-  private m_mouse = new b2.Vec2();
+  private m_mouse = new b2.b2Vec2();
 
   public HandleMouseMove(e: MouseEvent): void {
-    const element: b2.Vec2 = new b2.Vec2(e.clientX, e.clientY);
-    const world: b2.Vec2 = g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+    const element: b2.b2Vec2 = new b2.b2Vec2(e.clientX, e.clientY);
+    const world: b2.b2Vec2 = g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
 
     this.m_mouse.Copy(element);
 
@@ -299,16 +290,16 @@ export class Main {
 
     if (this.m_rMouseDown) {
       // m_center = viewCenter0 - (projection - projection0);
-      const projection: b2.Vec2 = g_camera.ConvertElementToProjection(element, new b2.Vec2());
-      const diff: b2.Vec2 = b2.Vec2.SubVV(projection, this.m_projection0, new b2.Vec2());
-      const center: b2.Vec2 = b2.Vec2.SubVV(this.m_viewCenter0, diff, new b2.Vec2());
+      const projection: b2.b2Vec2 = g_camera.ConvertElementToProjection(element, new b2.b2Vec2());
+      const diff: b2.b2Vec2 = b2.b2Vec2.SubVV(projection, this.m_projection0, new b2.b2Vec2());
+      const center: b2.b2Vec2 = b2.b2Vec2.SubVV(this.m_viewCenter0, diff, new b2.b2Vec2());
       g_camera.m_center.Copy(center);
     }
   }
 
   public HandleMouseDown(e: MouseEvent): void {
-    const element: b2.Vec2 = new b2.Vec2(e.clientX, e.clientY);
-    const world: b2.Vec2 = g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+    const element: b2.b2Vec2 = new b2.b2Vec2(e.clientX, e.clientY);
+    const world: b2.b2Vec2 = g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
 
     switch (e.which) {
     case 1: // left mouse button
@@ -321,7 +312,7 @@ export class Main {
       break;
     case 3: // right mouse button
       this.m_rMouseDown = true;
-      const projection: b2.Vec2 = g_camera.ConvertElementToProjection(element, new b2.Vec2());
+      const projection: b2.b2Vec2 = g_camera.ConvertElementToProjection(element, new b2.b2Vec2());
       this.m_projection0.Copy(projection);
       this.m_viewCenter0.Copy(g_camera.m_center);
       break;
@@ -329,8 +320,8 @@ export class Main {
   }
 
   public HandleMouseUp(e: MouseEvent): void {
-    const element: b2.Vec2 = new b2.Vec2(e.clientX, e.clientY);
-    const world: b2.Vec2 = g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+    const element: b2.b2Vec2 = new b2.b2Vec2(e.clientX, e.clientY);
+    const world: b2.b2Vec2 = g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
 
     switch (e.which) {
     case 1: // left mouse button
@@ -344,15 +335,15 @@ export class Main {
   }
 
   public HandleTouchMove(e: TouchEvent): void {
-    const element: b2.Vec2 = new b2.Vec2(e.touches[0].clientX, e.touches[0].clientY);
-    const world: b2.Vec2 = g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+    const element: b2.b2Vec2 = new b2.b2Vec2(e.touches[0].clientX, e.touches[0].clientY);
+    const world: b2.b2Vec2 = g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
     if (this.m_test) { this.m_test.MouseMove(world); }
     e.preventDefault();
   }
 
   public HandleTouchStart(e: TouchEvent): void {
-    const element: b2.Vec2 = new b2.Vec2(e.touches[0].clientX, e.touches[0].clientY);
-    const world: b2.Vec2 = g_camera.ConvertScreenToWorld(element, new b2.Vec2());
+    const element: b2.b2Vec2 = new b2.b2Vec2(e.touches[0].clientX, e.touches[0].clientY);
+    const world: b2.b2Vec2 = g_camera.ConvertScreenToWorld(element, new b2.b2Vec2());
     if (this.m_test) { this.m_test.MouseDown(world); }
     e.preventDefault();
   }
@@ -382,47 +373,47 @@ export class Main {
     case "ArrowLeft":
       if (this.m_ctrl) {
         if (this.m_test) {
-          this.m_test.ShiftOrigin(new b2.Vec2(2, 0));
+          this.m_test.ShiftOrigin(new b2.b2Vec2(2, 0));
         }
       } else {
-        this.MoveCamera(new b2.Vec2(-0.5, 0));
+        this.MoveCamera(new b2.b2Vec2(-0.5, 0));
       }
       break;
     case "ArrowRight":
       if (this.m_ctrl) {
         if (this.m_test) {
-          this.m_test.ShiftOrigin(new b2.Vec2(-2, 0));
+          this.m_test.ShiftOrigin(new b2.b2Vec2(-2, 0));
         }
       } else {
-        this.MoveCamera(new b2.Vec2(0.5, 0));
+        this.MoveCamera(new b2.b2Vec2(0.5, 0));
       }
       break;
     case "ArrowDown":
       if (this.m_ctrl) {
         if (this.m_test) {
-          this.m_test.ShiftOrigin(new b2.Vec2(0, 2));
+          this.m_test.ShiftOrigin(new b2.b2Vec2(0, 2));
         }
       } else {
-        this.MoveCamera(new b2.Vec2(0, -0.5));
+        this.MoveCamera(new b2.b2Vec2(0, -0.5));
       }
       break;
     case "ArrowUp":
       if (this.m_ctrl) {
         if (this.m_test) {
-          this.m_test.ShiftOrigin(new b2.Vec2(0, -2));
+          this.m_test.ShiftOrigin(new b2.b2Vec2(0, -2));
         }
       } else {
-        this.MoveCamera(new b2.Vec2(0, 0.5));
+        this.MoveCamera(new b2.b2Vec2(0, 0.5));
       }
       break;
     case "Home":
       this.HomeCamera();
       break;
     ///case "PageUp":
-    ///  this.RollCamera(b2.DegToRad(-1));
+    ///  this.RollCamera(b2.b2DegToRad(-1));
     ///  break;
     ///case "PageDown":
-    ///  this.RollCamera(b2.DegToRad(1));
+    ///  this.RollCamera(b2.b2DegToRad(1));
     ///  break;
     case "z":
       this.ZoomCamera(1.1);
@@ -450,20 +441,6 @@ export class Main {
     case "]":
       this.IncrementTest();
       break;
-    // #if B2_ENABLE_PARTICLE
-    case ",":
-      if (this.m_shift) {
-        // Press < to select the previous particle parameter setting.
-        Test.particleParameter.Decrement();
-      }
-      break;
-    case ".":
-      if (this.m_shift) {
-        // Press > to select the next particle parameter setting.
-        Test.particleParameter.Increment();
-      }
-      break;
-    // #endif
     default:
       // console.log(e.keyCode);
       break;
@@ -526,16 +503,7 @@ export class Main {
   }
 
   public LoadTest(restartTest: boolean = false): void {
-    // #if B2_ENABLE_PARTICLE
-    Test.fullscreenUI.Reset();
-    if (!restartTest) { Test.particleParameter.Reset(); }
-    // #endif
     this.m_demo_time = 0;
-    // #if B2_ENABLE_PARTICLE
-    if (this.m_test) {
-      this.m_test.RestoreParticleParameters();
-    }
-    // #endif
     this.m_test = g_testEntries[parseInt(this.m_test_options[this.m_settings.m_testIndex].value)].createFcn();
     if (!restartTest) {
       this.HomeCamera();
@@ -577,17 +545,13 @@ export class Main {
     if (time_elapsed > 0) {
       const ctx: CanvasRenderingContext2D | null = this.m_ctx;
 
-      // #if B2_ENABLE_PARTICLE
-      const restartTest = [false];
-      // #endif
-
       if (ctx) {
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
         // ctx.strokeStyle = "blue";
         // ctx.strokeRect(this.m_mouse.x - 24, this.m_mouse.y - 24, 48, 48);
 
-        // const mouse_world: b2.Vec2 = g_camera.ConvertScreenToWorld(this.m_mouse, new b2.Vec2());
+        // const mouse_world: b2.b2Vec2 = g_camera.ConvertScreenToWorld(this.m_mouse, new b2.b2Vec2());
 
         ctx.save();
 
@@ -608,33 +572,14 @@ export class Main {
 
         if (this.m_test) { this.m_test.Step(this.m_settings); }
 
-        // #if B2_ENABLE_PARTICLE
-        // Update the state of the particle parameter.
-        Test.particleParameter.Changed(restartTest);
-        // #endif
-
-        // #if B2_ENABLE_PARTICLE
         let msg = this.m_test_options[this.m_settings.m_testIndex].text;
-        if (Test.fullscreenUI.GetParticleParameterSelectionEnabled()) {
-          msg += " : ";
-          msg += Test.particleParameter.GetName();
-        }
         if (this.m_test) { this.m_test.DrawTitle(msg); }
-        // #else
-        // if (this.m_test) { this.m_test.DrawTitle(this.m_test_options[this.m_settings.m_testIndex].text); }
-        // #endif
 
         // ctx.strokeStyle = "yellow";
         // ctx.strokeRect(mouse_world.x - 0.5, mouse_world.y - 0.5, 1.0, 1.0);
 
         ctx.restore();
       }
-
-      // #if B2_ENABLE_PARTICLE
-      if (restartTest[0]) {
-        this.LoadTest(true);
-      }
-      // #endif
 
       this.UpdateTest(time_elapsed);
     }
@@ -708,32 +653,3 @@ import "./tests/extras/test_stack.js";
 import "./tests/extras/top_down_car.js";
 import "./tests/extras/segway.js";
 
-// #if B2_ENABLE_CONTROLLER
-import "./tests/extras/buoyancy_test.js";
-// #endif
-
-// #if B2_ENABLE_PARTICLE
-import "./tests/particles/anti_pointy.js";
-import "./tests/particles/corner_case.js";
-import "./tests/particles/dam_break.js";
-import "./tests/particles/drawing_particles.js";
-import "./tests/particles/elastic_particles.js";
-import "./tests/particles/eye_candy.js";
-import "./tests/particles/faucet.js";
-import "./tests/particles/fracker.js";
-import "./tests/particles/impulse.js";
-import "./tests/particles/liquid_timer.js";
-import "./tests/particles/maxwell.js";
-import "./tests/particles/multiple_particle_systems.js";
-import "./tests/particles/particle_collision_filter.js";
-import "./tests/particles/particles_surface_tension.js";
-import "./tests/particles/particles.js";
-import "./tests/particles/pointy.js";
-import "./tests/particles/ramp.js";
-import "./tests/particles/rigid_particles.js";
-import "./tests/particles/sandbox.js";
-import "./tests/particles/soup_stirrer.js";
-import "./tests/particles/soup.js";
-import "./tests/particles/sparky.js";
-import "./tests/particles/wave_machine.js";
-// #endif

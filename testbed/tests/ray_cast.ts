@@ -28,15 +28,15 @@ import * as testbed from "@testbed";
 // the ray will always miss one type of polygon.
 
 // This callback finds the closest hit. Polygon 0 is filtered.
-class RayCastClosestCallback extends b2.RayCastCallback {
+class RayCastClosestCallback extends b2.b2RayCastCallback {
   public m_hit: boolean = false;
-  public readonly m_point: b2.Vec2 = new b2.Vec2();
-  public readonly m_normal: b2.Vec2 = new b2.Vec2();
+  public readonly m_point: b2.b2Vec2 = new b2.b2Vec2();
+  public readonly m_normal: b2.b2Vec2 = new b2.b2Vec2();
   constructor() {
     super();
   }
-  public ReportFixture(fixture: b2.Fixture, point: b2.Vec2, normal: b2.Vec2, fraction: number): number {
-    const body: b2.Body = fixture.GetBody();
+  public ReportFixture(fixture: b2.b2Fixture, point: b2.b2Vec2, normal: b2.b2Vec2, fraction: number): number {
+    const body: b2.b2Body = fixture.GetBody();
     const userData: any = body.GetUserData();
     if (userData) {
       const index: number = userData.index;
@@ -60,15 +60,15 @@ class RayCastClosestCallback extends b2.RayCastCallback {
 
 // This callback finds any hit. Polygon 0 is filtered. For this type of query we are usually
 // just checking for obstruction, so the actual fixture and hit point are irrelevant. 
-class RayCastAnyCallback extends b2.RayCastCallback {
+class RayCastAnyCallback extends b2.b2RayCastCallback {
   public m_hit: boolean = false;
-  public readonly m_point: b2.Vec2 = new b2.Vec2();
-  public readonly m_normal: b2.Vec2 = new b2.Vec2();
+  public readonly m_point: b2.b2Vec2 = new b2.b2Vec2();
+  public readonly m_normal: b2.b2Vec2 = new b2.b2Vec2();
   constructor() {
     super();
   }
-  public ReportFixture(fixture: b2.Fixture, point: b2.Vec2, normal: b2.Vec2, fraction: number): number {
-    const body: b2.Body = fixture.GetBody();
+  public ReportFixture(fixture: b2.b2Fixture, point: b2.b2Vec2, normal: b2.b2Vec2, fraction: number): number {
+    const body: b2.b2Body = fixture.GetBody();
     const userData: any = body.GetUserData();
     if (userData) {
       const index: number = userData.index;
@@ -92,16 +92,16 @@ class RayCastAnyCallback extends b2.RayCastCallback {
 // This ray cast collects multiple hits along the ray. Polygon 0 is filtered.
 // The fixtures are not necessary reported in order, so we might not capture
 // the closest fixture.
-class RayCastMultipleCallback extends b2.RayCastCallback {
+class RayCastMultipleCallback extends b2.b2RayCastCallback {
   private static e_maxCount: number = 3;
-  public m_points: b2.Vec2[] = b2.Vec2.MakeArray(RayCastMultipleCallback.e_maxCount);
-  public m_normals: b2.Vec2[] = b2.Vec2.MakeArray(RayCastMultipleCallback.e_maxCount);
+  public m_points: b2.b2Vec2[] = b2.b2Vec2.MakeArray(RayCastMultipleCallback.e_maxCount);
+  public m_normals: b2.b2Vec2[] = b2.b2Vec2.MakeArray(RayCastMultipleCallback.e_maxCount);
   public m_count: number = 0;
   constructor() {
     super();
   }
-  public ReportFixture(fixture: b2.Fixture, point: b2.Vec2, normal: b2.Vec2, fraction: number): number {
-    const body: b2.Body = fixture.GetBody();
+  public ReportFixture(fixture: b2.b2Fixture, point: b2.b2Vec2, normal: b2.b2Vec2, fraction: number): number {
+    const body: b2.b2Body = fixture.GetBody();
     const userData: any = body.GetUserData();
     if (userData) {
       const index: number = userData.index;
@@ -139,10 +139,10 @@ export class RayCast extends testbed.Test {
   private static e_maxBodies: number = 256;
 
   private m_bodyIndex: number = 0;
-  private m_bodies: Array<b2.Body | null> = [];
-  private m_polygons: b2.PolygonShape[] = [];
-  private m_circle: b2.CircleShape = new b2.CircleShape();
-  private m_edge: b2.EdgeShape = new b2.EdgeShape();
+  private m_bodies: Array<b2.b2Body | null> = [];
+  private m_polygons: b2.b2PolygonShape[] = [];
+  private m_circle: b2.b2CircleShape = new b2.b2CircleShape();
+  private m_edge: b2.b2EdgeShape = new b2.b2EdgeShape();
 
   private m_angle: number = 0;
 
@@ -152,49 +152,49 @@ export class RayCast extends testbed.Test {
     super();
 
     for (let i = 0; i < 4; ++i) {
-      this.m_polygons[i] = new b2.PolygonShape();
+      this.m_polygons[i] = new b2.b2PolygonShape();
     }
 
     // Ground body
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       const ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
       ground.CreateFixture(shape, 0.0);
     }
 
     {
-      const vertices: b2.Vec2[] = [/*3*/];
-      vertices[0] = new b2.Vec2(-0.5, 0.0);
-      vertices[1] = new b2.Vec2(0.5, 0.0);
-      vertices[2] = new b2.Vec2(0.0, 1.5);
+      const vertices: b2.b2Vec2[] = [/*3*/];
+      vertices[0] = new b2.b2Vec2(-0.5, 0.0);
+      vertices[1] = new b2.b2Vec2(0.5, 0.0);
+      vertices[2] = new b2.b2Vec2(0.0, 1.5);
       this.m_polygons[0].Set(vertices, 3);
     }
 
     {
-      const vertices: b2.Vec2[] = [/*3*/];
-      vertices[0] = new b2.Vec2(-0.1, 0.0);
-      vertices[1] = new b2.Vec2(0.1, 0.0);
-      vertices[2] = new b2.Vec2(0.0, 1.5);
+      const vertices: b2.b2Vec2[] = [/*3*/];
+      vertices[0] = new b2.b2Vec2(-0.1, 0.0);
+      vertices[1] = new b2.b2Vec2(0.1, 0.0);
+      vertices[2] = new b2.b2Vec2(0.0, 1.5);
       this.m_polygons[1].Set(vertices, 3);
     }
 
     {
       const w = 1.0;
-      const b = w / (2.0 + b2.Sqrt(2.0));
-      const s = b2.Sqrt(2.0) * b;
+      const b = w / (2.0 + b2.b2Sqrt(2.0));
+      const s = b2.b2Sqrt(2.0) * b;
 
-      const vertices: b2.Vec2[] = [/*8*/];
-      vertices[0] = new b2.Vec2(0.5 * s, 0.0);
-      vertices[1] = new b2.Vec2(0.5 * w, b);
-      vertices[2] = new b2.Vec2(0.5 * w, b + s);
-      vertices[3] = new b2.Vec2(0.5 * s, w);
-      vertices[4] = new b2.Vec2(-0.5 * s, w);
-      vertices[5] = new b2.Vec2(-0.5 * w, b + s);
-      vertices[6] = new b2.Vec2(-0.5 * w, b);
-      vertices[7] = new b2.Vec2(-0.5 * s, 0.0);
+      const vertices: b2.b2Vec2[] = [/*8*/];
+      vertices[0] = new b2.b2Vec2(0.5 * s, 0.0);
+      vertices[1] = new b2.b2Vec2(0.5 * w, b);
+      vertices[2] = new b2.b2Vec2(0.5 * w, b + s);
+      vertices[3] = new b2.b2Vec2(0.5 * s, w);
+      vertices[4] = new b2.b2Vec2(-0.5 * s, w);
+      vertices[5] = new b2.b2Vec2(-0.5 * w, b + s);
+      vertices[6] = new b2.b2Vec2(-0.5 * w, b);
+      vertices[7] = new b2.b2Vec2(-0.5 * s, 0.0);
 
       this.m_polygons[2].Set(vertices, 8);
     }
@@ -208,7 +208,7 @@ export class RayCast extends testbed.Test {
     }
 
     {
-      this.m_edge.SetTwoSided(new b2.Vec2(-1, 0), new b2.Vec2(1, 0));
+      this.m_edge.SetTwoSided(new b2.b2Vec2(-1, 0), new b2.b2Vec2(1, 0));
     }
 
     this.m_bodyIndex = 0;
@@ -228,12 +228,12 @@ export class RayCast extends testbed.Test {
       this.m_bodies[this.m_bodyIndex] = null;
     }
 
-    const bd: b2.BodyDef = new b2.BodyDef();
+    const bd: b2.b2BodyDef = new b2.b2BodyDef();
 
-    const x: number = b2.RandomRange(-10.0, 10.0);
-    const y: number = b2.RandomRange(0.0, 20.0);
+    const x: number = b2.b2RandomRange(-10.0, 10.0);
+    const y: number = b2.b2RandomRange(0.0, 20.0);
     bd.position.Set(x, y);
-    bd.angle = b2.RandomRange(-b2.pi, b2.pi);
+    bd.angle = b2.b2RandomRange(-b2.b2_pi, b2.b2_pi);
 
     bd.userData = {};
     bd.userData.index = index;
@@ -245,17 +245,17 @@ export class RayCast extends testbed.Test {
     const new_body = this.m_bodies[this.m_bodyIndex] = this.m_world.CreateBody(bd);
 
     if (index < 4) {
-      const fd: b2.FixtureDef = new b2.FixtureDef();
+      const fd: b2.b2FixtureDef = new b2.b2FixtureDef();
       fd.shape = this.m_polygons[index];
       fd.friction = 0.3;
       new_body.CreateFixture(fd);
     } else if (index < 5) {
-      const fd: b2.FixtureDef = new b2.FixtureDef();
+      const fd: b2.b2FixtureDef = new b2.b2FixtureDef();
       fd.shape = this.m_circle;
       fd.friction = 0.3;
       new_body.CreateFixture(fd);
     } else {
-      const fd: b2.FixtureDef = new b2.FixtureDef();
+      const fd: b2.b2FixtureDef = new b2.b2FixtureDef();
       fd.shape = this.m_edge;
       fd.friction = 0.3;
       new_body.CreateFixture(fd);
@@ -324,51 +324,51 @@ export class RayCast extends testbed.Test {
     this.m_textLine += testbed.DRAW_STRING_NEW_LINE;
 
     const L = 11.0;
-    const point1 = new b2.Vec2(0.0, 10.0);
-    const d = new b2.Vec2(L * b2.Cos(this.m_angle), L * b2.Sin(this.m_angle));
-    const point2 = b2.Vec2.AddVV(point1, d, new b2.Vec2());
+    const point1 = new b2.b2Vec2(0.0, 10.0);
+    const d = new b2.b2Vec2(L * b2.b2Cos(this.m_angle), L * b2.b2Sin(this.m_angle));
+    const point2 = b2.b2Vec2.AddVV(point1, d, new b2.b2Vec2());
 
     if (this.m_mode === RayCastMode.e_closest) {
       const callback = new RayCastClosestCallback();
       this.m_world.RayCast(callback, point1, point2);
 
       if (callback.m_hit) {
-        testbed.g_debugDraw.DrawPoint(callback.m_point, 5.0, new b2.Color(0.4, 0.9, 0.4));
-        testbed.g_debugDraw.DrawSegment(point1, callback.m_point, new b2.Color(0.8, 0.8, 0.8));
-        const head = b2.Vec2.AddVV(callback.m_point, b2.Vec2.MulSV(0.5, callback.m_normal, b2.Vec2.s_t0), new b2.Vec2());
-        testbed.g_debugDraw.DrawSegment(callback.m_point, head, new b2.Color(0.9, 0.9, 0.4));
+        testbed.g_debugDraw.DrawPoint(callback.m_point, 5.0, new b2.b2Color(0.4, 0.9, 0.4));
+        testbed.g_debugDraw.DrawSegment(point1, callback.m_point, new b2.b2Color(0.8, 0.8, 0.8));
+        const head = b2.b2Vec2.AddVV(callback.m_point, b2.b2Vec2.MulSV(0.5, callback.m_normal, b2.b2Vec2.s_t0), new b2.b2Vec2());
+        testbed.g_debugDraw.DrawSegment(callback.m_point, head, new b2.b2Color(0.9, 0.9, 0.4));
       } else {
-        testbed.g_debugDraw.DrawSegment(point1, point2, new b2.Color(0.8, 0.8, 0.8));
+        testbed.g_debugDraw.DrawSegment(point1, point2, new b2.b2Color(0.8, 0.8, 0.8));
       }
     } else if (this.m_mode === RayCastMode.e_any) {
       const callback = new RayCastAnyCallback();
       this.m_world.RayCast(callback, point1, point2);
 
       if (callback.m_hit) {
-        testbed.g_debugDraw.DrawPoint(callback.m_point, 5.0, new b2.Color(0.4, 0.9, 0.4));
-        testbed.g_debugDraw.DrawSegment(point1, callback.m_point, new b2.Color(0.8, 0.8, 0.8));
-        const head = b2.Vec2.AddVV(callback.m_point, b2.Vec2.MulSV(0.5, callback.m_normal, b2.Vec2.s_t0), new b2.Vec2());
-        testbed.g_debugDraw.DrawSegment(callback.m_point, head, new b2.Color(0.9, 0.9, 0.4));
+        testbed.g_debugDraw.DrawPoint(callback.m_point, 5.0, new b2.b2Color(0.4, 0.9, 0.4));
+        testbed.g_debugDraw.DrawSegment(point1, callback.m_point, new b2.b2Color(0.8, 0.8, 0.8));
+        const head = b2.b2Vec2.AddVV(callback.m_point, b2.b2Vec2.MulSV(0.5, callback.m_normal, b2.b2Vec2.s_t0), new b2.b2Vec2());
+        testbed.g_debugDraw.DrawSegment(callback.m_point, head, new b2.b2Color(0.9, 0.9, 0.4));
       } else {
-        testbed.g_debugDraw.DrawSegment(point1, point2, new b2.Color(0.8, 0.8, 0.8));
+        testbed.g_debugDraw.DrawSegment(point1, point2, new b2.b2Color(0.8, 0.8, 0.8));
       }
     } else if (this.m_mode === RayCastMode.e_multiple) {
       const callback = new RayCastMultipleCallback();
       this.m_world.RayCast(callback, point1, point2);
-      testbed.g_debugDraw.DrawSegment(point1, point2, new b2.Color(0.8, 0.8, 0.8));
+      testbed.g_debugDraw.DrawSegment(point1, point2, new b2.b2Color(0.8, 0.8, 0.8));
 
       for (let i = 0; i < callback.m_count; ++i) {
         const p = callback.m_points[i];
         const n = callback.m_normals[i];
-        testbed.g_debugDraw.DrawPoint(p, 5.0, new b2.Color(0.4, 0.9, 0.4));
-        testbed.g_debugDraw.DrawSegment(point1, p, new b2.Color(0.8, 0.8, 0.8));
-        const head = b2.Vec2.AddVV(p, b2.Vec2.MulSV(0.5, n, b2.Vec2.s_t0), new b2.Vec2());
-        testbed.g_debugDraw.DrawSegment(p, head, new b2.Color(0.9, 0.9, 0.4));
+        testbed.g_debugDraw.DrawPoint(p, 5.0, new b2.b2Color(0.4, 0.9, 0.4));
+        testbed.g_debugDraw.DrawSegment(point1, p, new b2.b2Color(0.8, 0.8, 0.8));
+        const head = b2.b2Vec2.AddVV(p, b2.b2Vec2.MulSV(0.5, n, b2.b2Vec2.s_t0), new b2.b2Vec2());
+        testbed.g_debugDraw.DrawSegment(p, head, new b2.b2Color(0.9, 0.9, 0.4));
       }
     }
 
     if (advanceRay) {
-      this.m_angle += 0.25 * b2.pi / 180.0;
+      this.m_angle += 0.25 * b2.b2_pi / 180.0;
     }
 
     /*

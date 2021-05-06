@@ -17,13 +17,13 @@ export class DominoTower extends testbed.Test {
     let dominoDensity: number;
 
     function makeDomino(x: number, y: number, horizontal: boolean) {
-      const sd = new b2.PolygonShape();
+      const sd = new b2.b2PolygonShape();
       sd.SetAsBox(0.5 * DOMINO_WIDTH, 0.5 * DOMINO_HEIGHT);
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = sd;
       fd.density = dominoDensity;
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       fd.friction = DOMINO_FRICTION;
       fd.restitution = 0.65;
       bd.position.Set(x, y);
@@ -32,17 +32,17 @@ export class DominoTower extends testbed.Test {
       myBody.CreateFixture(fd);
     }
 
-    const gravity = new b2.Vec2(0, -10);
-    //world = new b2.World(gravity);
+    const gravity = new b2.b2Vec2(0, -10);
+    //world = new b2.b2World(gravity);
     const world = this.m_world;
     world.SetGravity(gravity);
 
     // Create the floor
     {
-      const sd = new b2.PolygonShape();
+      const sd = new b2.b2PolygonShape();
       sd.SetAsBox(50, 10);
 
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       bd.position.Set(0, -10);
       const body = world.CreateBody(bd);
       body.CreateFixture(sd, 0);
@@ -51,12 +51,12 @@ export class DominoTower extends testbed.Test {
     {
       dominoDensity = 10;
       // Make bullet
-      const sd = new b2.PolygonShape();
+      const sd = new b2.b2PolygonShape();
       sd.SetAsBox(.7, .7);
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.density = 35.0;
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       fd.shape = sd;
       fd.friction = 0.0;
       fd.restitution = 0.85;
@@ -64,14 +64,14 @@ export class DominoTower extends testbed.Test {
       bd.position.Set(30.0, 5.00);
       let b = world.CreateBody(bd);
       b.CreateFixture(fd);
-      b.SetLinearVelocity(new b2.Vec2(-25.0, -25.0));
+      b.SetLinearVelocity(new b2.b2Vec2(-25.0, -25.0));
       b.SetAngularVelocity(6.7);
 
       fd.density = 25.0;
       bd.position.Set(-30.0, 25.0);
       b = world.CreateBody(bd);
       b.CreateFixture(fd);
-      b.SetLinearVelocity(new b2.Vec2(35.0, -10.0));
+      b.SetLinearVelocity(new b2.b2Vec2(35.0, -10.0));
       b.SetAngularVelocity(-8.3);
     }
 

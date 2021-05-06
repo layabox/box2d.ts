@@ -25,7 +25,7 @@ import * as testbed from "@testbed";
 
 // Test the prismatic joint with limits and motor options.
 export class Prismatic extends testbed.Test {
-  public m_joint: b2.PrismaticJoint;
+  public m_joint: b2.b2PrismaticJoint;
 
   constructor() {
     super();
@@ -33,30 +33,30 @@ export class Prismatic extends testbed.Test {
     let ground = null;
 
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
       ground.CreateFixture(shape, 0.0);
     }
 
     {
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(1.0, 1.0);
 
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.position.Set(0.0, 10.0);
-      bd.angle = 0.5 * b2.pi;
+      bd.angle = 0.5 * b2.b2_pi;
       bd.allowSleep = false;
       const body = this.m_world.CreateBody(bd);
       body.CreateFixture(shape, 5.0);
 
-      const pjd = new b2.PrismaticJointDef();
+      const pjd = new b2.b2PrismaticJointDef();
 
       // Horizontal
-			pjd.Initialize(ground, body, bd.position, new b2.Vec2(1.0, 0.0));
+			pjd.Initialize(ground, body, bd.position, new b2.b2Vec2(1.0, 0.0));
 
       pjd.motorSpeed = 10.0;
       pjd.maxMotorForce = 10000.0;

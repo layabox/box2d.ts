@@ -24,7 +24,7 @@ import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 
 export class PulleyJoint extends testbed.Test {
-  public m_joint1: b2.PulleyJoint;
+  public m_joint1: b2.b2PulleyJoint;
 
   constructor() {
     super();
@@ -36,10 +36,10 @@ export class PulleyJoint extends testbed.Test {
 
     let ground = null;
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       ground = this.m_world.CreateBody(bd);
 
-      const circle = new b2.CircleShape();
+      const circle = new b2.b2CircleShape();
       circle.m_radius = 2.0;
 
       circle.m_p.Set(-10.0, y + b + L);
@@ -51,11 +51,11 @@ export class PulleyJoint extends testbed.Test {
 
     {
 
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(a, b);
 
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
 
       //bd.fixedRotation = true;
       bd.position.Set(-10.0, y);
@@ -66,11 +66,11 @@ export class PulleyJoint extends testbed.Test {
       const body2 = this.m_world.CreateBody(bd);
       body2.CreateFixture(shape, 5.0);
 
-      const pulleyDef = new b2.PulleyJointDef();
-      const anchor1 = new b2.Vec2(-10.0, y + b);
-      const anchor2 = new b2.Vec2(10.0, y + b);
-      const groundAnchor1 = new b2.Vec2(-10.0, y + b + L);
-      const groundAnchor2 = new b2.Vec2(10.0, y + b + L);
+      const pulleyDef = new b2.b2PulleyJointDef();
+      const anchor1 = new b2.b2Vec2(-10.0, y + b);
+      const anchor2 = new b2.b2Vec2(10.0, y + b);
+      const groundAnchor1 = new b2.b2Vec2(-10.0, y + b + L);
+      const groundAnchor2 = new b2.b2Vec2(10.0, y + b + L);
       pulleyDef.Initialize(body1, body2, groundAnchor1, groundAnchor2, anchor1, anchor2, 1.5);
 
       this.m_joint1 = this.m_world.CreateJoint(pulleyDef);

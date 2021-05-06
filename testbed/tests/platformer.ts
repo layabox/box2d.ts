@@ -28,29 +28,29 @@ export class Platformer extends testbed.Test {
   public m_top = 0.0;
   public m_bottom = 0.0;
   public m_state = Platformer_State.e_unknown;
-  public m_platform: b2.Fixture;
-  public m_character: b2.Fixture;
+  public m_platform: b2.b2Fixture;
+  public m_character: b2.b2Fixture;
 
   constructor() {
     super();
 
     // Ground
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       const ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
       ground.CreateFixture(shape, 0.0);
     }
 
     // Platform
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       bd.position.Set(0.0, 10.0);
       const body = this.m_world.CreateBody(bd);
 
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(3.0, 0.5);
       this.m_platform = body.CreateFixture(shape, 0.0);
 
@@ -60,23 +60,23 @@ export class Platformer extends testbed.Test {
 
     // Actor
     {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.position.Set(0.0, 12.0);
       const body = this.m_world.CreateBody(bd);
 
       this.m_radius = 0.5;
-      const shape = new b2.CircleShape();
+      const shape = new b2.b2CircleShape();
       shape.m_radius = this.m_radius;
       this.m_character = body.CreateFixture(shape, 20.0);
 
-      body.SetLinearVelocity(new b2.Vec2(0.0, -50.0));
+      body.SetLinearVelocity(new b2.b2Vec2(0.0, -50.0));
 
       this.m_state = Platformer_State.e_unknown;
     }
   }
 
-  public PreSolve(contact: b2.Contact, oldManifold: b2.Manifold) {
+  public PreSolve(contact: b2.b2Contact, oldManifold: b2.b2Manifold) {
     super.PreSolve(contact, oldManifold);
 
     const fixtureA = contact.GetFixtureA();
@@ -92,7 +92,7 @@ export class Platformer extends testbed.Test {
 
     const position = this.m_character.GetBody().GetPosition();
 
-    if (position.y < this.m_top + this.m_radius - 3.0 * b2.linearSlop) {
+    if (position.y < this.m_top + this.m_radius - 3.0 * b2.b2_linearSlop) {
       contact.SetEnabled(false);
     }
   }

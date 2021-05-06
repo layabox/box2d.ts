@@ -24,26 +24,26 @@ import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 
 export class Heavy2 extends testbed.Test {
-  public m_heavy: b2.Body | null = null;
+  public m_heavy: b2.b2Body | null = null;
 
   constructor() {
     super();
 
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       const ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-40.0, 0.0), new b2.Vec2(40.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-40.0, 0.0), new b2.b2Vec2(40.0, 0.0));
       ground.CreateFixture(shape, 0.0);
     }
 
-    const bd = new b2.BodyDef();
-    bd.type = b2.BodyType.b2_dynamicBody;
+    const bd = new b2.b2BodyDef();
+    bd.type = b2.b2BodyType.b2_dynamicBody;
     bd.position.Set(0.0, 2.5);
     let body = this.m_world.CreateBody(bd);
 
-    const shape = new b2.CircleShape();
+    const shape = new b2.b2CircleShape();
     shape.m_radius = 0.5;
     body.CreateFixture(shape, 10.0);
 
@@ -57,12 +57,12 @@ export class Heavy2 extends testbed.Test {
       this.m_world.DestroyBody(this.m_heavy);
       this.m_heavy = null;
     } else {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.position.Set(0.0, 9.0);
       this.m_heavy = this.m_world.CreateBody(bd);
 
-      const shape = new b2.CircleShape();
+      const shape = new b2.b2CircleShape();
       shape.m_radius = 5.0;
       this.m_heavy.CreateFixture(shape, 10.0);
     }

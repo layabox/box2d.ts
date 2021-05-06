@@ -26,17 +26,17 @@ import * as testbed from "@testbed";
 export class ShapeCast extends testbed.Test {
   public static e_vertexCount = 8;
 
-  public readonly m_vAs: b2.Vec2[] = b2.Vec2.MakeArray(b2.maxPolygonVertices);
+  public readonly m_vAs: b2.b2Vec2[] = b2.b2Vec2.MakeArray(b2.b2_maxPolygonVertices);
   public m_countA = 0;
   public m_radiusA = 0;
 
-  public readonly m_vBs: b2.Vec2[] = b2.Vec2.MakeArray(b2.maxPolygonVertices);
+  public readonly m_vBs: b2.b2Vec2[] = b2.b2Vec2.MakeArray(b2.b2_maxPolygonVertices);
   public m_countB = 0;
   public m_radiusB = 0;
 
-  public readonly m_transformA = new b2.Transform();
-  public readonly m_transformB = new b2.Transform();
-  public readonly m_translationB = new b2.Vec2();
+  public readonly m_transformA = new b2.b2Transform();
+  public readonly m_transformB = new b2.b2Transform();
+  public readonly m_translationB = new b2.b2Vec2();
 
   constructor() {
     super();
@@ -46,14 +46,14 @@ export class ShapeCast extends testbed.Test {
     this.m_vAs[1].Set(0.5, 1.0);
     this.m_vAs[2].Set(0.0, 0.0);
     this.m_countA = 3;
-    this.m_radiusA = b2.polygonRadius;
+    this.m_radiusA = b2.b2_polygonRadius;
 
     this.m_vBs[0].Set(-0.5, -0.5);
     this.m_vBs[1].Set(0.5, -0.5);
     this.m_vBs[2].Set(0.5, 0.5);
     this.m_vBs[3].Set(-0.5, 0.5);
     this.m_countB = 4;
-    this.m_radiusB = b2.polygonRadius;
+    this.m_radiusB = b2.b2_polygonRadius;
 
     this.m_transformA.p.Set(0.0, 0.25);
     this.m_transformA.q.SetIdentity();
@@ -78,7 +78,7 @@ export class ShapeCast extends testbed.Test {
     // this.m_vAs[0].Set(0.0, 0.0);
     // this.m_vAs[1].Set(2.0, 0.0);
     // this.m_countA = 2;
-    // this.m_radiusA = b2.polygonRadius;
+    // this.m_radiusA = b2.b2_polygonRadius;
 
     // this.m_vBs[0].Set(0.0, 0.0);
     // this.m_countB = 1;
@@ -96,33 +96,33 @@ export class ShapeCast extends testbed.Test {
   public Step(settings: testbed.Settings): void {
     super.Step(settings);
 
-    const input = new b2.ShapeCastInput();
+    const input = new b2.b2ShapeCastInput();
     input.proxyA.SetVerticesRadius(this.m_vAs, this.m_countA, this.m_radiusA);
     input.proxyB.SetVerticesRadius(this.m_vBs, this.m_countB, this.m_radiusB);
     input.transformA.Copy(this.m_transformA);
     input.transformB.Copy(this.m_transformB);
     input.translationB.Copy(this.m_translationB);
 
-    const output = new b2.ShapeCastOutput();
+    const output = new b2.b2ShapeCastOutput();
 
-    const hit = b2.ShapeCast(output, input);
+    const hit = b2.b2ShapeCast(output, input);
 
-    const transformB2 = new b2.Transform();
+    const transformB2 = new b2.b2Transform();
     transformB2.q.Copy(this.m_transformB.q);
     // transformB2.p = transformB.p + output.lambda * input.translationB;
     transformB2.p.Copy(this.m_transformB.p).SelfMulAdd(output.lambda, input.translationB);
 
-    const distanceInput = new b2.DistanceInput();
+    const distanceInput = new b2.b2DistanceInput();
     distanceInput.proxyA.SetVerticesRadius(this.m_vAs, this.m_countA, this.m_radiusA);
     distanceInput.proxyB.SetVerticesRadius(this.m_vBs, this.m_countB, this.m_radiusB);
     distanceInput.transformA.Copy(this.m_transformA);
     distanceInput.transformB.Copy(transformB2);
     distanceInput.useRadii = false;
-    const simplexCache = new b2.SimplexCache();
+    const simplexCache = new b2.b2SimplexCache();
     simplexCache.count = 0;
-    const distanceOutput = new b2.DistanceOutput();
+    const distanceOutput = new b2.b2DistanceOutput();
 
-    b2.Distance(distanceOutput, simplexCache, distanceInput);
+    b2.b2Distance(distanceOutput, simplexCache, distanceInput);
 
     testbed.g_debugDraw.DrawString(5, this.m_textLine,
       `hit = ${hit ? "true" : "false"}, iters = ${output.iterations}, lambda = ${output.lambda}, distance = ${distanceOutput.distance.toFixed(5)}`);
@@ -130,37 +130,37 @@ export class ShapeCast extends testbed.Test {
 
     testbed.g_debugDraw.PushTransform(this.m_transformA);
     if (this.m_countA === 1) {
-      testbed.g_debugDraw.DrawCircle(this.m_vAs[0], this.m_radiusA, new b2.Color(0.9, 0.9, 0.9));
+      testbed.g_debugDraw.DrawCircle(this.m_vAs[0], this.m_radiusA, new b2.b2Color(0.9, 0.9, 0.9));
     }
     else {
-      testbed.g_debugDraw.DrawPolygon(this.m_vAs, this.m_countA, new b2.Color(0.9, 0.9, 0.9));
+      testbed.g_debugDraw.DrawPolygon(this.m_vAs, this.m_countA, new b2.b2Color(0.9, 0.9, 0.9));
     }
     testbed.g_debugDraw.PopTransform(this.m_transformA);
 
     testbed.g_debugDraw.PushTransform(this.m_transformB);
     if (this.m_countB === 1) {
-      testbed.g_debugDraw.DrawCircle(this.m_vBs[0], this.m_radiusB, new b2.Color(0.5, 0.9, 0.5));
+      testbed.g_debugDraw.DrawCircle(this.m_vBs[0], this.m_radiusB, new b2.b2Color(0.5, 0.9, 0.5));
     }
     else {
-      testbed.g_debugDraw.DrawPolygon(this.m_vBs, this.m_countB, new b2.Color(0.5, 0.9, 0.5));
+      testbed.g_debugDraw.DrawPolygon(this.m_vBs, this.m_countB, new b2.b2Color(0.5, 0.9, 0.5));
     }
     testbed.g_debugDraw.PopTransform(this.m_transformB);
 
     testbed.g_debugDraw.PushTransform(transformB2);
     if (this.m_countB === 1) {
-      testbed.g_debugDraw.DrawCircle(this.m_vBs[0], this.m_radiusB, new b2.Color(0.5, 0.7, 0.9));
+      testbed.g_debugDraw.DrawCircle(this.m_vBs[0], this.m_radiusB, new b2.b2Color(0.5, 0.7, 0.9));
     }
     else {
-      testbed.g_debugDraw.DrawPolygon(this.m_vBs, this.m_countB, new b2.Color(0.5, 0.7, 0.9));
+      testbed.g_debugDraw.DrawPolygon(this.m_vBs, this.m_countB, new b2.b2Color(0.5, 0.7, 0.9));
     }
     testbed.g_debugDraw.PopTransform(transformB2);
 
     if (hit) {
       const p1 = output.point;
-      testbed.g_debugDraw.DrawPoint(p1, 10.0, new b2.Color(0.9, 0.3, 0.3));
+      testbed.g_debugDraw.DrawPoint(p1, 10.0, new b2.b2Color(0.9, 0.3, 0.3));
       // b2Vec2 p2 = p1 + output.normal;
-      const p2 = b2.Vec2.AddVV(p1, output.normal, new b2.Vec2());
-      testbed.g_debugDraw.DrawSegment(p1, p2, new b2.Color(0.9, 0.3, 0.3));
+      const p2 = b2.b2Vec2.AddVV(p1, output.normal, new b2.b2Vec2());
+      testbed.g_debugDraw.DrawSegment(p1, p2, new b2.b2Color(0.9, 0.3, 0.3));
     }
   }
 

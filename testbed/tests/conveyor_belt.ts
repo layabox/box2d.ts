@@ -24,31 +24,31 @@ import * as b2 from "@box2d";
 import * as testbed from "@testbed";
 
 export class ConveyorBelt extends testbed.Test {
-  public m_platform: b2.Fixture;
+  public m_platform: b2.b2Fixture;
 
   constructor() {
     super();
 
     // Ground
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       const ground = this.m_world.CreateBody(bd);
 
-      const shape = new b2.EdgeShape();
-      shape.SetTwoSided(new b2.Vec2(-20.0, 0.0), new b2.Vec2(20.0, 0.0));
+      const shape = new b2.b2EdgeShape();
+      shape.SetTwoSided(new b2.b2Vec2(-20.0, 0.0), new b2.b2Vec2(20.0, 0.0));
       ground.CreateFixture(shape, 0.0);
     }
 
     // Platform
     {
-      const bd = new b2.BodyDef();
+      const bd = new b2.b2BodyDef();
       bd.position.Set(-5.0, 5.0);
       const body = this.m_world.CreateBody(bd);
 
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(10.0, 0.5);
 
-      const fd = new b2.FixtureDef();
+      const fd = new b2.b2FixtureDef();
       fd.shape = shape;
       fd.friction = 0.8;
       this.m_platform = body.CreateFixture(fd);
@@ -56,18 +56,18 @@ export class ConveyorBelt extends testbed.Test {
 
     // Boxes
     for (let i = 0; i < 5; ++i) {
-      const bd = new b2.BodyDef();
-      bd.type = b2.BodyType.b2_dynamicBody;
+      const bd = new b2.b2BodyDef();
+      bd.type = b2.b2BodyType.b2_dynamicBody;
       bd.position.Set(-10.0 + 2.0 * i, 7.0);
       const body = this.m_world.CreateBody(bd);
 
-      const shape = new b2.PolygonShape();
+      const shape = new b2.b2PolygonShape();
       shape.SetAsBox(0.5, 0.5);
       body.CreateFixture(shape, 20.0);
     }
   }
 
-  public PreSolve(contact: b2.Contact, oldManifold: b2.Manifold) {
+  public PreSolve(contact: b2.b2Contact, oldManifold: b2.b2Manifold) {
     super.PreSolve(contact, oldManifold);
 
     const fixtureA = contact.GetFixtureA();
