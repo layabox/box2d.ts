@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "es6",
+    "target": "ES2016",
+    "module": "system",
     "strict": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
