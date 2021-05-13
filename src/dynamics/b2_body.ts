@@ -105,6 +105,7 @@ export class b2BodyDef implements b2IBodyDef {
 
   /// The world position of the body. Avoid creating bodies at the origin
   /// since this can lead to many overlapping shapes.
+  /// kylin: C++版本的b2Vec2重载了大量的运算符，为了避免开发者错误操作，设置为 readonly 是合理的
   public readonly position: b2Vec2 = new b2Vec2(0, 0);
 
   /// The world angle of the body in radians.
