@@ -58,6 +58,16 @@ export class b2DistanceProxy {
     this.m_count = count;
     this.m_radius = radius;
   }
+  
+  public Set(shape: b2Shape, index: number): void;
+  public Set(vertices: b2Vec2[], count: number, radius: number): void;
+  public Set(...args: any) {
+    if (args[0] instanceof b2Shape) {
+      this.SetShape(args[0], args[1]);
+    } else {
+      this.SetVerticesRadius(args[0], args[1], args[2]);
+    }
+  }
 
   public GetSupport(d: b2Vec2): number {
     let bestIndex: number = 0;
