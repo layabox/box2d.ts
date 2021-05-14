@@ -98,7 +98,17 @@ export class b2DynamicTree<T> {
   //   return node.aabb;
   // }
 
-  public Query(aabb: b2AABB, callback: (node: b2TreeNode<T>) => boolean): void {
+  public Query(callback: (node: b2TreeNode<T>) => boolean, aabb: b2AABB): void;
+  public Query(aabb: b2AABB, callback: (node: b2TreeNode<T>) => boolean): void;
+  public Query(...args: any[]): void {
+    let aabb: b2AABB, callback;
+    if (args[0] instanceof b2AABB) {
+      aabb = args[0];
+      callback = args[1];
+    } else {
+      aabb = args[1];
+      callback = args[0];
+    }
     const stack: b2GrowableStack<b2TreeNode<T> | null> = this.m_stack.Reset();
     stack.Push(this.m_root);
 
@@ -146,7 +156,17 @@ export class b2DynamicTree<T> {
     }
   }
 
-  public RayCast(input: b2RayCastInput, callback: (input: b2RayCastInput, node: b2TreeNode<T>) => number): void {
+  public RayCast(callback: (input: b2RayCastInput, node: b2TreeNode<T>) => number, input: b2RayCastInput): void;
+  public RayCast(input: b2RayCastInput, callback: (input: b2RayCastInput, node: b2TreeNode<T>) => number): void;
+  public RayCast(...args: any[]): void {
+    let callback, input: b2RayCastInput;
+    if (args[0] instanceof b2RayCastInput) {
+      input = args[0];
+      callback = args[1];
+    } else {
+      input = args[1];
+      callback = args[0];
+    }
     const p1: b2Vec2 = input.p1;
     const p2: b2Vec2 = input.p2;
     const r: b2Vec2 = b2Vec2.SubVV(p2, p1, b2DynamicTree.s_r);

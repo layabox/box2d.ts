@@ -174,8 +174,10 @@ export class b2BroadPhase<T> {
 
   /// Query an AABB for overlapping proxies. The callback class
   /// is called for each proxy that overlaps the supplied AABB.
-  public Query(aabb: b2AABB, callback: (node: b2TreeNode<T>) => boolean): void {
-    this.m_tree.Query(aabb, callback);
+  public Query(callback: (node: b2TreeNode<T>) => boolean, aabb: b2AABB): void;
+  public Query(aabb: b2AABB, callback: (node: b2TreeNode<T>) => boolean): void;
+  public Query(...args: any[]): void {
+    this.m_tree.Query(args[0], args[1]);
   }
 
   public QueryPoint(point: XY, callback: (node: b2TreeNode<T>) => boolean): void {
