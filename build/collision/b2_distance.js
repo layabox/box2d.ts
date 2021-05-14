@@ -15,9 +15,9 @@
 * misrepresented as being the original software.
 * 3. This notice may not be removed or altered from any source distribution.
 */
-System.register(["../common/b2_settings.js", "../common/b2_math.js"], function (exports_1, context_1) {
+System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_shape.js"], function (exports_1, context_1) {
     "use strict";
-    var b2_settings_js_1, b2_math_js_1, b2DistanceProxy, b2SimplexCache, b2DistanceInput, b2DistanceOutput, b2ShapeCastInput, b2ShapeCastOutput, b2_gjkCalls, b2_gjkIters, b2_gjkMaxIters, b2SimplexVertex, b2Simplex, b2Distance_s_simplex, b2Distance_s_saveA, b2Distance_s_saveB, b2Distance_s_p, b2Distance_s_d, b2Distance_s_normal, b2Distance_s_supportA, b2Distance_s_supportB, b2ShapeCast_s_n, b2ShapeCast_s_simplex, b2ShapeCast_s_wA, b2ShapeCast_s_wB, b2ShapeCast_s_v, b2ShapeCast_s_p, b2ShapeCast_s_pointA, b2ShapeCast_s_pointB;
+    var b2_settings_js_1, b2_math_js_1, b2_shape_js_1, b2DistanceProxy, b2SimplexCache, b2DistanceInput, b2DistanceOutput, b2ShapeCastInput, b2ShapeCastOutput, b2_gjkCalls, b2_gjkIters, b2_gjkMaxIters, b2SimplexVertex, b2Simplex, b2Distance_s_simplex, b2Distance_s_saveA, b2Distance_s_saveB, b2Distance_s_p, b2Distance_s_d, b2Distance_s_normal, b2Distance_s_supportA, b2Distance_s_supportB, b2ShapeCast_s_n, b2ShapeCast_s_simplex, b2ShapeCast_s_wA, b2ShapeCast_s_wB, b2ShapeCast_s_v, b2ShapeCast_s_p, b2ShapeCast_s_pointA, b2ShapeCast_s_pointB;
     var __moduleName = context_1 && context_1.id;
     function b2_gjk_reset() {
         exports_1("b2_gjkCalls", b2_gjkCalls = 0);
@@ -285,6 +285,9 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js"], function (
             },
             function (b2_math_js_1_1) {
                 b2_math_js_1 = b2_math_js_1_1;
+            },
+            function (b2_shape_js_1_1) {
+                b2_shape_js_1 = b2_shape_js_1_1;
             }
         ],
         execute: function () {
@@ -323,6 +326,14 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js"], function (
                     this.m_vertices = vertices;
                     this.m_count = count;
                     this.m_radius = radius;
+                }
+                Set(...args) {
+                    if (args[0] instanceof b2_shape_js_1.b2Shape) {
+                        this.SetShape(args[0], args[1]);
+                    }
+                    else {
+                        this.SetVerticesRadius(args[0], args[1], args[2]);
+                    }
                 }
                 GetSupport(d) {
                     let bestIndex = 0;

@@ -84,21 +84,16 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                     this.m_insertionCount = 0;
                     this.m_stack = new b2_growable_stack_js_1.b2GrowableStack(256);
                 }
-                // public GetUserData(node: b2TreeNode<T>): T {
-                //   // DEBUG: b2Assert(node !== null);
-                //   return node.userData;
-                // }
-                // public WasMoved(node: b2TreeNode<T>): boolean {
-                //   return node.moved;
-                // }
-                // public ClearMoved(node: b2TreeNode<T>): void {
-                //   node.moved = false;
-                // }
-                // public GetFatAABB(node: b2TreeNode<T>): b2AABB {
-                //   // DEBUG: b2Assert(node !== null);
-                //   return node.aabb;
-                // }
-                Query(aabb, callback) {
+                Query(...args) {
+                    let aabb, callback;
+                    if (args[0] instanceof b2_collision_js_1.b2AABB) {
+                        aabb = args[0];
+                        callback = args[1];
+                    }
+                    else {
+                        aabb = args[1];
+                        callback = args[0];
+                    }
                     const stack = this.m_stack.Reset();
                     stack.Push(this.m_root);
                     while (stack.GetCount() > 0) {
@@ -142,7 +137,16 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
                         }
                     }
                 }
-                RayCast(input, callback) {
+                RayCast(...args) {
+                    let callback, input;
+                    if (args[0] instanceof b2_collision_js_1.b2RayCastInput) {
+                        input = args[0];
+                        callback = args[1];
+                    }
+                    else {
+                        input = args[1];
+                        callback = args[0];
+                    }
                     const p1 = input.p1;
                     const p2 = input.p2;
                     const r = b2_math_js_1.b2Vec2.SubVV(p2, p1, b2DynamicTree.s_r);

@@ -23,6 +23,7 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../common/
     // void b2LinearStiffness(float& stiffness, float& damping,
     // 	float frequencyHertz, float dampingRatio,
     // 	const b2Body* bodyA, const b2Body* bodyB);
+    // kylin: 这里是合理的，需要修改def的值；C++中为引用传递
     function b2LinearStiffness(def, frequencyHertz, dampingRatio, bodyA, bodyB) {
         const massA = bodyA.GetMass();
         const massB = bodyB.GetMass();

@@ -28,8 +28,10 @@ export declare class b2DynamicTree<T> {
     static readonly s_subInput: b2RayCastInput;
     static readonly s_combinedAABB: b2AABB;
     static readonly s_aabb: b2AABB;
+    Query(callback: (node: b2TreeNode<T>) => boolean, aabb: b2AABB): void;
     Query(aabb: b2AABB, callback: (node: b2TreeNode<T>) => boolean): void;
     QueryPoint(point: XY, callback: (node: b2TreeNode<T>) => boolean): void;
+    RayCast(callback: (input: b2RayCastInput, node: b2TreeNode<T>) => number, input: b2RayCastInput): void;
     RayCast(input: b2RayCastInput, callback: (input: b2RayCastInput, node: b2TreeNode<T>) => number): void;
     static s_node_id: number;
     AllocateNode(): b2TreeNode<T>;

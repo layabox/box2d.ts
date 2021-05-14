@@ -19,6 +19,7 @@ export declare class b2BroadPhase<T> {
     TouchProxy(proxy: b2TreeNode<T>): void;
     GetProxyCount(): number;
     UpdatePairs(callback: (a: T, b: T) => void): void;
+    Query(callback: (node: b2TreeNode<T>) => boolean, aabb: b2AABB): void;
     Query(aabb: b2AABB, callback: (node: b2TreeNode<T>) => boolean): void;
     QueryPoint(point: XY, callback: (node: b2TreeNode<T>) => boolean): void;
     RayCast(input: b2RayCastInput, callback: (input: b2RayCastInput, node: b2TreeNode<T>) => number): void;

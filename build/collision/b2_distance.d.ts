@@ -9,6 +9,8 @@ export declare class b2DistanceProxy {
     Reset(): b2DistanceProxy;
     SetShape(shape: b2Shape, index: number): void;
     SetVerticesRadius(vertices: b2Vec2[], count: number, radius: number): void;
+    Set(shape: b2Shape, index: number): void;
+    Set(vertices: b2Vec2[], count: number, radius: number): void;
     GetSupport(d: b2Vec2): number;
     GetSupportVertex(d: b2Vec2): b2Vec2;
     GetVertexCount(): number;

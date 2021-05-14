@@ -1473,6 +1473,67 @@ var box2d = (function (exports) {
   * misrepresented as being the original software.
   * 3. This notice may not be removed or altered from any source distribution.
   */
+  /// This holds the mass data computed for a shape.
+  class b2MassData {
+      constructor() {
+          /// The mass of the shape, usually in kilograms.
+          this.mass = 0;
+          /// The position of the shape's centroid relative to the shape's origin.
+          this.center = new b2Vec2(0, 0);
+          /// The rotational inertia of the shape about the local origin.
+          this.I = 0;
+      }
+  }
+  exports.b2ShapeType = void 0;
+  (function (b2ShapeType) {
+      b2ShapeType[b2ShapeType["e_unknown"] = -1] = "e_unknown";
+      b2ShapeType[b2ShapeType["e_circleShape"] = 0] = "e_circleShape";
+      b2ShapeType[b2ShapeType["e_edgeShape"] = 1] = "e_edgeShape";
+      b2ShapeType[b2ShapeType["e_polygonShape"] = 2] = "e_polygonShape";
+      b2ShapeType[b2ShapeType["e_chainShape"] = 3] = "e_chainShape";
+      b2ShapeType[b2ShapeType["e_shapeTypeCount"] = 4] = "e_shapeTypeCount";
+  })(exports.b2ShapeType || (exports.b2ShapeType = {}));
+  /// A shape is used for collision detection. You can create a shape however you like.
+  /// Shapes used for simulation in b2World are created automatically when a b2Fixture
+  /// is created. Shapes may encapsulate a one or more child shapes.
+  class b2Shape {
+      constructor(type, radius) {
+          this.m_type = exports.b2ShapeType.e_unknown;
+          /// Radius of a shape. For polygonal shapes this must be b2_polygonRadius. There is no support for
+          /// making rounded polygons.
+          this.m_radius = 0;
+          this.m_type = type;
+          this.m_radius = radius;
+      }
+      Copy(other) {
+          // DEBUG: b2Assert(this.m_type === other.m_type);
+          this.m_radius = other.m_radius;
+          return this;
+      }
+      /// Get the type of this shape. You can use this to down cast to the concrete shape.
+      /// @return the shape type.
+      GetType() {
+          return this.m_type;
+      }
+  }
+
+  /*
+  * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
+  *
+  * This software is provided 'as-is', without any express or implied
+  * warranty.  In no event will the authors be held liable for any damages
+  * arising from the use of this software.
+  * Permission is granted to anyone to use this software for any purpose,
+  * including commercial applications, and to alter it and redistribute it
+  * freely, subject to the following restrictions:
+  * 1. The origin of this software must not be misrepresented; you must not
+  * claim that you wrote the original software. If you use this software
+  * in a product, an acknowledgment in the product documentation would be
+  * appreciated but is not required.
+  * 2. Altered source versions must be plainly marked as such, and must not be
+  * misrepresented as being the original software.
+  * 3. This notice may not be removed or altered from any source distribution.
+  */
   /// A distance proxy is used by the GJK algorithm.
   /// It encapsulates any shape.
   class b2DistanceProxy {
@@ -1508,6 +1569,14 @@ var box2d = (function (exports) {
           this.m_vertices = vertices;
           this.m_count = count;
           this.m_radius = radius;
+      }
+      Set(...args) {
+          if (args[0] instanceof b2Shape) {
+              this.SetShape(args[0], args[1]);
+          }
+          else {
+              this.SetVerticesRadius(args[0], args[1], args[2]);
+          }
       }
       GetSupport(d) {
           let bestIndex = 0;
@@ -2799,21 +2868,16 @@ var box2d = (function (exports) {
           this.m_insertionCount = 0;
           this.m_stack = new b2GrowableStack(256);
       }
-      // public GetUserData(node: b2TreeNode<T>): T {
-      //   // DEBUG: b2Assert(node !== null);
-      //   return node.userData;
-      // }
-      // public WasMoved(node: b2TreeNode<T>): boolean {
-      //   return node.moved;
-      // }
-      // public ClearMoved(node: b2TreeNode<T>): void {
-      //   node.moved = false;
-      // }
-      // public GetFatAABB(node: b2TreeNode<T>): b2AABB {
-      //   // DEBUG: b2Assert(node !== null);
-      //   return node.aabb;
-      // }
-      Query(aabb, callback) {
+      Query(...args) {
+          let aabb, callback;
+          if (args[0] instanceof b2AABB) {
+              aabb = args[0];
+              callback = args[1];
+          }
+          else {
+              aabb = args[1];
+              callback = args[0];
+          }
           const stack = this.m_stack.Reset();
           stack.Push(this.m_root);
           while (stack.GetCount() > 0) {
@@ -2857,7 +2921,16 @@ var box2d = (function (exports) {
               }
           }
       }
-      RayCast(input, callback) {
+      RayCast(...args) {
+          let callback, input;
+          if (args[0] instanceof b2RayCastInput) {
+              input = args[0];
+              callback = args[1];
+          }
+          else {
+              input = args[1];
+              callback = args[0];
+          }
           const p1 = input.p1;
           const p2 = input.p2;
           const r = b2Vec2.SubVV(p2, p1, b2DynamicTree.s_r);
@@ -3635,10 +3708,8 @@ var box2d = (function (exports) {
           // Reset move buffer
           this.m_moveCount = 0;
       }
-      /// Query an AABB for overlapping proxies. The callback class
-      /// is called for each proxy that overlaps the supplied AABB.
-      Query(aabb, callback) {
-          this.m_tree.Query(aabb, callback);
+      Query(...args) {
+          this.m_tree.Query(args[0], args[1]);
       }
       QueryPoint(point, callback) {
           this.m_tree.QueryPoint(point, callback);
@@ -3681,67 +3752,6 @@ var box2d = (function (exports) {
                   this.m_moveBuffer[i] = null;
               }
           }
-      }
-  }
-
-  /*
-  * Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
-  *
-  * This software is provided 'as-is', without any express or implied
-  * warranty.  In no event will the authors be held liable for any damages
-  * arising from the use of this software.
-  * Permission is granted to anyone to use this software for any purpose,
-  * including commercial applications, and to alter it and redistribute it
-  * freely, subject to the following restrictions:
-  * 1. The origin of this software must not be misrepresented; you must not
-  * claim that you wrote the original software. If you use this software
-  * in a product, an acknowledgment in the product documentation would be
-  * appreciated but is not required.
-  * 2. Altered source versions must be plainly marked as such, and must not be
-  * misrepresented as being the original software.
-  * 3. This notice may not be removed or altered from any source distribution.
-  */
-  /// This holds the mass data computed for a shape.
-  class b2MassData {
-      constructor() {
-          /// The mass of the shape, usually in kilograms.
-          this.mass = 0;
-          /// The position of the shape's centroid relative to the shape's origin.
-          this.center = new b2Vec2(0, 0);
-          /// The rotational inertia of the shape about the local origin.
-          this.I = 0;
-      }
-  }
-  exports.b2ShapeType = void 0;
-  (function (b2ShapeType) {
-      b2ShapeType[b2ShapeType["e_unknown"] = -1] = "e_unknown";
-      b2ShapeType[b2ShapeType["e_circleShape"] = 0] = "e_circleShape";
-      b2ShapeType[b2ShapeType["e_edgeShape"] = 1] = "e_edgeShape";
-      b2ShapeType[b2ShapeType["e_polygonShape"] = 2] = "e_polygonShape";
-      b2ShapeType[b2ShapeType["e_chainShape"] = 3] = "e_chainShape";
-      b2ShapeType[b2ShapeType["e_shapeTypeCount"] = 4] = "e_shapeTypeCount";
-  })(exports.b2ShapeType || (exports.b2ShapeType = {}));
-  /// A shape is used for collision detection. You can create a shape however you like.
-  /// Shapes used for simulation in b2World are created automatically when a b2Fixture
-  /// is created. Shapes may encapsulate a one or more child shapes.
-  class b2Shape {
-      constructor(type, radius) {
-          this.m_type = exports.b2ShapeType.e_unknown;
-          /// Radius of a shape. For polygonal shapes this must be b2_polygonRadius. There is no support for
-          /// making rounded polygons.
-          this.m_radius = 0;
-          this.m_type = type;
-          this.m_radius = radius;
-      }
-      Copy(other) {
-          // DEBUG: b2Assert(this.m_type === other.m_type);
-          this.m_radius = other.m_radius;
-          return this;
-      }
-      /// Get the type of this shape. You can use this to down cast to the concrete shape.
-      /// @return the shape type.
-      GetType() {
-          return this.m_type;
       }
   }
 
@@ -5987,6 +5997,7 @@ var box2d = (function (exports) {
   // void b2LinearStiffness(float& stiffness, float& damping,
   // 	float frequencyHertz, float dampingRatio,
   // 	const b2Body* bodyA, const b2Body* bodyB);
+  // kylin: 这里是合理的，需要修改def的值；C++中为引用传递
   function b2LinearStiffness(def, frequencyHertz, dampingRatio, bodyA, bodyB) {
       const massA = bodyA.GetMass();
       const massB = bodyB.GetMass();
@@ -7050,6 +7061,7 @@ var box2d = (function (exports) {
           this.type = exports.b2BodyType.b2_staticBody;
           /// The world position of the body. Avoid creating bodies at the origin
           /// since this can lead to many overlapping shapes.
+          /// kylin: C++版本的b2Vec2重载了大量的运算符，为了避免开发者错误操作，设置为 readonly 是合理的
           this.position = new b2Vec2(0, 0);
           /// The world angle of the body in radians.
           this.angle = 0;

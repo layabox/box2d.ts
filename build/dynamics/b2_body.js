@@ -57,6 +57,7 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     this.type = b2BodyType.b2_staticBody;
                     /// The world position of the body. Avoid creating bodies at the origin
                     /// since this can lead to many overlapping shapes.
+                    /// kylin: C++版本的b2Vec2重载了大量的运算符，为了避免开发者错误操作，设置为 readonly 是合理的
                     this.position = new b2_math_js_1.b2Vec2(0, 0);
                     /// The world angle of the body in radians.
                     this.angle = 0;

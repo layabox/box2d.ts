@@ -161,10 +161,8 @@ System.register(["./b2_dynamic_tree.js"], function (exports_1, context_1) {
                     // Reset move buffer
                     this.m_moveCount = 0;
                 }
-                /// Query an AABB for overlapping proxies. The callback class
-                /// is called for each proxy that overlaps the supplied AABB.
-                Query(aabb, callback) {
-                    this.m_tree.Query(aabb, callback);
+                Query(...args) {
+                    this.m_tree.Query(args[0], args[1]);
                 }
                 QueryPoint(point, callback) {
                     this.m_tree.QueryPoint(point, callback);
