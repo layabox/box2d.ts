@@ -9,7 +9,7 @@ export declare class RayCast extends testbed.Test {
     private m_angle;
     private m_mode;
     constructor();
-    CreateBody(index: number): void;
+    Create(index: number): void;
     DestroyBody(): void;
     Keyboard(key: string): void;
     Step(settings: testbed.Settings): void;

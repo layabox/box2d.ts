@@ -25,15 +25,12 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     this.m_normal = new b2.b2Vec2();
                 }
                 ReportFixture(fixture, point, normal, fraction) {
-                    const body = fixture.GetBody();
-                    const userData = body.GetUserData();
-                    if (userData) {
-                        const index = userData.index;
-                        if (index === 0) {
-                            // By returning -1, we instruct the calling code to ignore this fixture
-                            // and continue the ray-cast to the next fixture.
-                            return -1;
-                        }
+                    var _a;
+                    const index = (_a = fixture.GetUserData()) === null || _a === void 0 ? void 0 : _a.pointer;
+                    if (index === 1) {
+                        // By returning -1, we instruct the calling code to ignore this fixture
+                        // and continue the ray-cast to the next fixture.
+                        return -1;
                     }
                     this.m_hit = true;
                     this.m_point.Copy(point);
@@ -54,15 +51,12 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     this.m_normal = new b2.b2Vec2();
                 }
                 ReportFixture(fixture, point, normal, fraction) {
-                    const body = fixture.GetBody();
-                    const userData = body.GetUserData();
-                    if (userData) {
-                        const index = userData.index;
-                        if (index === 0) {
-                            // By returning -1, we instruct the calling code to ignore this fixture
-                            // and continue the ray-cast to the next fixture.
-                            return -1;
-                        }
+                    var _a;
+                    const index = (_a = fixture.GetUserData()) === null || _a === void 0 ? void 0 : _a.pointer;
+                    if (index === 1) {
+                        // By returning -1, we instruct the calling code to ignore this fixture
+                        // and continue the ray-cast to the next fixture.
+                        return -1;
                     }
                     this.m_hit = true;
                     this.m_point.Copy(point);
@@ -83,15 +77,12 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     this.m_count = 0;
                 }
                 ReportFixture(fixture, point, normal, fraction) {
-                    const body = fixture.GetBody();
-                    const userData = body.GetUserData();
-                    if (userData) {
-                        const index = userData.index;
-                        if (index === 0) {
-                            // By returning -1, we instruct the calling code to ignore this fixture
-                            // and continue the ray-cast to the next fixture.
-                            return -1;
-                        }
+                    var _a;
+                    const index = (_a = fixture.GetUserData()) === null || _a === void 0 ? void 0 : _a.pointer;
+                    if (index === 1) {
+                        // By returning -1, we instruct the calling code to ignore this fixture
+                        // and continue the ray-cast to the next fixture.
+                        return -1;
                     }
                     // DEBUG: b2.Assert(this.m_count < RayCastMultipleCallback.e_maxCount);
                     this.m_points[this.m_count].Copy(point);
@@ -178,7 +169,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     this.m_angle = 0;
                     this.m_mode = RayCastMode.e_closest;
                 }
-                CreateBody(index) {
+                Create(index) {
                     const old_body = this.m_bodies[this.m_bodyIndex];
                     if (old_body !== null) {
                         this.m_world.DestroyBody(old_body);
@@ -189,8 +180,6 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     const y = b2.b2RandomRange(0.0, 20.0);
                     bd.position.Set(x, y);
                     bd.angle = b2.b2RandomRange(-b2.b2_pi, b2.b2_pi);
-                    bd.userData = {};
-                    bd.userData.index = index;
                     if (index === 4) {
                         bd.angularDamping = 0.02;
                     }
@@ -199,18 +188,21 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         const fd = new b2.b2FixtureDef();
                         fd.shape = this.m_polygons[index];
                         fd.friction = 0.3;
+                        fd.userData = { pointer: index + 1 };
                         new_body.CreateFixture(fd);
                     }
                     else if (index < 5) {
                         const fd = new b2.b2FixtureDef();
                         fd.shape = this.m_circle;
                         fd.friction = 0.3;
+                        fd.userData = { pointer: index + 1 };
                         new_body.CreateFixture(fd);
                     }
                     else {
                         const fd = new b2.b2FixtureDef();
                         fd.shape = this.m_edge;
                         fd.friction = 0.3;
+                        fd.userData = { pointer: index + 1 };
                         new_body.CreateFixture(fd);
                     }
                     this.m_bodyIndex = (this.m_bodyIndex + 1) % RayCast.e_maxBodies;
@@ -233,7 +225,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         case "4":
                         case "5":
                         case "6":
-                            this.CreateBody(parseInt(key, 10) - 1);
+                            this.Create(parseInt(key, 10) - 1);
                             break;
                         case "d":
                             this.DestroyBody();

@@ -85,7 +85,6 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         this.m_skier = skier;
                     }
                     testbed.g_camera.m_center.Set(this.m_platform_width / 2.0, 0.0);
-                    testbed.g_camera.m_center.Set(this.m_platform_width / 2.0, 0.0);
                     testbed.g_camera.m_zoom = 0.4;
                     this.m_fixed_camera = true;
                 }

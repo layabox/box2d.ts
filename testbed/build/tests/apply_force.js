@@ -47,7 +47,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     {
                         const xf1 = new b2.b2Transform();
                         xf1.q.SetAngle(0.3524 * b2.b2_pi);
-                        xf1.p.Copy(b2.b2Rot.MulRV(xf1.q, new b2.b2Vec2(1.0, 0.0), new b2.b2Vec2()));
+                        xf1.p.Copy(xf1.q.GetXAxis(new b2.b2Vec2()));
                         const vertices = new Array();
                         vertices[0] = b2.b2Transform.MulXV(xf1, new b2.b2Vec2(-1.0, 0.0), new b2.b2Vec2());
                         vertices[1] = b2.b2Transform.MulXV(xf1, new b2.b2Vec2(1.0, 0.0), new b2.b2Vec2());
@@ -59,7 +59,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         sd1.density = 2.0;
                         const xf2 = new b2.b2Transform();
                         xf2.q.SetAngle(-0.3524 * b2.b2_pi);
-                        xf2.p.Copy(b2.b2Rot.MulRV(xf2.q, new b2.b2Vec2(-1.0, 0.0), new b2.b2Vec2()));
+                        xf2.p.Copy(xf2.q.GetXAxis(new b2.b2Vec2()).SelfMul(-1));
                         vertices[0] = b2.b2Transform.MulXV(xf2, new b2.b2Vec2(-1.0, 0.0), new b2.b2Vec2());
                         vertices[1] = b2.b2Transform.MulXV(xf2, new b2.b2Vec2(1.0, 0.0), new b2.b2Vec2());
                         vertices[2] = b2.b2Transform.MulXV(xf2, new b2.b2Vec2(0.0, 0.5), new b2.b2Vec2());

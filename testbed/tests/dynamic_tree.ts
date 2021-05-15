@@ -91,11 +91,11 @@ export class DynamicTreeTest extends testbed.Test {
 
       const c = new b2.b2Color(0.9, 0.9, 0.9);
       if (actor === this.m_rayActor && actor.overlap) {
-        c.SetRGB(0.9, 0.6, 0.6);
+        c.Set(0.9, 0.6, 0.6);
       } else if (actor === this.m_rayActor) {
-        c.SetRGB(0.6, 0.9, 0.6);
+        c.Set(0.6, 0.9, 0.6);
       } else if (actor.overlap) {
-        c.SetRGB(0.6, 0.6, 0.9);
+        c.Set(0.6, 0.6, 0.9);
       }
       testbed.g_debugDraw.DrawAABB(actor.aabb, c);
     }
@@ -179,7 +179,7 @@ export class DynamicTreeTest extends testbed.Test {
   public CreateProxy(): void {
     for (let i = 0; i < DynamicTreeTest.e_actorCount; ++i) {
       const j = 0 | b2.b2RandomRange(0, DynamicTreeTest.e_actorCount);
-      const actor = this.m_actors[j];
+      const actor = this.m_actors[j]; // 这里和C++版本差别很大
       if (actor.proxyId === null) {
         this.GetRandomAABB(actor.aabb);
         actor.proxyId = this.m_tree.CreateProxy(actor.aabb, actor);
@@ -243,11 +243,11 @@ export class DynamicTreeTest extends testbed.Test {
   }
 
   public Query(): void {
-    this.m_tree.Query(this.m_queryAABB, (proxyId: b2.b2TreeNode<DynamicTreeTest_Actor>): boolean => {
+    this.m_tree.Query((proxyId: b2.b2TreeNode<DynamicTreeTest_Actor>): boolean => {
       const actor = proxyId.userData; // this.m_tree.GetUserData(proxyId);
       actor.overlap = b2.b2TestOverlapAABB(this.m_queryAABB, actor.aabb);
       return true;
-    });
+    }, this.m_queryAABB);
 
     for (let i = 0; i < DynamicTreeTest.e_actorCount; ++i) {
       if (this.m_actors[i].proxyId === null) {
@@ -267,7 +267,7 @@ export class DynamicTreeTest extends testbed.Test {
     input.Copy(this.m_rayCastInput);
 
     // Ray cast against the dynamic tree.
-    this.m_tree.RayCast(input, (input: b2.b2RayCastInput, proxyId: b2.b2TreeNode<DynamicTreeTest_Actor>): number => {
+    this.m_tree.RayCast((input: b2.b2RayCastInput, proxyId: b2.b2TreeNode<DynamicTreeTest_Actor>): number => {
       const actor: DynamicTreeTest_Actor = proxyId.userData; // this.m_tree.GetUserData(proxyId);
 
       const output = new b2.b2RayCastOutput();
@@ -281,7 +281,7 @@ export class DynamicTreeTest extends testbed.Test {
       }
 
       return input.maxFraction;
-    });
+    }, input);
 
     // Brute force ray cast.
     let bruteActor = null;

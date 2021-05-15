@@ -107,13 +107,25 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     {
                         const bd = new b2.b2BodyDef();
                         const ground = this.m_world.CreateBody(bd);
-                        const shape = new b2.b2EdgeShape();
-                        shape.SetTwoSided(new b2.b2Vec2(-50.0, 0.0), new b2.b2Vec2(50.0, 0.0));
-                        ground.CreateFixture(shape, 0.0);
-                        shape.SetTwoSided(new b2.b2Vec2(-50.0, 0.0), new b2.b2Vec2(-50.0, 10.0));
-                        ground.CreateFixture(shape, 0.0);
-                        shape.SetTwoSided(new b2.b2Vec2(50.0, 0.0), new b2.b2Vec2(50.0, 10.0));
-                        ground.CreateFixture(shape, 0.0);
+                        if (true) {
+                            const shape = new b2.b2EdgeShape();
+                            shape.SetTwoSided(new b2.b2Vec2(-50.0, 0.0), new b2.b2Vec2(50.0, 0.0));
+                            ground.CreateFixture(shape, 0.0);
+                            shape.SetTwoSided(new b2.b2Vec2(-50.0, 0.0), new b2.b2Vec2(-50.0, 10.0));
+                            ground.CreateFixture(shape, 0.0);
+                            shape.SetTwoSided(new b2.b2Vec2(50.0, 0.0), new b2.b2Vec2(50.0, 10.0));
+                            ground.CreateFixture(shape, 0.0);
+                        }
+                        else {
+                            // 使用ChainShape重新实现
+                            const shape = new b2.b2ChainShape();
+                            const v0 = new b2.b2Vec2(50.0, 10.0);
+                            const v1 = new b2.b2Vec2(50.0, 0.0);
+                            const v2 = new b2.b2Vec2(-50.0, 0.0);
+                            const v3 = new b2.b2Vec2(-50.0, 10.0);
+                            shape.CreateChain([v0, v1, v2, v3], 4, v0, v3);
+                            ground.CreateFixture(shape, 0.0);
+                        }
                     }
                     // Balls
                     for (let i = 0; i < 40; ++i) {

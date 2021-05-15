@@ -36,15 +36,11 @@ class RayCastClosestCallback extends b2.b2RayCastCallback {
     super();
   }
   public ReportFixture(fixture: b2.b2Fixture, point: b2.b2Vec2, normal: b2.b2Vec2, fraction: number): number {
-    const body: b2.b2Body = fixture.GetBody();
-    const userData: any = body.GetUserData();
-    if (userData) {
-      const index: number = userData.index;
-      if (index === 0) {
-        // By returning -1, we instruct the calling code to ignore this fixture
-        // and continue the ray-cast to the next fixture.
-        return -1;
-      }
+    const index: any = fixture.GetUserData()?.pointer;
+    if (index === 1) {
+      // By returning -1, we instruct the calling code to ignore this fixture
+      // and continue the ray-cast to the next fixture.
+      return -1;
     }
 
     this.m_hit = true;
@@ -68,15 +64,11 @@ class RayCastAnyCallback extends b2.b2RayCastCallback {
     super();
   }
   public ReportFixture(fixture: b2.b2Fixture, point: b2.b2Vec2, normal: b2.b2Vec2, fraction: number): number {
-    const body: b2.b2Body = fixture.GetBody();
-    const userData: any = body.GetUserData();
-    if (userData) {
-      const index: number = userData.index;
-      if (index === 0) {
-        // By returning -1, we instruct the calling code to ignore this fixture
-        // and continue the ray-cast to the next fixture.
-        return -1;
-      }
+    const index: any = fixture.GetUserData()?.pointer;
+    if (index === 1) {
+      // By returning -1, we instruct the calling code to ignore this fixture
+      // and continue the ray-cast to the next fixture.
+      return -1;
     }
 
     this.m_hit = true;
@@ -101,15 +93,11 @@ class RayCastMultipleCallback extends b2.b2RayCastCallback {
     super();
   }
   public ReportFixture(fixture: b2.b2Fixture, point: b2.b2Vec2, normal: b2.b2Vec2, fraction: number): number {
-    const body: b2.b2Body = fixture.GetBody();
-    const userData: any = body.GetUserData();
-    if (userData) {
-      const index: number = userData.index;
-      if (index === 0) {
-        // By returning -1, we instruct the calling code to ignore this fixture
-        // and continue the ray-cast to the next fixture.
-        return -1;
-      }
+    const index: any = fixture.GetUserData()?.pointer;
+    if (index === 1) {
+      // By returning -1, we instruct the calling code to ignore this fixture
+      // and continue the ray-cast to the next fixture.
+      return -1;
     }
 
     // DEBUG: b2.Assert(this.m_count < RayCastMultipleCallback.e_maxCount);
@@ -221,7 +209,7 @@ export class RayCast extends testbed.Test {
     this.m_mode = RayCastMode.e_closest;
   }
 
-  public CreateBody(index: number): void {
+  public Create(index: number): void {
     const old_body = this.m_bodies[this.m_bodyIndex];
     if (old_body !== null) {
       this.m_world.DestroyBody(old_body);
@@ -235,9 +223,6 @@ export class RayCast extends testbed.Test {
     bd.position.Set(x, y);
     bd.angle = b2.b2RandomRange(-b2.b2_pi, b2.b2_pi);
 
-    bd.userData = {};
-    bd.userData.index = index;
-
     if (index === 4) {
       bd.angularDamping = 0.02;
     }
@@ -248,16 +233,19 @@ export class RayCast extends testbed.Test {
       const fd: b2.b2FixtureDef = new b2.b2FixtureDef();
       fd.shape = this.m_polygons[index];
       fd.friction = 0.3;
+      fd.userData = { pointer: index + 1 };
       new_body.CreateFixture(fd);
     } else if (index < 5) {
       const fd: b2.b2FixtureDef = new b2.b2FixtureDef();
       fd.shape = this.m_circle;
       fd.friction = 0.3;
+      fd.userData = { pointer: index + 1 };
       new_body.CreateFixture(fd);
     } else {
       const fd: b2.b2FixtureDef = new b2.b2FixtureDef();
       fd.shape = this.m_edge;
       fd.friction = 0.3;
+      fd.userData = { pointer: index + 1 };
       new_body.CreateFixture(fd);
     }
 
@@ -283,7 +271,7 @@ export class RayCast extends testbed.Test {
       case "4":
       case "5":
       case "6":
-        this.CreateBody(parseInt(key, 10) - 1);
+        this.Create(parseInt(key, 10) - 1);
         break;
 
       case "d":

@@ -63,13 +63,13 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                         }
                         const c = new b2.b2Color(0.9, 0.9, 0.9);
                         if (actor === this.m_rayActor && actor.overlap) {
-                            c.SetRGB(0.9, 0.6, 0.6);
+                            c.Set(0.9, 0.6, 0.6);
                         }
                         else if (actor === this.m_rayActor) {
-                            c.SetRGB(0.6, 0.9, 0.6);
+                            c.Set(0.6, 0.9, 0.6);
                         }
                         else if (actor.overlap) {
-                            c.SetRGB(0.6, 0.6, 0.9);
+                            c.Set(0.6, 0.6, 0.9);
                         }
                         testbed.g_debugDraw.DrawAABB(actor.aabb, c);
                     }
@@ -138,7 +138,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 CreateProxy() {
                     for (let i = 0; i < DynamicTreeTest.e_actorCount; ++i) {
                         const j = 0 | b2.b2RandomRange(0, DynamicTreeTest.e_actorCount);
-                        const actor = this.m_actors[j];
+                        const actor = this.m_actors[j]; // 这里和C++版本差别很大
                         if (actor.proxyId === null) {
                             this.GetRandomAABB(actor.aabb);
                             actor.proxyId = this.m_tree.CreateProxy(actor.aabb, actor);
@@ -193,11 +193,11 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     }
                 }
                 Query() {
-                    this.m_tree.Query(this.m_queryAABB, (proxyId) => {
+                    this.m_tree.Query((proxyId) => {
                         const actor = proxyId.userData; // this.m_tree.GetUserData(proxyId);
                         actor.overlap = b2.b2TestOverlapAABB(this.m_queryAABB, actor.aabb);
                         return true;
-                    });
+                    }, this.m_queryAABB);
                     for (let i = 0; i < DynamicTreeTest.e_actorCount; ++i) {
                         if (this.m_actors[i].proxyId === null) {
                             continue;
@@ -212,7 +212,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     const input = new b2.b2RayCastInput();
                     input.Copy(this.m_rayCastInput);
                     // Ray cast against the dynamic tree.
-                    this.m_tree.RayCast(input, (input, proxyId) => {
+                    this.m_tree.RayCast((input, proxyId) => {
                         const actor = proxyId.userData; // this.m_tree.GetUserData(proxyId);
                         const output = new b2.b2RayCastOutput();
                         const hit = actor.aabb.RayCast(output, input);
@@ -223,7 +223,7 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                             return output.fraction;
                         }
                         return input.maxFraction;
-                    });
+                    }, input);
                     // Brute force ray cast.
                     let bruteActor = null;
                     const bruteOutput = new b2.b2RayCastOutput();

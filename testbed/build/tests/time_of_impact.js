@@ -38,8 +38,8 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     //sweepB.a0 -= 300.0 * b2.b2_pi;
                     //sweepB.a -= 300.0 * b2.b2_pi;
                     const input = new b2.b2TOIInput();
-                    input.proxyA.SetShape(this.m_shapeA, 0);
-                    input.proxyB.SetShape(this.m_shapeB, 0);
+                    input.proxyA.Set(this.m_shapeA, 0);
+                    input.proxyB.Set(this.m_shapeB, 0);
                     input.sweepA.Copy(sweepA);
                     input.sweepB.Copy(sweepB);
                     input.tMax = 1.0;

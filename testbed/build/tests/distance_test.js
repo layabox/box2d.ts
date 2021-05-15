@@ -60,8 +60,8 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 Step(settings) {
                     super.Step(settings);
                     const input = new b2.b2DistanceInput();
-                    input.proxyA.SetShape(this.m_polygonA, 0);
-                    input.proxyB.SetShape(this.m_polygonB, 0);
+                    input.proxyA.Set(this.m_polygonA, 0);
+                    input.proxyB.Set(this.m_polygonB, 0);
                     input.transformA.Copy(this.m_transformA);
                     input.transformB.Copy(this.m_transformB);
                     input.useRadii = true;

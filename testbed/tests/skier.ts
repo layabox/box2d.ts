@@ -103,7 +103,6 @@ export class Skier extends testbed.Test {
     }
 
     testbed.g_camera.m_center.Set(this.m_platform_width / 2.0, 0.0);
-    testbed.g_camera.m_center.Set(this.m_platform_width / 2.0, 0.0);
     testbed.g_camera.m_zoom = 0.4;
     this.m_fixed_camera = true;
   }

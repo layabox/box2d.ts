@@ -73,8 +73,8 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                 Step(settings) {
                     super.Step(settings);
                     const input = new b2.b2ShapeCastInput();
-                    input.proxyA.SetVerticesRadius(this.m_vAs, this.m_countA, this.m_radiusA);
-                    input.proxyB.SetVerticesRadius(this.m_vBs, this.m_countB, this.m_radiusB);
+                    input.proxyA.Set(this.m_vAs, this.m_countA, this.m_radiusA);
+                    input.proxyB.Set(this.m_vBs, this.m_countB, this.m_radiusB);
                     input.transformA.Copy(this.m_transformA);
                     input.transformB.Copy(this.m_transformB);
                     input.translationB.Copy(this.m_translationB);
@@ -85,8 +85,8 @@ System.register(["@box2d", "@testbed"], function (exports_1, context_1) {
                     // transformB2.p = transformB.p + output.lambda * input.translationB;
                     transformB2.p.Copy(this.m_transformB.p).SelfMulAdd(output.lambda, input.translationB);
                     const distanceInput = new b2.b2DistanceInput();
-                    distanceInput.proxyA.SetVerticesRadius(this.m_vAs, this.m_countA, this.m_radiusA);
-                    distanceInput.proxyB.SetVerticesRadius(this.m_vBs, this.m_countB, this.m_radiusB);
+                    distanceInput.proxyA.Set(this.m_vAs, this.m_countA, this.m_radiusA);
+                    distanceInput.proxyB.Set(this.m_vBs, this.m_countB, this.m_radiusB);
                     distanceInput.transformA.Copy(this.m_transformA);
                     distanceInput.transformB.Copy(transformB2);
                     distanceInput.useRadii = false;
