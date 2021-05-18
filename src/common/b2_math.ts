@@ -1254,10 +1254,8 @@ export class b2Sweep {
   public Advance(alpha: number): void {
     // DEBUG: b2Assert(this.alpha0 < 1);
     const beta: number = (alpha - this.alpha0) / (1 - this.alpha0);
-    const one_minus_beta: number = (1 - beta);
-    this.c0.x = one_minus_beta * this.c0.x + beta * this.c.x;
-    this.c0.y = one_minus_beta * this.c0.y + beta * this.c.y;
-    this.a0 = one_minus_beta * this.a0 + beta * this.a;
+    this.c0.SelfMulAdd(beta, this.c.SelfSub(this.c0));
+    this.a0 += beta * (this.a - this.a0);
     this.alpha0 = alpha;
   }
 
