@@ -42,7 +42,7 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
         execute: function () {
             // Solver debugging is normally disabled because the block solver sometimes has to deal with a poorly conditioned effective mass matrix.
             // #define B2_DEBUG_SOLVER 0
-            exports_1("g_blockSolve", g_blockSolve = false);
+            exports_1("g_blockSolve", g_blockSolve = true);
             b2VelocityConstraintPoint = class b2VelocityConstraintPoint {
                 constructor() {
                     this.rA = new b2_math_js_1.b2Vec2();
