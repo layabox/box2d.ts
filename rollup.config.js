@@ -2,7 +2,7 @@ import typescript from "rollup-plugin-typescript2";
 import dts from "rollup-plugin-dts";
 
 // 根据此参数区分是生成dts还是js
-const gendts = false;
+const gendts = true;
 
 let config;
 if (!gendts) {
