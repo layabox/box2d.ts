@@ -13,6 +13,14 @@ function genBox2dDTS(cb) {
     genSpawn("rollup", ["-c"], cb);
 }
 
+function changeBox2d(cb) {
+    const box2dJSPath = "./dist/box2d.js";
+    let con = fs.readFileSync(box2dJSPath, "utf-8");
+    con = con.replace("var box2d =", "var box2d = window.box2d =");
+    fs.writeFileSync(box2dJSPath, con, "utf-8");
+    return cb();
+}
+
 function genSpawn(command, args, cb) {
     const cs = child_process.spawn(command, args, {
         shell: true
@@ -37,4 +45,4 @@ function changeCon(flag) {
     fs.writeFileSync("./rollup.config.js", con, "utf-8");
 }
 
-exports.default = gulp.series(genBox2dJS, genBox2dDTS)
+exports.default = gulp.series(genBox2dJS, genBox2dDTS, changeBox2d)
