@@ -149,6 +149,11 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     this.m_density = b2_settings_js_1.b2Maybe(def.density, 0);
                 }
                 get m_proxyCount() { return this.m_proxies.length; }
+                // 为了避免引擎/项目报错增加到空方法；通过 body.CreateFixture 以及 body.DestroyFixture 方法执行时不需要这两个方法的
+                Create(allocator, body, def) {
+                }
+                Destroy() {
+                }
                 Reset() {
                     // The proxies must be destroyed before calling this.
                     // DEBUG: b2Assert(this.m_proxyCount === 0);
@@ -321,6 +326,9 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "../collisi
                     for (const proxy of this.m_proxies) {
                         proxy.Touch();
                     }
+                }
+                Synchronize(broadPhase, transform1, transform2) {
+                    this.SynchronizeProxies(transform1, transform2);
                 }
                 SynchronizeProxies(transform1, transform2) {
                     for (const proxy of this.m_proxies) {

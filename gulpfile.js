@@ -3,6 +3,10 @@ const child_process = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
+function tsc(cb) {
+    genSpawn("tsc", [], cb);
+}
+
 function genBox2dJS(cb) {
     changeCon(true);
     genSpawn("rollup", ["-c"], cb);
@@ -45,4 +49,4 @@ function changeCon(flag) {
     fs.writeFileSync("./rollup.config.js", con, "utf-8");
 }
 
-exports.default = gulp.series(genBox2dJS, genBox2dDTS, changeBox2d)
+exports.default = gulp.series(tsc, genBox2dJS, genBox2dDTS, changeBox2d)
