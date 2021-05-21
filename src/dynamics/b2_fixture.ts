@@ -207,6 +207,15 @@ export class b2Fixture {
     this.m_density = b2Maybe(def.density, 0);
   }
 
+  // 为了避免引擎/项目报错增加到空方法；通过 body.CreateFixture 以及 body.DestroyFixture 方法执行时不需要这两个方法的
+  Create(allocator: any, body: any, def: any) {
+
+  }
+
+  Destroy() {
+    
+  }
+
   public Reset(): void {
     // The proxies must be destroyed before calling this.
     // DEBUG: b2Assert(this.m_proxyCount === 0);
@@ -411,6 +420,10 @@ export class b2Fixture {
     for (const proxy of this.m_proxies) {
       proxy.Touch();
     }
+  }
+
+  public Synchronize(broadPhase: any, transform1: b2Transform, transform2: b2Transform) {
+    this.SynchronizeProxies(transform1, transform2);
   }
 
   public SynchronizeProxies(transform1: b2Transform, transform2: b2Transform): void {
