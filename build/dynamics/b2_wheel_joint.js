@@ -134,16 +134,16 @@ System.register(["../common/b2_settings.js", "../common/b2_math.js", "./b2_joint
                 GetMaxMotorTorque() {
                     return this.m_maxMotorTorque;
                 }
-                SetSpringFrequencyHz(hz) {
+                SetStiffness(hz) {
                     this.m_stiffness = hz;
                 }
-                GetSpringFrequencyHz() {
+                GetStiffness() {
                     return this.m_stiffness;
                 }
-                SetSpringDampingRatio(ratio) {
+                SetDamping(ratio) {
                     this.m_damping = ratio;
                 }
-                GetSpringDampingRatio() {
+                GetDamping() {
                     return this.m_damping;
                 }
                 InitVelocityConstraints(data) {

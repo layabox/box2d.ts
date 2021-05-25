@@ -189,19 +189,19 @@ export class b2WheelJoint extends b2Joint {
     return this.m_maxMotorTorque;
   }
 
-  public SetSpringFrequencyHz(hz: number): void {
+  public SetStiffness(hz: number): void {
     this.m_stiffness = hz;
   }
 
-  public GetSpringFrequencyHz(): number {
+  public GetStiffness(): number {
     return this.m_stiffness;
   }
 
-  public SetSpringDampingRatio(ratio: number): void {
+  public SetDamping(ratio: number): void {
     this.m_damping = ratio;
   }
 
-  public GetSpringDampingRatio(): number {
+  public GetDamping(): number {
     return this.m_damping;
   }
 
