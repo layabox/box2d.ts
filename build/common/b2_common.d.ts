@@ -1,4 +1,4 @@
-export declare function b2Assert(condition: boolean, ...args: any[]): asserts condition;
+export declare function b2Assert(condition: boolean, ...args: any[]): void /**asserts condition*/;
 export declare function b2Maybe<T>(value: T | undefined, def: T): T;
 export declare const b2_maxFloat: number;
 export declare const b2_epsilon: number;

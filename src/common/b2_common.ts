@@ -18,7 +18,7 @@
 
 // import { b2_lengthUnitsPerMeter } from "./b2_settings.js";
 
-export function b2Assert(condition: boolean, ...args: any[]): asserts condition {
+export function b2Assert(condition: boolean, ...args: any[]): void /**asserts condition*/ {
   if (!condition) {
     // debugger;
     throw new Error(...args);
